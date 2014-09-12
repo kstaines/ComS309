@@ -28,4 +28,7 @@
 
 	</profiles>
 	<packaging>pom</packaging>
+	<modules>
+		<module>cysquare-web</module>
+	</modules>
 </project>
