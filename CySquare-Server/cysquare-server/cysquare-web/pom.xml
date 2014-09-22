@@ -14,6 +14,11 @@
 			<artifactId>jetty-server</artifactId>
 			<version>9.2.2.v20140723</version>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -32,5 +37,5 @@
 			</build>
 		</profile>
 	</profiles>
-	
+
 </project>
