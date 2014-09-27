@@ -8,6 +8,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jetty.version>9.2.3.v20140905</jetty.version>
 	</properties>
 	
 	<profiles>
@@ -30,5 +31,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>cysquare-web</module>
+		<module>cysquare-dao</module>
 	</modules>
 </project>

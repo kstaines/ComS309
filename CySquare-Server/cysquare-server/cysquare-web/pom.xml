@@ -12,7 +12,12 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>9.2.2.v20140723</version>
+			<version>${jetty.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-webapp</artifactId>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -24,6 +29,7 @@
 	<profiles>
 		<profile>
 			<build>
+				<finalName>cysquare-web</finalName>
 				<plugins>
 					<plugin>
 						<artifactId>maven-compiler-plugin</artifactId>
@@ -33,9 +39,17 @@
 							<target>1.7</target>
 						</configuration>
 					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webXml>.\src\main\WEB-INF\web.xml</webXml>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
 	</profiles>
 
+	<packaging>war</packaging>
 </project>
