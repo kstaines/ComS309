@@ -10,13 +10,24 @@
 	
 	//prints Hello world!
     <TextView
+    	android:id="@+id/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
-    
-    //username text label "Username:"    
+        
     <TextView
-    	android:id="@+id/textView2"
+    	android:id="@+id/Welcome_to_CySquare"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="50dp"
+    	android:layout_centerHorizontal="true"
+    	android:text="@string/Welcome_to_CySquare"
+    	android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    //username text label "Username:" 
+    //textView2  
+    <TextView
+    	android:id="@+id/textView_username" 
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:layout_below="@+id/textView1"
@@ -25,37 +36,41 @@
       	android:textAppearance="?android:attr/textAppearanceMedium" />
     
     //username text input field  	
-    //layout width of 1000dp allows for 20 characters, else can do wrap_content
+    //editText1
     <EditText
-    	android:id="@+id/editText1"
-     	android:layout_width="1000dp"
+    	android:id="@+id/editText_username" 
+     	android:layout_width="500dp"
       	android:layout_height="wrap_content"
-      	android:layout_alignBottom="@+id/textView2"
-      	android:layout_marginLeft="32dp"
-      	android:layout_toRightOf="@+id/textView2"
+      	android:layout_alignBottom="@+id/textView_username"
+      	android:layout_marginLeft="2dp"
+      	android:layout_toRightOf="@+id/textView_username"
       	android:ems="10" >
 
       	<requestFocus />
    	</EditText> //end username text input field
    	
    	//password text label "Password:"
+   	//textView3
    	<TextView
-    	android:id="@+id/textView3"
+    	android:id="@+id/textView_password" 
      	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
-      	android:layout_alignLeft="@+id/textView2"
-      	android:layout_below="@+id/textView2"
-      	android:layout_marginTop="155dp"
+      	android:layout_alignLeft="@+id/textView_username"
+      	android:layout_below="@+id/textView_username"
+      	android:layout_marginTop="50dp"
       	android:text="@string/password"
       	android:textAppearance="?android:attr/textAppearanceMedium" />
     
     //password text input field	
+    //editText2
 	<EditText
-      android:id="@+id/editText2"
-      android:layout_width="2000dp"
+      android:id="@+id/editText_password" 
+      android:layout_width="500dp"
       android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/textView3"
-      android:layout_alignLeft="@+id/editText1"
+      android:layout_alignBottom="@+id/textView_password"
+      android:layout_alignLeft="@+id/editText_username"
+      android:layout_toRightOf="@+id/textView_password"
+      android:layout_marginLeft="2dp"
       android:ems="10"
       android:inputType="textPassword" />
 
