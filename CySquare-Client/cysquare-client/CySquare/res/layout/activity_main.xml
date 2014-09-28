@@ -64,17 +64,26 @@
     //password text input field	
     //editText2
 	<EditText
-      android:id="@+id/editText_password" 
-      android:layout_width="500dp"
-      android:layout_height="wrap_content"
-      android:layout_alignBottom="@+id/textView_password"
-      android:layout_alignLeft="@+id/editText_username"
-      android:layout_toRightOf="@+id/textView_password"
-      android:layout_marginLeft="2dp"
-      android:ems="10"
-      android:inputType="textPassword" />
+     	android:id="@+id/editText_password" 
+      	android:layout_width="500dp"
+      	android:layout_height="wrap_content"
+      	android:layout_alignBottom="@+id/textView_password"
+      	android:layout_alignLeft="@+id/editText_username"
+      	android:layout_toRightOf="@+id/textView_password"
+      	android:layout_marginLeft="2dp"
+      	android:ems="10"
+      	android:inputType="textPassword" />
 
-	
+	//button1
+	<Button
+		android:id="@+id/button_login"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/editText_password"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="80dp"
+		android:onClick="login"
+		android:text="@string/Login" />
     	
 
 </RelativeLayout>

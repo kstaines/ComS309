@@ -7,5 +7,6 @@
     <string name="Welcome_to_CySquare">Welcome to CySquare!</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
+    <string name="Login">Login</string> //login button
 
 </resources>
