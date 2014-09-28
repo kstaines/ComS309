@@ -8,14 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.iastate.cysquare.MainActivity" >
 	
-	//prints Hello world!
-    <TextView
-    	android:id="@+id/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-        
-    <TextView
+     <TextView
     	android:id="@+id/Welcome_to_CySquare"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
