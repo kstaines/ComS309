@@ -40,7 +40,34 @@ public class loginServlet extends HttpServlet {
 		
 		//if there is no username the dao will return a null
 		//then should send a json object with text stating there is no user by that name
+		/*if(pojo_username == null)
+		{
+			response.sendError(401, "There is no user by that name");
+		}*/
+		
 		//else compare passwords
+		/*else
+		{
+			//if the passwords have different lengths then they are not the same
+			if(password_string.length() != pojo_password.length())
+			{
+				response.sendError(401, "The password does not match the username");
+			}
+			for(int i = 0; i < password_string.length(); i++)
+			{
+				char c_one = password_string.charAt(i);
+				char c_two = pojo_password.charAt(i);
+				if(c_one != c_two)
+				{
+					response.sendError(401, "The password does not match the username");
+				}
+			}
+			 
+			
+			
+		}*/
+		
+		
 		
 		JSONObject object = new JSONObject();
 		try 
