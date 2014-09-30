@@ -10,6 +10,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>edu.iastate</groupId>
+			<artifactId>cysquare-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.32</version>

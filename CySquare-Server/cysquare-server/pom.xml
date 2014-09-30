@@ -10,7 +10,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jetty.version>9.2.3.v20140905</jetty.version>
 	</properties>
-	
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.6</version>
+		</dependency>
+	</dependencies>
+
 	<profiles>
 		<profile>
 			<build>
@@ -32,5 +40,6 @@
 	<modules>
 		<module>cysquare-web</module>
 		<module>cysquare-dao</module>
+		<module>cysquare-util</module>
 	</modules>
 </project>
