@@ -1,7 +1,6 @@
 package edu.iastate.servlet;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import edu.iastate.domain.UserAccount;
 import edu.iastate.dao.impl.AccountDAO;
@@ -14,9 +13,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class loginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6761544027811752080L;
+	
+	private AccountDAO accountDao = new AccountDAO();
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -45,7 +46,7 @@ public class loginServlet extends HttpServlet {
 		
 		//send the username to the dao
 		//receive a pojo from the dao
-		UserAccount newuser = getAccountInfo(username_string);
+		UserAccount newuser = accountDao.getAccountInfo(username_string);
 		String pojo_username = newuser.getUsername();
 		String pojo_password = newuser.getPassword();
 		//if there is no username the dao will return a null

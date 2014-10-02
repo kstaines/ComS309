@@ -7,7 +7,7 @@
 	<!-- Declare the existence of a servlet. -->
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>edu.iastate.servlet.loginServlet</servlet-class>
+		<servlet-class>edu.iastate.servlet.LoginServlet</servlet-class>
 	</servlet>
 
 	<!-- Map URLs to that servlet. -->
