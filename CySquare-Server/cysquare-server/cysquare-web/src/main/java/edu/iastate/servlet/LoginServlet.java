@@ -21,64 +21,83 @@ public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
+		String username_string = "";
+		String password_string = "";
 		//getParameter method returns a string of the JSON Object from the android project
-		String username_string = request.getParameter("username");
-		String password_string = request.getParameter("password");
+		String json_string = request.getParameter("Json");
 
 		//Set the content type to JSON for when this sends the response
 		response.setContentType("application/json");
 		
 		//check if username_string is null or blank
-		if((username_string == null) || (username_string == ""))
+		if((json_string == null) || (json_string.equalsIgnoreCase("")))
 		{
-			response.sendError(401, "The username is invalid");
-			//or can send this if the error code does not work
-			//response.getWriter().write("The username is invalid");
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", false);
+				error_response.write(response.getWriter());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//Get the key
+		JSONObject json_request = new JSONObject();
+		try {
+			json_request.getJSONObject(json_string);
+			 username_string = json_request.getString("username");
+			 password_string = json_request.getString("password");
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		//check if password_string is null or blank
-		if((password_string == null) || (password_string == ""))
+		if((password_string == null) || (password_string.equalsIgnoreCase( "")))
 		{
-			response.sendError(401, "The password is invalid");
-			//or can send this if the error code does not work
-			//response.getWriter().write("The password is invalid");
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", false);
+				error_response.write(response.getWriter());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		
 		//send the username to the dao
 		//receive a pojo from the dao
-		UserAccount newuser = accountDao.getAccountInfo(username_string);
-		String pojo_username = newuser.getUsername();
+		UserAccount newuser = accountDao.getAccountInfo(json_string);
 		String pojo_password = newuser.getPassword();
 		//if there is no username the dao will return a null
 		//then should send a json object with text stating there is no user by that name
-		if(pojo_username == null)
+		if(newuser.getUsername() == null)
 		{
-			response.sendError(401, "There is no user by that name");
-			//or can send this if the error code does not work
-			//response.getWriter().write("There is no user by that name");
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", false);
+				error_response.write(response.getWriter());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		//else compare passwords
 		else
 		{
-			//if the passwords have different lengths then they are not the same
-			if(password_string.length() != pojo_password.length())
+			//if  they are not the same
+			if(!password_string.equals(pojo_password))
 			{
-				response.sendError(401, "The password does not match the username");
-				//or can send this if the error code does not work
-				//response.getWriter().write("The password does not match the username");
-			}
-			for(int i = 0; i < password_string.length(); i++)
-			{
-				char c_one = password_string.charAt(i);
-				char c_two = pojo_password.charAt(i);
-				if(c_one != c_two)
-				{
-					response.sendError(401, "The password does not match the username");
-					//or can send this if the error code does not work
-					//response.getWriter().write("The password does not match the username");
+				JSONObject error_response = new JSONObject();
+				try {
+					error_response.put("status", false);
+					error_response.write(response.getWriter());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-			}			
+			}		
 		}
 		JSONObject object = new JSONObject();
 		try 
