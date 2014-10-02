@@ -36,19 +36,17 @@ public class LoginServlet extends HttpServlet {
 			try {
 				error_response.put("status", false);
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		//Get the key
-		JSONObject json_request = new JSONObject();
 		try {
-			json_request.getJSONObject(json_string);
-			 username_string = json_request.getString("username");
-			 password_string = json_request.getString("password");
+			JSONObject json_request = new JSONObject(json_string);
+			username_string = json_request.getString("username");
+			password_string = json_request.getString("password");
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		//check if password_string is null or blank
@@ -58,8 +56,8 @@ public class LoginServlet extends HttpServlet {
 			try {
 				error_response.put("status", false);
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -67,7 +65,7 @@ public class LoginServlet extends HttpServlet {
 		
 		//send the username to the dao
 		//receive a pojo from the dao
-		UserAccount newuser = accountDao.getAccountInfo(json_string);
+		UserAccount newuser = accountDao.getAccountInfo(username_string);
 		String pojo_password = newuser.getPassword();
 		//if there is no username the dao will return a null
 		//then should send a json object with text stating there is no user by that name
@@ -77,8 +75,8 @@ public class LoginServlet extends HttpServlet {
 			try {
 				error_response.put("status", false);
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -93,8 +91,8 @@ public class LoginServlet extends HttpServlet {
 				try {
 					error_response.put("status", false);
 					error_response.write(response.getWriter());
+					return;
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}		
