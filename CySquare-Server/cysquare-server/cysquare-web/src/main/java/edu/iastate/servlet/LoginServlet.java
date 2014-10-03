@@ -5,6 +5,7 @@ import java.io.IOException;
 import edu.iastate.domain.UserAccount;
 import edu.iastate.dao.impl.AccountDAO;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -6761544027811752080L;
@@ -21,16 +22,15 @@ public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		String username_string = "";
-		String password_string = "";
-		//getParameter method returns a string of the JSON Object from the android project
-		String json_string = request.getParameter("Json");
 
+		String username_string = request.getParameter("username");
+		String password_string = request.getParameter("password");
+		
 		//Set the content type to JSON for when this sends the response
 		response.setContentType("application/json");
 		
 		//check if username_string is null or blank
-		if((json_string == null) || (json_string.equalsIgnoreCase("")))
+		if((username_string == null) || (username_string.equalsIgnoreCase("")))
 		{
 			JSONObject error_response = new JSONObject();
 			try {
@@ -41,16 +41,8 @@ public class LoginServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		//Get the key
-		try {
-			JSONObject json_request = new JSONObject(json_string);
-			username_string = json_request.getString("username");
-			password_string = json_request.getString("password");
-		} catch (JSONException e1) {
-			e1.printStackTrace();
-		}
 		//check if password_string is null or blank
-		if((password_string == null) || (password_string.equalsIgnoreCase( "")))
+		if((password_string == null) || (password_string.equalsIgnoreCase("")))
 		{
 			JSONObject error_response = new JSONObject();
 			try {

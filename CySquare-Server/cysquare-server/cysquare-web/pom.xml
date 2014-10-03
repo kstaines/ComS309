@@ -67,7 +67,7 @@
 						<artifactId>tomcat7-maven-plugin</artifactId>
 						<version>2.2</version>
 						<configuration>
-							<url>http://proj-309-w03.cs.iastate.edu/manager</url>
+							<url>http://proj-309-w03.cs.iastate.edu/manager/</url>
 							<server>TeamW03Server</server>
 							<path>/cysquare</path>
 						</configuration>
