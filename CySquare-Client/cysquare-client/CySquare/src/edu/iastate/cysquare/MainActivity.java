@@ -43,10 +43,65 @@ public class MainActivity extends ActionBarActivity{
         setContentView(R.layout.activity_main);
         username = (EditText)findViewById(R.id.editText_username);
         password = (EditText)findViewById(R.id.editText_password);
-        login = (Button)findViewById(R.id.button_login);   
+        login = (Button)findViewById(R.id.button_login);  
+        
+        login.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				http = new DefaultHttpClient();
+		    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
+		    	
+		    	//Create message
+		    	JSONObject jo = new JSONObject();	
+		    	try{
+					jo.put("username", username.getText().toString());
+					jo.put("password", password.getText().toString());
+					
+					//Send message and get response
+					StringEntity mySE = new StringEntity(jo.toString());
+					mySE.setContentType("application/json;charset=UTF-8"); //setContentType sets content type of the response being sent to the client
+					request = new HttpPost("proj-309-w03.cs.iastate.edu/..."); //cysquare-web-1.0.0-SNAPSHOT/login");
+					request.setEntity(mySE);
+					request.setHeader("status", "application/json");
+					response = http.execute(request);
+								
+					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+					//StringBuilder build = new StringBuilder();
+					String build = reader.readLine();
+					//for (String line = null; (line = reader.readLine()) != null;) {
+					//	build.append(line).append("\n");
+					//}
+					JSONTokener tokener = new JSONTokener(build.toString());
+					JSONObject responseObject = new JSONObject(tokener);
+					
+			    	if(responseObject.get("status") == "true"){ //login info was correct/true
+			    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+			    	}
+			    	else{
+			    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+			    	}
+		    	}
+		    	catch (JSONException e){
+					e.printStackTrace();
+				}
+		    	catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+		    	catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}//////////////////////////////////end onClick(View v)
+		});
     }
     
-    public void login(View view){
+//    public void login(View view){
 /*    	if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
     		Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_LONG).show();
     	}
@@ -54,56 +109,9 @@ public class MainActivity extends ActionBarActivity{
     		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
     	}
 */  	
-    	http = new DefaultHttpClient();
-    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
     	
-    	//Create message
-    	JSONObject jo = new JSONObject();	
-    	try{
-			jo.put("username", username.getText().toString());
-			jo.put("password", password.getText().toString());
-			
-			//Send message and get response
-			StringEntity mySE = new StringEntity(jo.toString());
-			mySE.setContentType("application/json;charset=UTF-8"); //setContentType sets content type of the response being sent to the client
-			request = new HttpPost("proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login");
-			request.setEntity(mySE);
-			request.setHeader("status", "application/json");
-			response = http.execute(request);
-						
-			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-			//StringBuilder build = new StringBuilder();
-			String build = reader.readLine();
-			//for (String line = null; (line = reader.readLine()) != null;) {
-			//	build.append(line).append("\n");
-			//}
-			JSONTokener tokener = new JSONTokener(build.toString());
-			JSONObject responseObject = new JSONObject(tokener);
-			
-	    	if(responseObject.get("status") == "true"){ //login info was correct/true
-	    		Toast.makeText(getApplicationContext(), "Login Successful",
-	    		Toast.LENGTH_LONG).show();
-	    	}
-	    	else{
-	    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-	    	}
-    	}
-    	catch (JSONException e){
-			e.printStackTrace();
-		}
-    	catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-    	catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     	
-    }
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
