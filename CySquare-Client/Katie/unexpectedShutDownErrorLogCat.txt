@@ -1,0 +1,37 @@
+10-02 20:27:47.397: I/Choreographer(2346): Skipped 176 frames!  The application may be doing too much work on its main thread.
+10-02 20:27:47.717: D/dalvikvm(2346): GC_FOR_ALLOC freed 102K, 5% free 3236K/3392K, paused 47ms, total 51ms
+10-02 20:27:48.087: D/gralloc_goldfish(2346): Emulator without GPU emulation detected.
+10-02 20:28:31.988: D/InputEventConsistencyVerifier(2346): KeyEvent: ACTION_UP but key was not down.
+10-02 20:28:31.988: D/InputEventConsistencyVerifier(2346):   in android.widget.EditText{b10a1f68 VFED..CL .F....I. 215,451-736,530 #7f050041 app:id/editText_password}
+10-02 20:28:31.988: D/InputEventConsistencyVerifier(2346):   0: sent at 6532436000000, KeyEvent { action=ACTION_UP, keyCode=KEYCODE_TAB, scanCode=15, metaState=0, flags=0x8, repeatCount=0, eventTime=6532436, downTime=6532314, deviceId=0, source=0x101 }
+10-02 20:28:34.178: D/AndroidRuntime(2346): Shutting down VM
+10-02 20:28:34.178: W/dalvikvm(2346): threadid=1: thread exiting with uncaught exception (group=0xb0d84b20)
+10-02 20:28:34.198: E/AndroidRuntime(2346): FATAL EXCEPTION: main
+10-02 20:28:34.198: E/AndroidRuntime(2346): Process: edu.iastate.cysquare, PID: 2346
+10-02 20:28:34.198: E/AndroidRuntime(2346): java.lang.IllegalStateException: Could not execute method of the activity
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.view.View$1.onClick(View.java:3823)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.view.View.performClick(View.java:4438)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.view.View$PerformClick.run(View.java:18422)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.os.Handler.handleCallback(Handler.java:733)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.os.Handler.dispatchMessage(Handler.java:95)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.os.Looper.loop(Looper.java:136)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.app.ActivityThread.main(ActivityThread.java:5017)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at java.lang.reflect.Method.invokeNative(Native Method)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at java.lang.reflect.Method.invoke(Method.java:515)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:779)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:595)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at dalvik.system.NativeStart.main(Native Method)
+10-02 20:28:34.198: E/AndroidRuntime(2346): Caused by: java.lang.reflect.InvocationTargetException
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at java.lang.reflect.Method.invokeNative(Native Method)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at java.lang.reflect.Method.invoke(Method.java:515)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at android.view.View$1.onClick(View.java:3818)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	... 11 more
+10-02 20:28:34.198: E/AndroidRuntime(2346): Caused by: java.lang.IllegalStateException: Target host must not be null, or set in parameters. scheme=null, host=null, path=proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at org.apache.http.impl.client.DefaultRequestDirector.determineRoute(DefaultRequestDirector.java:591)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:293)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:555)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:487)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at org.apache.http.impl.client.AbstractHttpClient.execute(AbstractHttpClient.java:465)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	at edu.iastate.cysquare.MainActivity.login(MainActivity.java:72)
+10-02 20:28:34.198: E/AndroidRuntime(2346): 	... 14 more
+10-02 20:29:02.698: I/Process(2346): Sending signal. PID: 2346 SIG: 9
