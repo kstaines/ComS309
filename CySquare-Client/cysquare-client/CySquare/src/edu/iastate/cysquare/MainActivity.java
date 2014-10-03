@@ -24,6 +24,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -71,16 +72,26 @@ public class MainActivity extends ActionBarActivity{
 					request.setHeader("status", "application/json");
 					response = http.execute(request);
 								
-					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-					//StringBuilder build = new StringBuilder();
-					String build = reader.readLine();
+//					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+//					StringBuilder builder = new StringBuilder();
+//					String build = reader.readLine();
 					//for (String line = null; (line = reader.readLine()) != null;) {
 					//	build.append(line).append("\n");
 					//}
-					JSONTokener tokener = new JSONTokener(build.toString());
-					JSONObject responseObject = new JSONObject(tokener);
+//
+//					JSONTokener tokener = new JSONTokener(builder.toString());
+//					JSONObject responseObject = new JSONObject(tokener);
 					
-			    	if(responseObject.get("status") == "true"){ //login info was correct/true
+					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+					StringBuilder builder = new StringBuilder();
+					String line;
+					while ((line = reader.readLine()) != null) {
+						builder.append(line + "\n");
+					}
+					
+					JSONObject responseObject = new JSONObject(builder.toString());
+					
+			    	if(responseObject.get("status").equals("true")){ //login info was correct/true
 			    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 			    	}
 			    	else{
@@ -94,28 +105,16 @@ public class MainActivity extends ActionBarActivity{
 					e.printStackTrace();
 				}
 		    	catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		    	catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}//////////////////////////////////end onClick(View v)
 		});
     }
     
-//    public void login(View view){
-/*    	if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
-    		Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_LONG).show();
-    	}
-    	else{
-    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-    	}
-*/  	
     	
-    	
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
