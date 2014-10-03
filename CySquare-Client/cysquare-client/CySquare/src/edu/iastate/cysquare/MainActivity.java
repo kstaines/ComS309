@@ -52,7 +52,9 @@ public class MainActivity extends ActionBarActivity{
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
+				String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
+				
 				http = new DefaultHttpClient();
 		    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
 		    	
@@ -63,15 +65,7 @@ public class MainActivity extends ActionBarActivity{
 					jo.put("password", password.getText().toString());
 					
 					//Send message and get response
-					StringEntity mySE = new StringEntity(jo.toString());
-					mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
-					request = new HttpPost("http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login");
-					request.setEntity(mySE);
-					//Note: request.setParams is null
-					response = http.execute(request);
-								
-					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-					String build = reader.readLine();
+					String build = sendPost(url, jo);
 					
 					JSONObject responseObject = new JSONObject(build);
 					
@@ -95,6 +89,20 @@ public class MainActivity extends ActionBarActivity{
 					e.printStackTrace();
 				}
 			}//////////////////////////////////end onClick(View v)
+
+			private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException {
+				
+				StringEntity mySE = new StringEntity(jo.toString());
+				mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
+				request = new HttpPost(url);
+				request.setEntity(mySE);
+				//Note: request.setParams is null
+				response = http.execute(request);
+							
+				BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+				String build = reader.readLine();
+				return build;
+			}
 		});
     }
     

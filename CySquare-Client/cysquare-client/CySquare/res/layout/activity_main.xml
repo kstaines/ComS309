@@ -17,8 +17,9 @@
     	android:text="@string/Welcome_to_CySquare"
     	android:textAppearance="?android:attr/textAppearanceLarge" />
     
-    //username text label "Username:" 
-    //textView2  
+     
+    <!-- //username text label "Username:" 
+    //textView2  -->
     <TextView
     	android:id="@+id/textView_username" 
     	android:layout_width="wrap_content"
@@ -28,8 +29,9 @@
       	android:text="@string/username"
       	android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    //username text input field  	
-    //editText1
+    
+    <!-- //username text input field  	
+    //editText1 -->
     <EditText
     	android:id="@+id/editText_username" 
      	android:layout_width="500dp"
@@ -40,10 +42,11 @@
       	android:ems="10" >
 
       	<requestFocus />
-   	</EditText> //end username text input field
+   	</EditText> <!-- //end username text input field -->
    	
-   	//password text label "Password:"
-   	//textView3
+   	
+   	<!-- //password text label "Password:"
+   	//textView3 -->
    	<TextView
     	android:id="@+id/textView_password" 
      	android:layout_width="wrap_content"
@@ -54,8 +57,9 @@
       	android:text="@string/password"
       	android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    //password text input field	
-    //editText2
+    <!-- 
+    password text input field	
+    editText2 -->
 	<EditText
      	android:id="@+id/editText_password" 
       	android:layout_width="500dp"
@@ -67,7 +71,7 @@
       	android:ems="10"
       	android:inputType="textPassword" />
 
-	//button1
+	<!-- button1 -->
 	<Button
 		android:id="@+id/button_login"
 		android:layout_width="wrap_content"
