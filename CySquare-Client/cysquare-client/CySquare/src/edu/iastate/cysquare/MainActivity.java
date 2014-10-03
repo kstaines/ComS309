@@ -1,25 +1,8 @@
 package edu.iastate.cysquare;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +11,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
-public class MainActivity extends ActionBarActivity {
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+public class MainActivity extends ActionBarActivity{
 	
-	private EditText username=null;
-	private EditText password=null;
+	private EditText username;
+	private EditText password;
 	private Button login;
 	private HttpClient http;
 	private HttpPost request;
@@ -44,43 +43,44 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         username = (EditText)findViewById(R.id.editText_username);
         password = (EditText)findViewById(R.id.editText_password);
-        login = (Button)findViewById(R.id.button_login);
-        
-        http = new DefaultHttpClient();
-        request = new HttpPost("proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login");
-        
+        login = (Button)findViewById(R.id.button_login);   
     }
     
     public void login(View view){
-//    	if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
-//    		Toast.makeText(getApplicationContext(), "Logging in...",
-//    		Toast.LENGTH_LONG).show();
-//    	}
-//    	else{
-//    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-//    	}
+/*    	if(username.getText().toString().equals("admin") && password.getText().toString().equals("admin")){
+    		Toast.makeText(getApplicationContext(), "Logging in...", Toast.LENGTH_LONG).show();
+    	}
+    	else{
+    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+    	}
+*/  	
+    	http = new DefaultHttpClient();
+    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
     	
-    	JSONObject jo = new JSONObject();
-    	
-    	try
-    	{
+    	//Create message
+    	JSONObject jo = new JSONObject();	
+    	try{
 			jo.put("username", username.getText().toString());
 			jo.put("password", password.getText().toString());
-
-			StringEntity mySE = new StringEntity(jo.toString());
-			mySE.setContentType("application/json;charset=UTF-8");
-			request.setEntity(mySE);
 			
+			//Send message and get response
+			StringEntity mySE = new StringEntity(jo.toString());
+			mySE.setContentType("application/json;charset=UTF-8"); //setContentType sets content type of the response being sent to the client
+			request = new HttpPost("proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login");
+			request.setEntity(mySE);
+			request.setHeader("status", "application/json");
 			response = http.execute(request);
+						
 			BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-			StringBuilder build = new StringBuilder();
-			for (String line = null; (line = reader.readLine()) != null;) {
-				build.append(line).append("\n");
-			}
+			//StringBuilder build = new StringBuilder();
+			String build = reader.readLine();
+			//for (String line = null; (line = reader.readLine()) != null;) {
+			//	build.append(line).append("\n");
+			//}
 			JSONTokener tokener = new JSONTokener(build.toString());
 			JSONObject responseObject = new JSONObject(tokener);
 			
-	    	if(responseObject.get("status") == "true"){
+	    	if(responseObject.get("status") == "true"){ //login info was correct/true
 	    		Toast.makeText(getApplicationContext(), "Login Successful",
 	    		Toast.LENGTH_LONG).show();
 	    	}
@@ -88,15 +88,17 @@ public class MainActivity extends ActionBarActivity {
 	    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
 	    	}
     	}
-    	catch (JSONException e)
-    	{
+    	catch (JSONException e){
 			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+		}
+    	catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-		} catch (ClientProtocolException e) {
+		}
+    	catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+    	catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
