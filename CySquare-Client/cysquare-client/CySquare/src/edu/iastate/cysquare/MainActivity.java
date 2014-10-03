@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity{
 					//Send message and get response
 					StringEntity mySE = new StringEntity(jo.toString());
 					mySE.setContentType("application/json;charset=UTF-8"); //setContentType sets content type of the response being sent to the client
-					request = new HttpPost("proj-309-w03.cs.iastate.edu/..."); //cysquare-web-1.0.0-SNAPSHOT/login");
+					request = new HttpPost("http://proj-309-w03.cs.iastate.edu/..."); //cysquare-web-1.0.0-SNAPSHOT/login");
 					request.setEntity(mySE);
 					request.setHeader("status", "application/json");
 					response = http.execute(request);
