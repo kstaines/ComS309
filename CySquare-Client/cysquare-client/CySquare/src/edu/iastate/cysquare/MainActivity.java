@@ -29,17 +29,21 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class MainActivity extends ActionBarActivity{
-	
 	private EditText username;
 	private EditText password;
 	private Button login;
 	private HttpClient http;
 	private HttpPost request;
 	private HttpResponse response;
-
-    @Override
+	
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        //next two lines take care of NetworkOnMainThreadException
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        
         setContentView(R.layout.activity_main);
         username = (EditText)findViewById(R.id.editText_username);
         password = (EditText)findViewById(R.id.editText_password);
@@ -130,4 +134,5 @@ public class MainActivity extends ActionBarActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-}
+
+}//end MainActivity
