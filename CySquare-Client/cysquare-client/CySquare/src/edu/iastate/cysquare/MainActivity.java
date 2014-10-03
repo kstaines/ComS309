@@ -1,19 +1,7 @@
 package edu.iastate.cysquare;
 
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
@@ -23,11 +11,21 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.util.EntityUtils;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
+
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity{
 	private EditText username;
@@ -66,30 +64,16 @@ public class MainActivity extends ActionBarActivity{
 					
 					//Send message and get response
 					StringEntity mySE = new StringEntity(jo.toString());
-					mySE.setContentType("application/json;charset=UTF-8"); //setContentType sets content type of the response being sent to the client
-					request = new HttpPost("http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login"); //cysquare-web-1.0.0-SNAPSHOT/login");
+					mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
+					request = new HttpPost("http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login");
 					request.setEntity(mySE);
-					request.setHeader("status", "application/json");
+					//Note: request.setParams is null
 					response = http.execute(request);
 								
-//					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-//					StringBuilder builder = new StringBuilder();
-//					String build = reader.readLine();
-					//for (String line = null; (line = reader.readLine()) != null;) {
-					//	build.append(line).append("\n");
-					//}
-//
-//					JSONTokener tokener = new JSONTokener(builder.toString());
-//					JSONObject responseObject = new JSONObject(tokener);
-					
 					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-					StringBuilder builder = new StringBuilder();
-					String line;
-					while ((line = reader.readLine()) != null) {
-						builder.append(line + "\n");
-					}
+					String build = reader.readLine();
 					
-					JSONObject responseObject = new JSONObject(builder.toString());
+					JSONObject responseObject = new JSONObject(build);
 					
 			    	if(responseObject.get("status").equals("true")){ //login info was correct/true
 			    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
