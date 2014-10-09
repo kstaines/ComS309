@@ -12,11 +12,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -53,56 +56,10 @@ public class MainActivity extends ActionBarActivity{
 			@Override
 			public void onClick(View v) {
 
-				String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
+				new PostWithAsync().execute();
 				
-				http = new DefaultHttpClient();
-		    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
-		    	
-		    	//Create message
-		    	JSONObject jo = new JSONObject();	
-		    	try{
-					jo.put("username", username.getText().toString());
-					jo.put("password", password.getText().toString());
-					
-					//Send message and get response
-					String build = sendPost(url, jo);
-					
-					JSONObject responseObject = new JSONObject(build);
-					
-			    	if(responseObject.get("status").equals("true")){ //login info was correct/true
-			    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
-			    	}
-			    	else{
-			    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-			    	}
-		    	}
-		    	catch (JSONException e){
-					e.printStackTrace();
-				}
-		    	catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-		    	catch (ClientProtocolException e) {
-					e.printStackTrace();
-				}
-		    	catch (IOException e) {
-					e.printStackTrace();
-				}
 			}//////////////////////////////////end onClick(View v)
 
-			private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException {
-				
-				StringEntity mySE = new StringEntity(jo.toString());
-				mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
-				request = new HttpPost(url);
-				request.setEntity(mySE);
-				//Note: request.setParams is null
-				response = http.execute(request);
-							
-				BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-				String build = reader.readLine();
-				return build;
-			}
 		});
     }
     
@@ -126,4 +83,95 @@ public class MainActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    
+    private class PostWithAsync extends AsyncTask<String, String, String> {
+
+		@Override
+		protected String doInBackground(String... arg0) {
+			
+			System.out.println(arg0);
+			
+			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
+//			String url = "http://10.24.84.109:8081/login";		// Local server used for debugging
+			
+			http = new DefaultHttpClient();
+	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
+	    	
+	    	//Create message
+	    	JSONObject jo = new JSONObject();	
+	    	try{
+				jo.put("username", username.getText().toString());
+				jo.put("password", password.getText().toString());
+				
+				//Send message and get response
+				String build = sendPost(url, jo);
+				
+				publishProgress();
+				
+				return build;
+	    	}
+	    	catch (JSONException e){
+				e.printStackTrace();
+			}
+	    	catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	    	catch (ClientProtocolException e) {
+				e.printStackTrace();
+			}
+	    	catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+		
+		protected void onPostExecute(String build) {
+			JSONObject responseObject;
+			try {
+				responseObject = new JSONObject(build);
+			
+				if(responseObject.getString("status").equals("true")){ //login info was correct/true
+		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+		    	}
+		    	else if (!responseObject.getBoolean("status")) {
+		    		Toast.makeText(getApplicationContext(), "Status False", Toast.LENGTH_LONG).show();
+		    	}
+		    	else
+		    	{
+//		    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+		    		Toast.makeText(getApplicationContext(), responseObject.toString(), Toast.LENGTH_LONG).show();
+		    	}
+			}
+	    	catch (JSONException e){
+				e.printStackTrace();
+			}
+		}
+		
+		protected final void publishProgress(String string) {
+    		Toast.makeText(getApplicationContext(), "Logging In . . .", Toast.LENGTH_LONG).show();
+		}
+    }
+    
+	private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException, JSONException {
+		
+		StringEntity mySE = new StringEntity(jo.toString());
+		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
+		request = new HttpPost(url);
+		HttpParams params = new BasicHttpParams();
+		params.setParameter("username", jo.getString("username")).setParameter("password", jo.getString("password"));
+		request.setParams(params);
+		request.setEntity(mySE);
+
+		
+		System.out.println(jo.toString());
+		System.out.println(request.getParams().getParameter("password"));
+		System.out.println(request.getParams().getParameter("username"));
+		
+		response = http.execute(request);
+					
+		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+		String build = reader.readLine();
+		return build;
+	}
 }//end MainActivity
