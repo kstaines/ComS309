@@ -15,7 +15,7 @@ public class DeleteUserServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 7102890407783913618L;
 	
-private AccountDAO  account_dao = new AccountDAO();
+	private AccountDAO  account_dao = new AccountDAO();
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
