@@ -26,7 +26,7 @@ public class DeleteUserServlet extends HttpServlet{
 		//Set the response type
 		response.setContentType("application/json");
 		
-		//check if username_string is null or blank
+		//check if json_string is null or blank
 		if((json_string == null) || (json_string.equalsIgnoreCase("")))
 		{
 			JSONObject error_response = new JSONObject();
@@ -46,7 +46,20 @@ public class DeleteUserServlet extends HttpServlet{
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}		
+		}	
+		
+		//check if password_string or the username is null
+		if(username == null)
+		{
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", false);
+				error_response.write(response.getWriter());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		//Send the username to the DAO to erase the user account
 		account_dao.deleteUserAccount(username);
