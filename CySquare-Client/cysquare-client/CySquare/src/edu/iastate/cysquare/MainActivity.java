@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -18,6 +20,12 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,6 +54,8 @@ public class MainActivity extends ActionBarActivity{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         
+        
+        
         setContentView(R.layout.activity_main);
         username = (EditText)findViewById(R.id.editText_username);
         password = (EditText)findViewById(R.id.editText_password);
@@ -56,7 +66,10 @@ public class MainActivity extends ActionBarActivity{
 			@Override
 			public void onClick(View v) {
 
-				new PostWithAsync().execute();
+				String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
+//				String url = "http://10.24.84.109:8081/login";		// Local server used for debugging
+				createRequest(url);
+//				new PostWithAsync().execute();
 				
 			}//////////////////////////////////end onClick(View v)
 
@@ -91,38 +104,37 @@ public class MainActivity extends ActionBarActivity{
 			
 			System.out.println(arg0);
 			
-			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
-//			String url = "http://10.24.84.109:8081/login";		// Local server used for debugging
+			
 			
 			http = new DefaultHttpClient();
 	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
-	    	
 	    	//Create message
-	    	JSONObject jo = new JSONObject();	
-	    	try{
-				jo.put("username", username.getText().toString());
-				jo.put("password", password.getText().toString());
-				
-				//Send message and get response
-				String build = sendPost(url, jo);
-				
-				publishProgress();
-				
-				return build;
-	    	}
-	    	catch (JSONException e){
-				e.printStackTrace();
-			}
-	    	catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-	    	catch (ClientProtocolException e) {
-				e.printStackTrace();
-			}
-	    	catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+//	    	JSONObject jo = new JSONObject();	
+//	    	
+//	    	try{
+//				jo.put("username", username.getText().toString());
+//				jo.put("password", password.getText().toString());
+//				
+//				//Send message and get response
+////				String build = sendPost(url, jo);
+//				
+//				
+//				
+//				return build;
+//	    	}
+//	    	catch (JSONException e){
+//				e.printStackTrace();
+//			}
+//	    	catch (UnsupportedEncodingException e) {
+//				e.printStackTrace();
+//			}
+//	    	catch (ClientProtocolException e) {
+//				e.printStackTrace();
+//			}
+//	    	catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
 			return null;
 		}
 		
@@ -173,5 +185,37 @@ public class MainActivity extends ActionBarActivity{
 		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
 		String build = reader.readLine();
 		return build;
+	}
+
+
+	private void createRequest(String url) {
+		Map<String, String> jsonParams = new HashMap<String, String>();
+		jsonParams.put("username", username.getText().toString());
+		jsonParams.put("password", password.getText().toString());
+		JsonObjectRequest myRequest = new JsonObjectRequest(
+				Request.Method.POST,
+				url,
+				new JSONObject(jsonParams),
+				new Response.Listener<JSONObject>() {
+		            @Override
+		            public void onResponse(JSONObject response) {
+//						verificationSuccess(response);
+		            }
+		    	},
+		    	new Response.ErrorListener() {
+		            @Override
+		            public void onErrorResponse(VolleyError error) {
+//							verificationFailed(error);
+		            }
+		    	}) {
+			@Override
+			public Map<String, String> getHeaders() throws AuthFailureError {
+				HashMap<String, String> headers = new HashMap<String, String>();
+				headers.put("Content-Type", "application/json; charset=utf-8");
+				headers.put("User-agent", "My useragent");
+				return headers;
+			}
+		};
+		System.out.println(myRequest.toString());
 	}
 }//end MainActivity
