@@ -1,9 +1,6 @@
 package edu.iastate.cysquare;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,12 +18,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -38,23 +30,35 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 public class MainActivity extends ActionBarActivity{
 	private EditText username;
 	private EditText password;
 	private Button login;
-	private HttpClient http;
-	private HttpPost request;
-	private HttpResponse response;
+//	private HttpClient http;
+//	private HttpPost request;
+//	private HttpResponse response;
+	
+	Context context;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        context = this;
+        
         //next two lines take care of NetworkOnMainThreadException
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        
-        
         
         setContentView(R.layout.activity_main);
         username = (EditText)findViewById(R.id.editText_username);
@@ -66,10 +70,25 @@ public class MainActivity extends ActionBarActivity{
 			@Override
 			public void onClick(View v) {
 
-				String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
-//				String url = "http://10.24.84.109:8081/login";		// Local server used for debugging
-				createRequest(url);
-//				new PostWithAsync().execute();
+//				String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
+				String url = "http://10.24.46.97:8081/login";		// Local server used for debugging
+				
+	    	JSONObject jo = new JSONObject();	
+	    	
+				try
+				{
+					jo.put("username", username.getText().toString());
+					jo.put("password", password.getText().toString());
+					
+					sendPost(url, jo);
+					
+				} catch (JSONException e) {
+					e.printStackTrace();
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 			}//////////////////////////////////end onClick(View v)
 
@@ -95,127 +114,43 @@ public class MainActivity extends ActionBarActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    
-    private class PostWithAsync extends AsyncTask<String, String, String> {
-
-		@Override
-		protected String doInBackground(String... arg0) {
-			
-			System.out.println(arg0);
-			
-			
-			
-			http = new DefaultHttpClient();
-	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
-	    	//Create message
-//	    	JSONObject jo = new JSONObject();	
-//	    	
-//	    	try{
-//				jo.put("username", username.getText().toString());
-//				jo.put("password", password.getText().toString());
-//				
-//				//Send message and get response
-////				String build = sendPost(url, jo);
-//				
-//				
-//				
-//				return build;
-//	    	}
-//	    	catch (JSONException e){
-//				e.printStackTrace();
-//			}
-//	    	catch (UnsupportedEncodingException e) {
-//				e.printStackTrace();
-//			}
-//	    	catch (ClientProtocolException e) {
-//				e.printStackTrace();
-//			}
-//	    	catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			
-			return null;
-		}
-		
-		protected void onPostExecute(String build) {
-			JSONObject responseObject;
-			try {
-				responseObject = new JSONObject(build);
-			
-				if(responseObject.getString("status").equals("true")){ //login info was correct/true
-		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
-		    	}
-		    	else if (!responseObject.getBoolean("status")) {
-		    		Toast.makeText(getApplicationContext(), "Status False", Toast.LENGTH_LONG).show();
-		    	}
-		    	else
-		    	{
-//		    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
-		    		Toast.makeText(getApplicationContext(), responseObject.toString(), Toast.LENGTH_LONG).show();
-		    	}
-			}
-	    	catch (JSONException e){
-				e.printStackTrace();
-			}
-		}
-		
-		protected final void publishProgress(String string) {
-    		Toast.makeText(getApplicationContext(), "Logging In . . .", Toast.LENGTH_LONG).show();
-		}
-    }
     
 	private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException, JSONException {
 		
-		StringEntity mySE = new StringEntity(jo.toString());
-		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
-		request = new HttpPost(url);
-		HttpParams params = new BasicHttpParams();
-		params.setParameter("username", jo.getString("username")).setParameter("password", jo.getString("password"));
-		request.setParams(params);
-		request.setEntity(mySE);
-
-		
-		System.out.println(jo.toString());
-		System.out.println(request.getParams().getParameter("password"));
-		System.out.println(request.getParams().getParameter("username"));
-		
-		response = http.execute(request);
-					
-		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-		String build = reader.readLine();
-		return build;
-	}
-
-
-	private void createRequest(String url) {
-		Map<String, String> jsonParams = new HashMap<String, String>();
-		jsonParams.put("username", username.getText().toString());
-		jsonParams.put("password", password.getText().toString());
-		JsonObjectRequest myRequest = new JsonObjectRequest(
-				Request.Method.POST,
-				url,
-				new JSONObject(jsonParams),
+		RequestQueue myRQ = Volley.newRequestQueue(this);
+		JsonObjectRequest myJOR = new JsonObjectRequest(Request.Method.POST, url, jo,
 				new Response.Listener<JSONObject>() {
-		            @Override
-		            public void onResponse(JSONObject response) {
-//						verificationSuccess(response);
-		            }
-		    	},
-		    	new Response.ErrorListener() {
-		            @Override
-		            public void onErrorResponse(VolleyError error) {
-//							verificationFailed(error);
-		            }
-		    	}) {
-			@Override
-			public Map<String, String> getHeaders() throws AuthFailureError {
-				HashMap<String, String> headers = new HashMap<String, String>();
-				headers.put("Content-Type", "application/json; charset=utf-8");
-				headers.put("User-agent", "My useragent");
-				return headers;
-			}
-		};
-		System.out.println(myRequest.toString()); 
+					@Override
+					public void onResponse(JSONObject response) {
+						
+						try {
+							if(response.getString("status").equals("true")){ //login info was correct/true
+					    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+					    	}
+					    	else if (!response.getBoolean("status")) {
+					    		Toast.makeText(getApplicationContext(), "Status False", Toast.LENGTH_LONG).show();
+					    	}
+					    	else
+					    	{
+					    		Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+					    	}
+						}
+				    	catch (JSONException e){
+							e.printStackTrace();
+						}
+					}
+		},
+			new Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					Toast.makeText(context, error.toString() , Toast.LENGTH_SHORT).show();
+					error.printStackTrace();
+				}
+			});
+		
+		myRQ.add(myJOR);
+		
+		return null;
 	}
+
 }//end MainActivity
