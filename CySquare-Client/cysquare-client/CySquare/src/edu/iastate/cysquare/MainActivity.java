@@ -93,6 +93,7 @@ public class MainActivity extends ActionBarActivity{
 			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
 //			String url = "http://10.24.84.109:8081/login";		// Local server used for debugging
+//			String url = "http://192.168.1.17:8081/login";
 			
 			http = new DefaultHttpClient();
 	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
@@ -135,6 +136,7 @@ public class MainActivity extends ActionBarActivity{
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 		    	}
 		    	else if (!responseObject.getBoolean("status")) {
+		    		System.out.println(responseObject.toString());
 		    		Toast.makeText(getApplicationContext(), "Status False", Toast.LENGTH_LONG).show();
 		    	}
 		    	else
@@ -156,7 +158,7 @@ public class MainActivity extends ActionBarActivity{
 	private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException, JSONException {
 		
 		StringEntity mySE = new StringEntity(jo.toString());
-		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json;charset=UTF-8")); //setContentType sets content type of the response being sent to the client
+		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/x-www-form-urlencoded; charset=UTF-8")); //setContentType sets content type of the response being sent to the client
 		request = new HttpPost(url);
 		HttpParams params = new BasicHttpParams();
 		params.setParameter("username", jo.getString("username")).setParameter("password", jo.getString("password"));
