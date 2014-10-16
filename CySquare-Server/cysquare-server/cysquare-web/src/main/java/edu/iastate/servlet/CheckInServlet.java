@@ -47,7 +47,7 @@ public class CheckInServlet extends HttpServlet
 		JSONObject json_request = new JSONObject();
 		try
 		{
-			json_request.getJSONObject(json_string);
+			 json_request.getJSONObject(json_string);
 			 username = json_request.getString("username");
 			 location = json_request.getString("location");
 		} 
@@ -58,6 +58,7 @@ public class CheckInServlet extends HttpServlet
 		
 		//Get the class list which has the location, which will identify if the user is checking into class, or studying
 		//get pojo_class_info from the DAO 
+		
 		//check in each pojo_class_info to find the location
 		//if the pojo_location is the same as the current location
 		//then check into class

@@ -41,8 +41,8 @@ public class DeleteUserServlet extends HttpServlet{
 		//Get the key
 		JSONObject json_request = new JSONObject();
 		try {
-			json_request.getJSONObject(json_string);
-			 username = json_request.getString("username");
+				json_request.getJSONObject(json_string);
+				username = json_request.getString("username");
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
