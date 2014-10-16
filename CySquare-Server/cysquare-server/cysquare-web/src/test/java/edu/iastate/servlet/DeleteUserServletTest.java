@@ -17,15 +17,15 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import edu.iastate.dao.impl.AccountDAO;
-//import edu.iastate.domain.UserAccount;
+import edu.iastate.domain.UserAccount;
 
-public class CreateUserServletTest {
+public class DeleteUserServletTest {
+
 	@Mock
 	private AccountDAO accountDao;
 	
 	@InjectMocks
-	private CreateUserServlet createUserServlet = new CreateUserServlet();
-	
+	private LoginServlet loginServlet = new LoginServlet();
 	
 	@Before
 	public void setUp() {
@@ -44,13 +44,16 @@ public class CreateUserServletTest {
 		obj.put("username", "user");
 		obj.put("password", "pass");
 		
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUsername("user");
+		userAccount.setPassword("pass");
 		
 		Mockito.when(request.getParameter("username")).thenReturn((String) obj.get("username"));
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
-		Mockito.doThrow(new RuntimeException()).when(accountDao).createUserAccount(obj.get("username").toString(), obj.get("password").toString());
+		Mockito.doThrow(new RuntimeException()).when(accountDao).deleteUserAccount(obj.get("username").toString());
 		
-		createUserServlet.doPost(request, response);
+		loginServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 	}
