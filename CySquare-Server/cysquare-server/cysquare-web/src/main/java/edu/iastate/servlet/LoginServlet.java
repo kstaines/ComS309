@@ -2,9 +2,6 @@ package edu.iastate.servlet;
 
 import java.io.IOException;
 
-import edu.iastate.domain.UserAccount;
-import edu.iastate.dao.impl.AccountDAO;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import edu.iastate.dao.impl.AccountDAO;
+import edu.iastate.domain.UserAccount;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -22,7 +22,6 @@ public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-
 		String username_string = request.getParameter("username");
 		String password_string = request.getParameter("password");
 		
