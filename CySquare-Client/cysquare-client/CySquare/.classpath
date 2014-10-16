@@ -7,6 +7,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="C:/Development/CySquare-Client/cysquare-client/appcompat_v7/bin/appcompat_v7.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/Development/CySquare-Client/cysquare-client/org.json-20120521.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Development/CySquare-Client/cysquare-client/volley.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
