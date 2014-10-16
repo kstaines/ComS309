@@ -4,17 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
-import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +31,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import edu.iastate.cysquare.domain.Parameter;
 
 public class MainActivity extends ActionBarActivity{
 	private EditText username;
@@ -92,7 +95,7 @@ public class MainActivity extends ActionBarActivity{
 			System.out.println(arg0);
 			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
-//			String url = "http://10.24.84.109:8081/login";		// Local server used for debugging
+//			String url = "http://10.24.84.79:8081/login";		// Local server used for debugging
 //			String url = "http://192.168.1.17:8081/login";
 			
 			http = new DefaultHttpClient();
@@ -136,12 +139,9 @@ public class MainActivity extends ActionBarActivity{
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 		    	}
 		    	else if (!responseObject.getBoolean("status")) {
-		    		System.out.println(responseObject.toString());
-		    		Toast.makeText(getApplicationContext(), "Status False", Toast.LENGTH_LONG).show();
+		    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
 		    	}
-		    	else
-		    	{
-//		    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+		    	else {
 		    		Toast.makeText(getApplicationContext(), responseObject.toString(), Toast.LENGTH_LONG).show();
 		    	}
 			}
@@ -149,27 +149,25 @@ public class MainActivity extends ActionBarActivity{
 				e.printStackTrace();
 			}
 		}
-		
-		protected final void publishProgress(String string) {
-    		Toast.makeText(getApplicationContext(), "Logging In . . .", Toast.LENGTH_LONG).show();
-		}
     }
     
 	private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException, JSONException {
 		
-		StringEntity mySE = new StringEntity(jo.toString());
-		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/x-www-form-urlencoded; charset=UTF-8")); //setContentType sets content type of the response being sent to the client
+		
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		Iterator<String> keys = jo.keys();
+		while(keys.hasNext()) {
+			String key = keys.next();
+			Parameter param = new Parameter();
+			param.setName(key);
+			param.setValue(jo.getString(key));
+			parameters.add(param);
+		}
+		StringEntity mySE = new UrlEncodedFormEntity(parameters);
+		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/x-www-form-urlencoded;")); //setContentType sets content type of the response being sent to the client
 		request = new HttpPost(url);
-		HttpParams params = new BasicHttpParams();
-		params.setParameter("username", jo.getString("username")).setParameter("password", jo.getString("password"));
-		request.setParams(params);
 		request.setEntity(mySE);
 
-		
-		System.out.println(jo.toString());
-		System.out.println(request.getParams().getParameter("password"));
-		System.out.println(request.getParams().getParameter("username"));
-		
 		response = http.execute(request);
 					
 		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
