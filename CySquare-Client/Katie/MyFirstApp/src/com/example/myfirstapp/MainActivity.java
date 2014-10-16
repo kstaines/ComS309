@@ -16,35 +16,35 @@ public class MainActivity extends Activity {
    private EditText  password=null;
    private TextView attempts;
    private Button login;
-   int counter = 3;
+   
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
-      username = (EditText)findViewById(R.id.editText1);
-      password = (EditText)findViewById(R.id.editText2);
-      attempts = (TextView)findViewById(R.id.textView5);
-      attempts.setText(Integer.toString(counter));
-      login = (Button)findViewById(R.id.button1);
+      username = (EditText)findViewById(R.id.username_input_field);
+      password = (EditText)findViewById(R.id.password_input_field);
+      login = (Button)findViewById(R.id.log_in_button);
    }
 
    public void login(View view){
       if(username.getText().toString().equals("admin") && 
-      password.getText().toString().equals("admin")){
-      Toast.makeText(getApplicationContext(), "Logging in...", 
-      Toast.LENGTH_SHORT).show();
-      }	
-   else{
-      Toast.makeText(getApplicationContext(), "Wrong Credentials",
-      Toast.LENGTH_SHORT).show();
-      attempts.setBackgroundColor(Color.RED);	
-      counter--;
-      attempts.setText(Integer.toString(counter));
-      if(counter==0){
-         login.setEnabled(false);
-      }
+    	  password.getText().toString().equals("admin")){
 
-   }
+    	  Toast.makeText(getApplicationContext(), "Logging in...", 
+    	  Toast.LENGTH_SHORT).show();
+      
+    	  System.out.print("Test after 'logging in...' shows up");
+    	  setContentView(R.layout.student_profile);    	  
+    	  //StudentProfile studentProfile = new StudentProfile();
+    	  //studentProfile.mainPage();
+
+      }	
+      
+	   else{
+	      Toast.makeText(getApplicationContext(), "Wrong Credentials",
+	      Toast.LENGTH_SHORT).show();
+	      attempts.setBackgroundColor(Color.RED);	
+	   }
 
 }
    @Override
