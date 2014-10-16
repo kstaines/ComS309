@@ -26,6 +26,9 @@ public class CreateUserServletTest {
 	@InjectMocks
 	private CreateUserServlet createUserServlet = new CreateUserServlet();
 	
+	@InjectMocks
+	private AccountDAO account = new AccountDAO();
+	
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -47,6 +50,7 @@ public class CreateUserServletTest {
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
 		Mockito.doThrow(new RuntimeException()).when(accountDao).createUserAccount("user", "pass");
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		account.createUserAccount("user", "pass");
 		
 		createUserServlet.doPost(request, response);
 		
