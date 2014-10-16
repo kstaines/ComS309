@@ -32,12 +32,10 @@ public class MainActivity extends Activity {
 
     	  Toast.makeText(getApplicationContext(), "Logging in...", 
     	  Toast.LENGTH_SHORT).show();
-      
-    	  System.out.print("Test after 'logging in...' shows up");
+    	     
     	  setContentView(R.layout.student_profile);    	  
     	  //StudentProfile studentProfile = new StudentProfile();
     	  //studentProfile.mainPage();
-
       }	
       
 	   else{
