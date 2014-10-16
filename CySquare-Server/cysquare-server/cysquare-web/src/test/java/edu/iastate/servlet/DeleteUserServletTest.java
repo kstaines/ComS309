@@ -25,7 +25,7 @@ public class DeleteUserServletTest {
 	private AccountDAO accountDao;
 	
 	@InjectMocks
-	private LoginServlet loginServlet = new LoginServlet();
+	private DeleteUserServlet deleteUser = new DeleteUserServlet();
 	
 	@Before
 	public void setUp() {
@@ -51,9 +51,10 @@ public class DeleteUserServletTest {
 		Mockito.when(request.getParameter("username")).thenReturn((String) obj.get("username"));
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
-		Mockito.doThrow(new RuntimeException()).when(accountDao).deleteUserAccount(obj.get("username").toString());
-		
-		loginServlet.doPost(request, response);
+		//Mockito.doThrow(new IOException()).when(accountDao).deleteUserAccount(obj.get("username").toString());
+			
+		deleteUser.doPost(request, response);
+		Mockito.verify(accountDao).deleteUserAccount(obj.get("username").toString());
 		
 		System.out.println(stringWriter.toString());
 	}

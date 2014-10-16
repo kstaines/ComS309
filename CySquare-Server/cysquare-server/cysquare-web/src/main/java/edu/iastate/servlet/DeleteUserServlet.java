@@ -20,36 +20,13 @@ public class DeleteUserServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//get the json string from the client side
-		String json_string = request.getParameter("Json");
-		String username = "";
-		
+		String username_string = request.getParameter("username");
+			
 		//Set the response type
 		response.setContentType("application/json");
 		
 		//check if json_string is null or blank
-		if((json_string == null) || (json_string.equalsIgnoreCase("")))
-		{
-			JSONObject error_response = new JSONObject();
-			try {
-				error_response.put("status", false);
-				error_response.write(response.getWriter());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		//Get the key
-		JSONObject json_request = new JSONObject();
-		try {
-				json_request.getJSONObject(json_string);
-				username = json_request.getString("username");
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}	
-		
-		//check if password_string or the username is null
-		if(username == null)
+		if((username_string == null) || (username_string.equalsIgnoreCase("")))
 		{
 			JSONObject error_response = new JSONObject();
 			try {
@@ -62,7 +39,7 @@ public class DeleteUserServlet extends HttpServlet{
 		}
 		
 		//Send the username to the DAO to erase the user account
-		account_dao.deleteUserAccount(username);
+		account_dao.deleteUserAccount(username_string);
 		
 		
 		//Send the response that it was successful
