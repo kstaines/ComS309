@@ -16,7 +16,7 @@
     	android:layout_centerHorizontal="true"
     	android:text="@string/Welcome_to_CySquare"
     	android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+    	
      
     <!-- //username text label "Username:" 
     //textView2  -->
