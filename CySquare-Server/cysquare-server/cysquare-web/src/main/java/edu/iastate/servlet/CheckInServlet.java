@@ -19,17 +19,16 @@ public class CheckInServlet extends HttpServlet
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		//get the json string from the client side
-		String json_string = request.getParameter("Json");
-		String username = "";
+		//get the string from the client side
+		String username_string = request.getParameter("username");
 		//Assuming right now the location will be sent as a string
-		String location = "";
+		String location = request.getParameter("location");
 		
 		//Set the response type
 		response.setContentType("application/json");
 		
-		//check if json_string is null or blank
-		if((json_string == null) || (json_string.equalsIgnoreCase("")))
+		//check if username_string and location is null or blank
+		if((username_string == null) || (location == null) || (username_string.equalsIgnoreCase("")) || (location.equalsIgnoreCase("")))
 		{
 			JSONObject error_response = new JSONObject();
 			try 
@@ -41,19 +40,6 @@ public class CheckInServlet extends HttpServlet
 			{
 				e.printStackTrace();
 			}
-		}
-		
-		//Get the key
-		JSONObject json_request = new JSONObject();
-		try
-		{
-			 json_request.getJSONObject(json_string);
-			 username = json_request.getString("username");
-			 location = json_request.getString("location");
-		} 
-		catch (JSONException e1) 
-		{
-			e1.printStackTrace();
 		}
 		
 		//Get the class list which has the location, which will identify if the user is checking into class, or studying

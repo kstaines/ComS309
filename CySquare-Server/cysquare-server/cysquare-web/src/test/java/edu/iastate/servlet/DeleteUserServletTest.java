@@ -51,7 +51,6 @@ public class DeleteUserServletTest {
 		Mockito.when(request.getParameter("username")).thenReturn((String) obj.get("username"));
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
-		//Mockito.doThrow(new IOException()).when(accountDao).deleteUserAccount(obj.get("username").toString());
 			
 		deleteUser.doPost(request, response);
 		Mockito.verify(accountDao).deleteUserAccount(obj.get("username").toString());
