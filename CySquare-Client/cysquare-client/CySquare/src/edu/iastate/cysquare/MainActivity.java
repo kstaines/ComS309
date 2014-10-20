@@ -35,8 +35,6 @@ import edu.iastate.cysquare.domain.Parameter;
 
 public class MainActivity extends ActionBarActivity{
 	
-	StudentProfile studentProfile = new StudentProfile();
-	
 	private EditText username;
 	private EditText password;
 	private Button login;
