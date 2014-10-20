@@ -1,6 +1,7 @@
 package com.example.myfirstapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,21 +28,31 @@ public class MainActivity extends Activity {
    }
 
    public void login(View view){
+	  
       if(username.getText().toString().equals("admin") && 
     	  password.getText().toString().equals("admin")){
 
-    	  Toast.makeText(getApplicationContext(), "Logging in...", 
-    	  Toast.LENGTH_SHORT).show();
-    	     
-    	  setContentView(R.layout.student_profile);    	  
+    	  //Toast.makeText(getApplicationContext(), "Logging in...", 
+    	  //Toast.LENGTH_SHORT).show();
+    	  
+    	  //******************************************************
+    	  login.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(v.getContext(), StudentWelcome.class);
+				startActivityForResult(myIntent, 0);	
+			}
+		});
+    	  //******************************************************
+    	  
+    	  //setContentView(R.layout.student_profile);   <--works 	  
     	  //StudentProfile studentProfile = new StudentProfile();
     	  //studentProfile.mainPage();
       }	
       
 	   else{
-	      Toast.makeText(getApplicationContext(), "Wrong Credentials",
-	      Toast.LENGTH_SHORT).show();
-	      attempts.setBackgroundColor(Color.RED);	
+	      Toast.makeText(getApplicationContext(), "Incorrect username or password",
+	      Toast.LENGTH_SHORT).show();	
 	   }
 
 }
