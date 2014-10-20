@@ -7,5 +7,14 @@
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="Login">Login</string>
+    
+    <string name="logout">Logout</string>
+    
+    <string name="student_welcome">Welcome!</string>
+    <string name="check_in">Check In</string>
+    <string name="view_my_classes">View My Classes</string>
+    <string name="my_friends">My Friends</string>
+    <string name="view_my_profile">View My Profile</string>
+    
 
 </resources>

@@ -21,6 +21,7 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -41,6 +42,7 @@ public class MainActivity extends ActionBarActivity{
 	private HttpClient http;
 	private HttpPost request;
 	private HttpResponse response;
+	private Intent myIntent;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,8 @@ public class MainActivity extends ActionBarActivity{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         
-        setContentView(R.layout.activity_main);
-        username = (EditText)findViewById(R.id.editText_username);
+        setContentView(R.layout.activity_main); //sets screen layout
+        username = (EditText)findViewById(R.id.editText_username); 
         password = (EditText)findViewById(R.id.editText_password);
         login = (Button)findViewById(R.id.button_login);  
         
@@ -61,13 +63,17 @@ public class MainActivity extends ActionBarActivity{
 			public void onClick(View v) {
 
 				new PostWithAsync().execute();
+	    		myIntent = new Intent(v.getContext(), StudentWelcome.class);
+				
+				//******Easily*Test*StudentWelcome*Screen*****************************
+				//Intent myIntent = new Intent(v.getContext(), StudentWelcome.class);
+				//startActivityForResult(myIntent, 0);
 				
 			}//////////////////////////////////end onClick(View v)
 
 		});
     }
-    
-    	
+      	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -138,6 +144,8 @@ public class MainActivity extends ActionBarActivity{
 			
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+		    		
+					startActivityForResult(myIntent, 0);
 		    	}
 		    	else if (!responseObject.getBoolean("status")) {
 		    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
@@ -175,4 +183,6 @@ public class MainActivity extends ActionBarActivity{
 		String build = reader.readLine();
 		return build;
 	}
+	
+	
 }//end MainActivity
