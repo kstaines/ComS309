@@ -8,35 +8,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" 
     tools:context="edu.iastate.cysquare.StudentWelcome">
-    	
-    
-<Button
-    android:id="@+id/check_in_button"
-    android:layout_width="140dp"
-    android:layout_height="80dp"
-    android:layout_above="@+id/my_friends_button"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="30dp"
-    android:text="@string/check_in" />
-
-<Button
-    android:id="@+id/my_friends_button"
-    style="?android:attr/buttonStyleSmall"
-    android:layout_width="140dp"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:text="@string/my_friends" />
-
-<Button
-    android:id="@+id/view_my_profile_button"
-    style="?android:attr/buttonStyleSmall"
-    android:layout_width="140dp"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/my_friends_button"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="30dp"
-    android:text="@string/view_my_profile" />
 
 <TextView
     android:id="@+id/student_welcome"
@@ -58,13 +29,41 @@
     android:text="@string/logout" />
 
 <Button
-    android:id="@+id/view_my_classes_button"
+    android:id="@+id/my_profile_button"
     style="?android:attr/buttonStyleSmall"
     android:layout_width="140dp"
     android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/view_my_profile_button"
-    android:layout_below="@+id/view_my_profile_button"
-    android:layout_marginTop="14dp"
-    android:text="@string/view_my_classes" />
+    android:layout_alignLeft="@+id/my_friends_button"
+    android:layout_below="@+id/my_friends_button"
+    android:layout_marginTop="30dp"
+    android:text="@string/my_profile" />
+
+<Button
+    android:id="@+id/my_classes_button"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/my_profile_button"
+    android:layout_below="@+id/my_profile_button"
+    android:layout_marginTop="30dp"
+    android:text="@string/my_classes" />
+
+<Button
+    android:id="@+id/my_friends_button"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/check_in_button"
+    android:layout_centerVertical="true"
+    android:text="@string/my_friends" />
+
+<Button
+    android:id="@+id/check_in_button"
+    android:layout_width="140dp"
+    android:layout_height="80dp"
+    android:layout_above="@+id/my_friends_button"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="30dp"
+    android:text="@string/check_in" />
 
 </RelativeLayout>

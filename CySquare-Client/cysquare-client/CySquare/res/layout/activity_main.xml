@@ -15,6 +15,7 @@
     	android:layout_marginTop="50dp"
     	android:layout_centerHorizontal="true"
     	android:text="@string/Welcome_to_CySquare"
+    	android:textColor="#FF0009"
     	android:textAppearance="?android:attr/textAppearanceLarge" />
     	
      

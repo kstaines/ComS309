@@ -28,6 +28,10 @@
         	android:name=".StudentWelcome">
         </activity>
         
+        <activity
+        	android:name=".StudentProfile">
+        </activity>
+        
     </application>
 
 </manifest>

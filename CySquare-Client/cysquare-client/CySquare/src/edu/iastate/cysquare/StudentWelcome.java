@@ -11,7 +11,12 @@ import android.widget.Toast;
 
 public class StudentWelcome extends Activity{
 	private Button logout;
+	private Button checkIn;
+	private Button myFriends;
+	private Button myProfile;
+	private Button myClasses;
 	private Intent mainIntent;
+	private Intent profileIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -20,16 +25,23 @@ public class StudentWelcome extends Activity{
 		setContentView(R.layout.student_welcome); //sets screen layout
 		
 		logout = (Button)findViewById(R.id.logout_button);
+		myProfile = (Button)findViewById(R.id.my_profile_button);
 		
 		logout.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				logout();
-				
 			} //end onClick(View v)
+		});
+		
+		myProfile.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				profileIntent = new Intent(v.getContext(), StudentProfile.class);
+				studentProfile();
+			}
 		});
 	} //end onCreate(Bundle savedInstanceState)
 	
@@ -54,6 +66,10 @@ public class StudentWelcome extends Activity{
     
     private void logout(){
     	startActivityForResult(mainIntent, 0);
+    }
+    
+    private void studentProfile(){
+    	startActivityForResult(profileIntent, 0);
     }
 
 }
