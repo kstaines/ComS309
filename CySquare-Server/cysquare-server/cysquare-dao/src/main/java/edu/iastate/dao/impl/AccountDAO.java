@@ -35,7 +35,7 @@ public class AccountDAO {
 		try {
 			conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + ".users (`username`, `password`) VALUES ('" + username + "', '" + password + "');");
+			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + ".users (`username`, `password`, `totalPts`) VALUES ('" + username + "', '" + password + "', 0);");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
