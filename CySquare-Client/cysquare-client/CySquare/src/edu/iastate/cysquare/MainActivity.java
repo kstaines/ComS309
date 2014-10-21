@@ -65,10 +65,6 @@ public class MainActivity extends ActionBarActivity{
 				new PostWithAsync().execute();
 	    		myIntent = new Intent(v.getContext(), StudentWelcome.class);
 				
-				//******Easily*Test*StudentWelcome*Screen*****************************
-				//Intent myIntent = new Intent(v.getContext(), StudentWelcome.class);
-				//startActivityForResult(myIntent, 0);
-				
 			}//////////////////////////////////end onClick(View v)
 
 		});

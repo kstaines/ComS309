@@ -29,7 +29,19 @@
         </activity>
         
         <activity
+        	android:name=".CheckIn">
+        </activity>
+        
+        <activity
+        	android:name=".StudentFriends">
+        </activity>
+        
+        <activity
         	android:name=".StudentProfile">
+        </activity>
+        
+        <activity
+        	android:name=".StudentClasses">
         </activity>
         
     </application>

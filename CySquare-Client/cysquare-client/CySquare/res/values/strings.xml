@@ -16,8 +16,15 @@
     <string name="my_friends">My Friends</string>
     <string name="my_profile">My Profile</string>
     
+    <string name="student_checkin">Check In</string>
+    
+    <string name="student_friends">Friends</string>
+    
     <string name="home">Home</string>
     <string name="student_profile">My Profile</string>
+    <string name="total_points">Total Points:</string>
+    
+    <string name="student_classes">My Classes</string>
     
 
 </resources>
