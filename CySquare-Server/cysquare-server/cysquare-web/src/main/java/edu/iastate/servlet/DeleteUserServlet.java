@@ -26,11 +26,22 @@ public class DeleteUserServlet extends HttpServlet{
 		response.setContentType("application/json");
 		
 		//check if json_string is null or blank
-		if((username_string == null) || (username_string.equalsIgnoreCase("")))
+		if(username_string == null)
 		{
 			JSONObject error_response = new JSONObject();
 			try {
-				error_response.put("status", false);
+				error_response.put("status", "The username is null.");
+				error_response.write(response.getWriter());
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if(username_string.equalsIgnoreCase(""))
+		{
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", "The username is blank.");
 				error_response.write(response.getWriter());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
