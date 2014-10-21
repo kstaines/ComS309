@@ -29,23 +29,46 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("application/json");
 		
 		//check if username_string is null or blank
-		if((username_string == null) || (username_string.equalsIgnoreCase("")))
+		if(username_string == null)
 		{
 			JSONObject error_response = new JSONObject();
 			try {
-				error_response.put("status", false);
+				error_response.put("status", "The username is null");
 				error_response.write(response.getWriter());
 				return;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		//check if password_string is null or blank
-		if((password_string == null) || (password_string.equalsIgnoreCase("")))
+		if(username_string.equalsIgnoreCase(""))
 		{
 			JSONObject error_response = new JSONObject();
 			try {
-				error_response.put("status", false);
+				error_response.put("status", "The username is blank");
+				error_response.write(response.getWriter());
+				return;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		//check if password_string is null or blank
+		if(password_string == null)
+		{
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", "The password is null");
+				error_response.write(response.getWriter());
+				return;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		if(password_string.equalsIgnoreCase(""))
+		{
+			JSONObject error_response = new JSONObject();
+			try {
+				error_response.put("status", "The password is blank");
 				error_response.write(response.getWriter());
 				return;
 			} catch (JSONException e) {
@@ -64,7 +87,7 @@ public class LoginServlet extends HttpServlet {
 		{
 			JSONObject error_response = new JSONObject();
 			try {
-				error_response.put("status", false);
+				error_response.put("status", "There is no user by that name in the database.");
 				error_response.write(response.getWriter());
 				return;
 			} catch (JSONException e) {
@@ -80,7 +103,7 @@ public class LoginServlet extends HttpServlet {
 			{
 				JSONObject error_response = new JSONObject();
 				try {
-					error_response.put("status", false);
+					error_response.put("status", "The passwords do not match.");
 					error_response.write(response.getWriter());
 					return;
 				} catch (JSONException e) {
