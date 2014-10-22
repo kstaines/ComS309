@@ -17,18 +17,9 @@
     	android:text="@string/Welcome_to_CySquare"
     	android:textColor="#FF0009"
     	android:textAppearance="?android:attr/textAppearanceLarge" />
-    	
      
     <!-- //username text label "Username:" 
     //textView2  -->
-    <TextView
-    	android:id="@+id/textView_username" 
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_below="@+id/textView1"
-     	android:layout_marginTop="150dp"
-      	android:text="@string/username"
-      	android:textAppearance="?android:attr/textAppearanceMedium" />
     
     
     <!-- //username text input field  	
@@ -40,23 +31,11 @@
       	android:layout_alignBottom="@+id/textView_username"
       	android:layout_marginLeft="2dp"
       	android:layout_toRightOf="@+id/textView_username"
-      	android:ems="10" >
-
-      	<requestFocus />
-   	</EditText> <!-- //end username text input field -->
+      	android:ems="10" />
    	
    	
    	<!-- //password text label "Password:"
    	//textView3 -->
-   	<TextView
-    	android:id="@+id/textView_password" 
-     	android:layout_width="wrap_content"
-      	android:layout_height="wrap_content"
-      	android:layout_alignLeft="@+id/textView_username"
-      	android:layout_below="@+id/textView_username"
-      	android:layout_marginTop="50dp"
-      	android:text="@string/password"
-      	android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <!-- 
     password text input field	
@@ -73,15 +52,54 @@
       	android:inputType="textPassword" />
 
 	<!-- button1 -->
+
+	<TextView
+	    android:id="@+id/textView_username"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/Welcome_to_CySquare"
+	    android:layout_marginLeft="17dp"
+	    android:layout_marginTop="148dp"
+	    android:text="@string/username"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	<TextView
+	    android:id="@+id/textView_password"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/textView_username"
+	    android:layout_below="@+id/textView_username"
+	    android:layout_marginTop="19dp"
+	    android:text="@string/password"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
+
 	<Button
-		android:id="@+id/button_login"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@+id/editText_password"
-		android:layout_centerHorizontal="true"
-		android:layout_marginTop="80dp"
-		android:onClick="login"
-		android:text="@string/Login" />
-    	
+	    android:id="@+id/button_login"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/editText_username"
+	    android:layout_below="@+id/editText_password"
+	    android:layout_marginTop="40dp"
+	    android:onClick="login"
+	    android:text="@string/Login" />
+
+	<Button
+	    android:id="@+id/button_Create"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/Welcome_to_CySquare"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="34dp"
+	    android:onClick="createNewUser"
+	    android:text="Create New User" />
+
+	<TextView
+	    android:id="@+id/or"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/editText_username"
+	    android:layout_centerHorizontal="true"
+	    android:text="or" />
 
 </RelativeLayout>

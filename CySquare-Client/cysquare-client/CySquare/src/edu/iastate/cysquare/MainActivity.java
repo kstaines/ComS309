@@ -35,10 +35,10 @@ import android.widget.Toast;
 import edu.iastate.cysquare.domain.Parameter;
 
 public class MainActivity extends ActionBarActivity{
-	
+
 	private EditText username;
 	private EditText password;
-	private Button login;
+	private Button login, createNewUser;
 	private HttpClient http;
 	private HttpPost request;
 	private HttpResponse response;
@@ -55,7 +55,8 @@ public class MainActivity extends ActionBarActivity{
         setContentView(R.layout.activity_main); //sets screen layout
         username = (EditText)findViewById(R.id.editText_username); 
         password = (EditText)findViewById(R.id.editText_password);
-        login = (Button)findViewById(R.id.button_login);  
+        login = (Button)findViewById(R.id.button_login); 
+        createNewUser = (Button) findViewById(R.id.button_Create);
         
         login.setOnClickListener(new View.OnClickListener() {
 			
@@ -64,10 +65,20 @@ public class MainActivity extends ActionBarActivity{
 
 				new PostWithAsync().execute();
 	    		myIntent = new Intent(v.getContext(), StudentWelcome.class);
+	    		startActivity(myIntent);
 				
 			}//////////////////////////////////end onClick(View v)
 
 		});
+        
+        createNewUser.setOnClickListener(new View.OnClickListener(){
+        	
+        	@Override
+        	public void onClick(View v) {
+            	myIntent = new Intent(v.getContext(), CreateUser.class);
+            	startActivity(myIntent);
+        	}
+        });
     }
       	
     @Override
