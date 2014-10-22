@@ -20,6 +20,14 @@ public class LoginServlet extends HttpServlet {
 	
 	private AccountDAO accountDao = new AccountDAO();
 
+	/**
+	 * Returns a HTTP response back to the client as a JSON object.
+	 * This method receives the request from the client and processes
+	 * the login information with the information received by the DAO (Database Access Object).
+	 * 
+	 * @param request An HTTP request received by the client to be processed
+	 * @param response An HTTP response to send to the client as a JSON object with the status of the process			
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String username_string = request.getParameter("username");
@@ -111,11 +119,11 @@ public class LoginServlet extends HttpServlet {
 				}
 			}		
 		}
-		//if(!newuser.getType().equalsIgnoreCase("student"))
+		//if(!newuser.getType().equalsIgnoreCase("y"))
 		{
 			JSONObject error_response = new JSONObject();
 			try{
-				error_response.put("status", "Your account needs to be approved");
+				error_response.put("status", "Your account needs to be approved.");
 				error_response.write(response.getWriter());
 			} catch(JSONException e) {
 				e.printStackTrace();
