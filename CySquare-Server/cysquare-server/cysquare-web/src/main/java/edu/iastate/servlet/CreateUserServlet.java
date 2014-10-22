@@ -2,6 +2,7 @@ package edu.iastate.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import edu.iastate.dao.impl.AccountDAO;
 
+@WebServlet("/createUser")
 public class CreateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 943348396279963269L;
 	
@@ -22,7 +24,7 @@ public class CreateUserServlet extends HttpServlet {
 		String username_string = request.getParameter("username");
 		String password_string = request.getParameter("password");
 		//As a group have decided there will be an account type
-		String accountType = request.getParameter("type");
+		String accountType = request.getParameter("usertype");
 		
 		//Set the response type
 		response.setContentType("application/json");
@@ -76,7 +78,7 @@ public class CreateUserServlet extends HttpServlet {
 		{
 			JSONObject error_response = new JSONObject();
 			try {
-				error_response.put("status", "The account type is null.");
+				error_response.put("status", "The user type is null.");
 				error_response.write(response.getWriter());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -87,7 +89,7 @@ public class CreateUserServlet extends HttpServlet {
 		{
 			JSONObject error_response = new JSONObject();
 			try {
-				error_response.put("status", "The account type is blank.");
+				error_response.put("status", "The user type is blank.");
 				error_response.write(response.getWriter());
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -103,7 +105,15 @@ public class CreateUserServlet extends HttpServlet {
 		//Send the response that it was successful
 		JSONObject correct_response = new JSONObject();
 		try {
-			correct_response.put("status", true);
+			if(accountType.equalsIgnoreCase("student"))
+			{
+				correct_response.put("status", true);
+			}
+			else
+			{
+				correct_response.put("status", "Account successfully created, but awaiting for approval.");
+			}
+			
 			correct_response.write(response.getWriter());
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

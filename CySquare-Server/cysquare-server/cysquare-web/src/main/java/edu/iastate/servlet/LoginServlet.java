@@ -111,6 +111,16 @@ public class LoginServlet extends HttpServlet {
 				}
 			}		
 		}
+		//if(!newuser.getType().equalsIgnoreCase("student"))
+		{
+			JSONObject error_response = new JSONObject();
+			try{
+				error_response.put("status", "Your account needs to be approved");
+				error_response.write(response.getWriter());
+			} catch(JSONException e) {
+				e.printStackTrace();
+			}
+		}
 		JSONObject object = new JSONObject();
 		try 
 		{
