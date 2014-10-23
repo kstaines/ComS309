@@ -95,7 +95,7 @@
 	    android:text="Create New User" />
 
 	<TextView
-	    android:id="@+id/or"
+	    android:id="@+id/textView_or"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_above="@+id/editText_username"
