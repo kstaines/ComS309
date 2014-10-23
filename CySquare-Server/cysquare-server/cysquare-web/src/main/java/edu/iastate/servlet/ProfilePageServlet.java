@@ -60,7 +60,9 @@ public class ProfilePageServlet extends HttpServlet{
 			int points = user.getTotalPts();
 			profile.put("points", points);
 			
-			
+			//course id and user id
+			//a list would be the course id
+			//get the course table with that course id
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
