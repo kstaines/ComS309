@@ -75,7 +75,6 @@ public class MainActivity extends ActionBarActivity{
         	@Override
         	public void onClick(View v) {
             	myIntent = new Intent(v.getContext(), CreateUser.class);
-            	startActivity(myIntent);
         	}
         });
     }
@@ -106,7 +105,7 @@ public class MainActivity extends ActionBarActivity{
 		protected String doInBackground(String... arg0) {
 			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
-//			String url = "http://192.168.1.17:8081/login";
+//			String url = "http://10.24.84.79:8081/login";		// Local server used for debugging
 			
 			http = new DefaultHttpClient();
 	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
@@ -114,8 +113,13 @@ public class MainActivity extends ActionBarActivity{
 	    	//Create message
 	    	JSONObject jo = new JSONObject();	
 	    	try{
+				jo.put("username", username.getText().toString());
+				jo.put("password", password.getText().toString());
+				
 				//Send message and get response
 				String build = sendPost(url, jo);
+				
+				publishProgress();
 				
 				return build;
 	    	}
@@ -143,10 +147,10 @@ public class MainActivity extends ActionBarActivity{
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 		    		
-					startActivityForResult(myIntent, 0);
+					startActivity(myIntent);
 		    	}
 		    	else if (!responseObject.getBoolean("status")) {
-		    		Toast.makeText(getApplicationContext(), "Incorrect username or password", Toast.LENGTH_LONG).show();
+		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
 		    	}
 		    	else {
 		    		Toast.makeText(getApplicationContext(), responseObject.toString(), Toast.LENGTH_LONG).show();
