@@ -43,12 +43,39 @@ public class AccountDAO {
 		}
 	}
 	
+	public void createUserAccount(String username, String password, String userType) {
+		Connection conn;
+		try {
+			conn = mysqlConnector.makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + ".users (`username`, `password`, `userType`) VALUES ('" + username + "', '" + password + "', '" + userType.toUpperCase() + "');");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void deleteUserAccount(String username) {
 		Connection conn;
 		try {
 			conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
 			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + ".users WHERE username='" + username + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void approveUserAccount(String username) {
+		Connection conn;
+		try {
+			conn = mysqlConnector.makeConnection();
+			Statement st = conn.createStatement();
+			//Update user account with an updated string of "Y".
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + ".`users` SET `approved`='Y' WHERE  `username`='" + username + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
