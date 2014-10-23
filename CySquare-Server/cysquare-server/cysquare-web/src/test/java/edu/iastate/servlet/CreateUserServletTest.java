@@ -18,6 +18,7 @@ import org.mockito.MockitoAnnotations;
 
 import edu.iastate.dao.impl.AccountDAO;
 //import edu.iastate.domain.UserAccount;
+import edu.iastate.domain.UserAccount;
 
 public class CreateUserServletTest {
 	@Mock
@@ -42,18 +43,23 @@ public class CreateUserServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		JSONObject obj = new JSONObject();
-		obj.put("username", "userssss");
+		obj.put("username", "user");
 		obj.put("password", "pass");
-		obj.put("usertype", "student");
+		obj.put("usertype", "admin");
+		
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUsername("user");
+		userAccount.setPassword("pass");
 		
 		
 		Mockito.when(request.getParameter("username")).thenReturn((String) obj.get("username"));
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
 		Mockito.when(request.getParameter("usertype")).thenReturn((String) obj.get("usertype"));
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
 		createUserServlet.doPost(request, response);
-		Mockito.verify(accountDao).createUserAccount(obj.getString("username").toString(), obj.getString("password").toString(), obj.getString("usertype").toString());
+		Mockito.verify(accountDao, Mockito.times(0)).createUserAccount(obj.getString("username").toString(), obj.getString("password").toString(), obj.getString("usertype").toString());
 		System.out.println(stringWriter.toString());
 	}
 

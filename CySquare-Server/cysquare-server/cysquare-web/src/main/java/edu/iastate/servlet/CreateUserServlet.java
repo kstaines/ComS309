@@ -37,6 +37,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The username is null.");
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -48,6 +49,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The username is blank.");
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -59,6 +61,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The password is null.");
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,6 +73,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The password is blank.");
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -81,6 +85,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The user type is null.");
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -92,6 +97,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The user type is blank.");
 				error_response.write(response.getWriter());
+				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -100,12 +106,13 @@ public class CreateUserServlet extends HttpServlet {
 		
 		//check if the username is already in the DAO 
 		UserAccount user = account_dao.getAccountInfo(username_string);
-		if(user != null)      //user.getUsername().equalsIgnoreCase(username_string))
+		if(user != null && user.getUsername().equalsIgnoreCase(username_string))
 		{
 			JSONObject error_response = new JSONObject();
 			try{
 				error_response.put("status", "This username already exists, please enter a different username.");
 				error_response.write(response.getWriter());
+				return;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
