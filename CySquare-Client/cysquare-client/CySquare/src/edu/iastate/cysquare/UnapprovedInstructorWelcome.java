@@ -1,16 +1,33 @@
 package edu.iastate.cysquare;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class UnapprovedInstructorWelcome extends ActionBarActivity {
 
+	private Button logout;
+	private Intent mainIntent;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_unapproved_instructor_welcome);
+		
+		logout = (Button)findViewById(R.id.button_unapprovedinstr_logout);
+		
+        logout.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mainIntent = new Intent(v.getContext(), MainActivity.class);
+				startActivity(mainIntent);
+			}//////////////////////////////////end onClick(View v)
+
+		});
 	}
 
 	@Override
