@@ -62,10 +62,8 @@ public class MainActivity extends ActionBarActivity{
 			
 			@Override
 			public void onClick(View v) {
-
+				myIntent = new Intent(v.getContext(), StudentWelcome.class);
 				new PostWithAsync().execute();
-	    		myIntent = new Intent(v.getContext(), StudentWelcome.class);
-	    		startActivity(myIntent);
 				
 			}//////////////////////////////////end onClick(View v)
 
