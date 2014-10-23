@@ -39,6 +39,9 @@ public class StudentWelcome extends Activity{
 			public void onClick(View v) {
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
+				
+				//***CLEAR MYPREFERENCESFILE username VALUE*************
+				
 				logout();
 			} //end onClick(View v)
 		}); //end logout.setOnClickListener

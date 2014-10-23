@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import edu.iastate.cysquare.domain.Parameter;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -39,6 +40,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class CreateUser extends ActionBarActivity implements OnItemSelectedListener {
+	public static final String PREFS_NAME = "MyPreferencesFile";
 
 	private Spinner spinner;
 	private Button back;
@@ -141,6 +143,11 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 			
 			http = new DefaultHttpClient();
 	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
+	    	
+	    	SharedPreferences username = getSharedPreferences(PREFS_NAME, 0);
+	    	SharedPreferences.Editor editor = username.edit();
+	    	editor.putString("username", username.toString());
+	    	editor.commit();
 	    	
 	    	//Create message
 	    	JSONObject jo = new JSONObject();	

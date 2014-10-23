@@ -35,6 +35,7 @@ import android.widget.Toast;
 import edu.iastate.cysquare.domain.Parameter;
 
 public class MainActivity extends ActionBarActivity{
+	public static final String PREFS_NAME = "MyPreferencesFile";
 
 	private EditText username;
 	private EditText password;
