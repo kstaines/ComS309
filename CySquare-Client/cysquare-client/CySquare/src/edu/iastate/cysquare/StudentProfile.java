@@ -1,10 +1,5 @@
 package edu.iastate.cysquare;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class StudentProfile extends Activity{
 	private Button home;
+	private TextView totalPointsServer;
 	
 	private Intent homeIntent;
 	
@@ -25,6 +22,10 @@ public class StudentProfile extends Activity{
 		setContentView(R.layout.student_profile); //sets screen layout
 		
 		home = (Button)findViewById(R.id.home_button);
+		totalPointsServer = (TextView)findViewById(R.id.total_points_server);
+		String textFromJSON = "thisTextIsTestText";
+		totalPointsServer.setText(textFromJSON);
+		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

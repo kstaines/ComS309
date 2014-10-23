@@ -1,23 +1,13 @@
 package edu.iastate.cysquare;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,7 +22,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import edu.iastate.cysquare.domain.Parameter;
 
 public class MainActivity extends ActionBarActivity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
@@ -117,7 +106,8 @@ public class MainActivity extends ActionBarActivity{
 				jo.put("password", password.getText().toString());
 				
 				//Send message and get response
-				String build = sendPost(url, jo);
+				JSONCommunication jc = new JSONCommunication();
+				String build = jc.sendPost(http, request, response, url, jo);
 				
 				publishProgress();
 				
@@ -146,7 +136,7 @@ public class MainActivity extends ActionBarActivity{
 			
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
-		    		startActivityForResult(welcomeIntent, 0);
+		    		startActivity(welcomeIntent);
 		    	}
 		    	else if (!responseObject.getBoolean("status")) {
 		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
@@ -161,29 +151,5 @@ public class MainActivity extends ActionBarActivity{
 		}
     }
     
-	private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException, JSONException {
-		
-		
-		List<Parameter> parameters = new ArrayList<Parameter>();
-		Iterator<String> keys = jo.keys();
-		while(keys.hasNext()) {
-			String key = keys.next();
-			Parameter param = new Parameter();
-			param.setName(key);
-			param.setValue(jo.getString(key));
-			parameters.add(param);
-		}
-		StringEntity mySE = new UrlEncodedFormEntity(parameters);
-		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/x-www-form-urlencoded;")); //setContentType sets content type of the response being sent to the client
-		request = new HttpPost(url);
-		request.setEntity(mySE);
-
-		response = http.execute(request);
-					
-		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
-		String build = reader.readLine();
-		return build;
-	}
-	
 	
 }//end MainActivity

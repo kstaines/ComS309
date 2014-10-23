@@ -1,4 +1,4 @@
-<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -34,14 +34,14 @@
     android:textAppearance="?android:attr/textAppearanceMedium" />
 
 <TextView
-    android:id="@+id/total_points_from_server"
+    android:id="@+id/total_points_server"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignBaseline="@+id/total_points"
     android:layout_alignBottom="@+id/total_points"
     android:layout_marginLeft="15dp"
     android:layout_toRightOf="@+id/total_points"
-    android:text="@string/total_points_from_server"
     android:textAppearance="?android:attr/textAppearanceMedium" />
+<!-- android:text="@string/total_points_server" -->
 
 </RelativeLayout>

@@ -56,7 +56,7 @@ public class StudentWelcome extends Activity{
 		checkIn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				checkInIntent = new Intent(v.getContext(), CheckIn.class);
+				checkInIntent = new Intent(v.getContext(), CheckIn.class);
 				checkIn();
 			} //end onClick(View v)
 		}); //end checkIn.setOnClickListener
@@ -64,7 +64,7 @@ public class StudentWelcome extends Activity{
 		myFriends.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				friendsIntent = new Intent(v.getContext(), StudentFriends.class);
+				friendsIntent = new Intent(v.getContext(), StudentFriends.class);
 				friends();
 			} //end onClick(View v)
 		}); //end myFriends.setOnClickListener
@@ -72,7 +72,7 @@ public class StudentWelcome extends Activity{
 		myProfile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				profileIntent = new Intent(v.getContext(), StudentProfile.class);
+				profileIntent = new Intent(v.getContext(), StudentProfile.class);
 				studentProfile();
 			} //end onClick(View v)
 		}); //end myProfile.setOnClickListener
@@ -80,7 +80,7 @@ public class StudentWelcome extends Activity{
 		myClasses.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				classesIntent = new Intent(v.getContext(), StudentClasses.class);
+				classesIntent = new Intent(v.getContext(), StudentClasses.class);
 				studentClasses();
 			} //end onClick(View v)
 		}); //end myClasses.setOnClickListener
