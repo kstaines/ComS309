@@ -98,23 +98,23 @@ public class StudentWelcome extends Activity{
     }
     
     private void logout(){
-    	startActivityForResult(mainIntent, 0);
+    	startActivity(mainIntent);
     }
     
     private void checkIn(){
-    	startActivityForResult(checkInIntent, 0);
+    	startActivity(checkInIntent);
     }
     
     private void friends(){
-    	startActivityForResult(friendsIntent, 0);
+    	startActivity(friendsIntent);
     }
     
     private void studentProfile(){
-    	startActivityForResult(profileIntent, 0);
+    	startActivity(profileIntent);
     }
     
     private void studentClasses(){
-    	startActivityForResult(classesIntent, 0);
+    	startActivity(classesIntent);
     }
 
 }

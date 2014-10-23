@@ -1,0 +1,47 @@
+<!-- <?xml version="1.0" encoding="utf-8"?> -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".StudentProfile" >
+    
+<TextView
+    android:id="@+id/student_profile"
+    style="@style/PageTitle"
+    android:text="@string/student_profile" />
+    
+<Button
+    android:id="@+id/home_button"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="68dp"
+    android:layout_height="40dp"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:text="@string/home" />
+
+<TextView
+    android:id="@+id/total_points"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/home_button"
+    android:layout_below="@+id/student_profile"
+    android:layout_marginTop="17dp"
+    android:text="@string/total_points"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+<TextView
+    android:id="@+id/total_points_from_server"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBaseline="@+id/total_points"
+    android:layout_alignBottom="@+id/total_points"
+    android:layout_marginLeft="15dp"
+    android:layout_toRightOf="@+id/total_points"
+    android:text="@string/total_points_from_server"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

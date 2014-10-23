@@ -18,6 +18,7 @@
     <string name="home">Home</string>
     <string name="student_profile">My Profile</string>
     <string name="total_points">Total Points:</string>
+    <string name="total_points_from_server">Points</string>
     <string name="student_classes">My Classes</string>
     <string name="title_activity_create_user">Create User</string>
     <string name="hello_world">Hello world!</string>
