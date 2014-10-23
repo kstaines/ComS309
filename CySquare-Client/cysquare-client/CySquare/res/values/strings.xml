@@ -21,10 +21,13 @@
     <string name="student_classes">My Classes</string>
     <string name="title_activity_create_user">CreateUser</string>
     <string name="hello_world">Hello world!</string>
+    <string name="CreateUser">Create New User</string>
+    <string name="or">or</string>
     <string-array name="user_types_array">
         <item>Student</item>
         <item>Instructor</item>
         <item>Admin</item>
 	</string-array>
+	<string name="Back">Back</string>
 	
 </resources>
