@@ -15,9 +15,9 @@ public class AccountDAO {
 		try {
 			Connection conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + ".users WHERE username=\"" + username + "\";");
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE username=\"" + username + "\";");
 			if(res.next()) {
-				userAccount.setUserId(res.getInt("user_id"));
+				userAccount.setUserId(res.getInt("userid"));
 				userAccount.setUsername(res.getString("username"));
 				userAccount.setPassword(res.getString("password"));
 				userAccount.setUpdatedTimestamp(res.getString("ts_update"));
@@ -39,7 +39,7 @@ public class AccountDAO {
 		try {
 			conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + ".users (`username`, `password`, `userType`) VALUES ('" + username + "', '" + password + "', '" + userType.toUpperCase() + "');");
+			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " (`username`, `password`, `userType`) VALUES ('" + username + "', '" + password + "', '" + userType.toUpperCase() + "');");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class AccountDAO {
 		try {
 			conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + ".users WHERE username='" + username + "';");
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE username='" + username + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class AccountDAO {
 			conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
 			//Update user account with an updated string of "Y".
-			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + ".`users` SET `approved`='Y' WHERE  `username`='" + username + "';");
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " SET `approved`='Y' WHERE  `username`='" + username + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

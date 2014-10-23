@@ -1,7 +1,6 @@
 package edu.iastate.server;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 public class JettyServer {
