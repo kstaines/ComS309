@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.iastate.dao.impl.AccountDAO;
+import edu.iastate.domain.UserAccount;
 
 @WebServlet("/createUser")
 public class CreateUserServlet extends HttpServlet {
@@ -97,16 +98,30 @@ public class CreateUserServlet extends HttpServlet {
 			}
 		}
 		
+		//check if the username is already in the DAO 
+		UserAccount user = account_dao.getAccountInfo(username_string);
+		if(user.getUsername().equalsIgnoreCase(username_string))
+		{
+			JSONObject error_response = new JSONObject();
+			try{
+				error_response.put("status", "This username already exists, please enter a different username.");
+				error_response.write(response.getWriter());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		//Send the username and password to the DAO
-		account_dao.createUserAccount(username_string, password_string);
+		//account_dao.createUserAccount(username_string, password_string);
 		//By specifications by the group, the new DAO will include type
-		//account_dao.createUserAccount(username_string, password_string, accountType);
+		account_dao.createUserAccount(username_string, password_string, accountType);
 		
 		//Send the response that it was successful
 		JSONObject correct_response = new JSONObject();
 		try {
 			if(accountType.equalsIgnoreCase("student"))
 			{
+				account_dao.approveUserAccount(username_string);
 				correct_response.put("status", true);
 			}
 			else

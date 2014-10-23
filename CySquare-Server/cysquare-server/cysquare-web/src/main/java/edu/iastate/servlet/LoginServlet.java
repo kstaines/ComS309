@@ -119,7 +119,8 @@ public class LoginServlet extends HttpServlet {
 				}
 			}		
 		}
-		//if(!newuser.getType().equalsIgnoreCase("y"))
+		//if the user type is not student then it needs approval. This applies to instructor and administration.
+		if(!newuser.getApproved().equalsIgnoreCase("approved"))
 		{
 			JSONObject error_response = new JSONObject();
 			try{
