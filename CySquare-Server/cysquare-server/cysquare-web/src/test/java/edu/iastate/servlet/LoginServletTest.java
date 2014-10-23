@@ -47,6 +47,7 @@ public class LoginServletTest {
 		UserAccount userAccount = new UserAccount();
 		userAccount.setUsername("user");
 		userAccount.setPassword("pass");
+		userAccount.setApproved("y");
 		
 		Mockito.when(request.getParameter("username")).thenReturn((String) obj.get("username"));
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
