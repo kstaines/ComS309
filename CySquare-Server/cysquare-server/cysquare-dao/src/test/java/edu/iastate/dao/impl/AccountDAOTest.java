@@ -29,6 +29,8 @@ public class AccountDAOTest {
 		UserAccount user = accountDao.getAccountInfo("use");
 		assertEquals("use", user.getUsername());
 		assertEquals("pass", user.getPassword());
+		assertEquals("STUDENT", user.getUserType());
+		assertNotSame(Integer.valueOf("1"), user.getTotalPts());
 	}
 	
 	@Test
@@ -43,6 +45,7 @@ public class AccountDAOTest {
 		user = accountDao.getAccountInfo("use");
 		assertEquals("use", user.getUsername());
 		assertEquals("pass", user.getPassword());
+		assertEquals(Integer.valueOf("0"), user.getTotalPts());
 		
 		deleteData();
 		user = accountDao.getAccountInfo("use");
@@ -52,7 +55,7 @@ public class AccountDAOTest {
 	}
 	
 	private void createData() {
-		accountDao.createUserAccount("use", "pass");
+		accountDao.createUserAccount("use", "pass", "STUDENT");
 	}
 	
 	private void deleteData() {

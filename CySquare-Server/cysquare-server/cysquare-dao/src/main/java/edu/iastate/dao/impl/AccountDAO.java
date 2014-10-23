@@ -17,8 +17,13 @@ public class AccountDAO {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + ".users WHERE username=\"" + username + "\";");
 			if(res.next()) {
-				userAccount.setUsername(res.getString(2));
+				userAccount.setUserId(res.getInt("user_id"));
+				userAccount.setUsername(res.getString("username"));
 				userAccount.setPassword(res.getString("password"));
+				userAccount.setUpdatedTimestamp(res.getString("ts_update"));
+				userAccount.setUserType(res.getString("userType"));
+				userAccount.setTotalPts(res.getInt("totalPts"));
+				userAccount.setApproved(res.getString("approved"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -26,21 +31,7 @@ public class AccountDAO {
 			e.printStackTrace();
 		}
 		
-		
 		return userAccount;
-	}
-
-	public void createUserAccount(String username, String password) {
-		Connection conn;
-		try {
-			conn = mysqlConnector.makeConnection();
-			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + ".users (`username`, `password`) VALUES ('" + username + "', '" + password + "');");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void createUserAccount(String username, String password, String userType) {
