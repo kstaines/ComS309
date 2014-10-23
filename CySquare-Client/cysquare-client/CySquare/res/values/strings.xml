@@ -25,11 +25,15 @@
     <string name="create_user">Create User</string>
     <string name="confirm_password">Confirm Password:</string>
     <string name="or">or</string>
+    <string name="unapproved_instructor_welcome_message">Welcome! Your instructor status is waiting for approval</string>
+
     <string-array name="user_types_array">
         <item>Student</item>
         <item>Instructor</item>
         <item>Admin</item>
-	</string-array>
-	<string name="Back">Back</string>
-	
+    </string-array>
+
+    <string name="Back">Back</string>
+    <string name="title_activity_unapproved_instructor_welcome">UnapprovedInstructorWelcome</string>
+
 </resources>

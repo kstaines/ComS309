@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity{
 	private HttpClient http;
 	private HttpPost request;
 	private HttpResponse response;
-	private Intent myIntent;
+	private Intent welcomeIntent, createIntent;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity{
 			
 			@Override
 			public void onClick(View v) {
-				myIntent = new Intent(v.getContext(), StudentWelcome.class);
+				welcomeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				new PostWithAsync().execute();
 				
 			}//////////////////////////////////end onClick(View v)
@@ -72,8 +72,8 @@ public class MainActivity extends ActionBarActivity{
         createNewUser.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
-            	myIntent = new Intent(v.getContext(), CreateUser.class);
-            	startActivity(myIntent);
+            	createIntent = new Intent(v.getContext(), CreateUser.class);
+            	startActivity(createIntent);
         	}
         });
     }
@@ -145,8 +145,7 @@ public class MainActivity extends ActionBarActivity{
 			
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
-		    		
-					startActivity(myIntent);
+		    		startActivityForResult(welcomeIntent, 0);
 		    	}
 		    	else if (!responseObject.getBoolean("status")) {
 		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();

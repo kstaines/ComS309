@@ -38,6 +38,10 @@
             android:name=".CreateUser"
             android:label="@string/title_activity_create_user" >
         </activity>
+        <activity
+            android:name=".UnapprovedInstructorWelcome"
+            android:label="@string/title_activity_unapproved_instructor_welcome" >
+        </activity>
     </application>
 
 </manifest>
