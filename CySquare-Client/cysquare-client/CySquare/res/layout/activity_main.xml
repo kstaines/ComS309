@@ -82,7 +82,7 @@
 	    android:layout_centerHorizontal="true"
 	    android:layout_marginTop="34dp"
 	    android:onClick="createNewUser"
-	    android:text="@string/CreateUser" />
+	    android:text="@string/CreateNewUser" />
 
 	<TextView
 	    android:id="@+id/textView_or"

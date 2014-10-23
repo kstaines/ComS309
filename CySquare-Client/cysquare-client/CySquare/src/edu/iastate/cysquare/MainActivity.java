@@ -72,7 +72,6 @@ public class MainActivity extends ActionBarActivity{
 		});
         
         createNewUser.setOnClickListener(new View.OnClickListener(){
-        	
         	@Override
         	public void onClick(View v) {
             	myIntent = new Intent(v.getContext(), CreateUser.class);
@@ -106,10 +105,7 @@ public class MainActivity extends ActionBarActivity{
 		@Override
 		protected String doInBackground(String... arg0) {
 			
-			System.out.println(arg0);
-			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
-//			String url = "http://10.24.84.79:8081/login";		// Local server used for debugging
 //			String url = "http://192.168.1.17:8081/login";
 			
 			http = new DefaultHttpClient();
@@ -118,13 +114,8 @@ public class MainActivity extends ActionBarActivity{
 	    	//Create message
 	    	JSONObject jo = new JSONObject();	
 	    	try{
-				jo.put("username", username.getText().toString());
-				jo.put("password", password.getText().toString());
-				
 				//Send message and get response
 				String build = sendPost(url, jo);
-				
-				publishProgress();
 				
 				return build;
 	    	}

@@ -19,9 +19,11 @@
     <string name="student_profile">My Profile</string>
     <string name="total_points">Total Points:</string>
     <string name="student_classes">My Classes</string>
-    <string name="title_activity_create_user">CreateUser</string>
+    <string name="title_activity_create_user">Create User</string>
     <string name="hello_world">Hello world!</string>
-    <string name="CreateUser">Create New User</string>
+    <string name="CreateNewUser">Create New User</string>
+    <string name="create_user">Create User</string>
+    <string name="confirm_password">Confirm Password:</string>
     <string name="or">or</string>
     <string-array name="user_types_array">
         <item>Student</item>
