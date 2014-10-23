@@ -58,8 +58,9 @@ public class ProfilePageServlet extends HttpServlet{
 		
 		try {
 			int points = user.getTotalPts();
-			
 			profile.put("points", points);
+			
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

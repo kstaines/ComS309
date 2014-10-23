@@ -100,7 +100,7 @@ public class CreateUserServlet extends HttpServlet {
 		
 		//check if the username is already in the DAO 
 		UserAccount user = account_dao.getAccountInfo(username_string);
-		if(user.getUsername().equalsIgnoreCase(username_string))
+		if(user != null)      //user.getUsername().equalsIgnoreCase(username_string))
 		{
 			JSONObject error_response = new JSONObject();
 			try{

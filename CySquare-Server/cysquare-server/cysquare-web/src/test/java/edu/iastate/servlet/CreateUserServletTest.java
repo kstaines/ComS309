@@ -42,16 +42,18 @@ public class CreateUserServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		JSONObject obj = new JSONObject();
-		obj.put("username", "user");
+		obj.put("username", "userssss");
 		obj.put("password", "pass");
+		obj.put("usertype", "student");
 		
 		
 		Mockito.when(request.getParameter("username")).thenReturn((String) obj.get("username"));
 		Mockito.when(request.getParameter("password")).thenReturn((String) obj.get("password"));
+		Mockito.when(request.getParameter("usertype")).thenReturn((String) obj.get("usertype"));
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
 		createUserServlet.doPost(request, response);
-		Mockito.verify(accountDao).createUserAccount(obj.getString("username").toString(), obj.getString("password").toString());
+		Mockito.verify(accountDao).createUserAccount(obj.getString("username").toString(), obj.getString("password").toString(), obj.getString("usertype").toString());
 		System.out.println(stringWriter.toString());
 	}
 
