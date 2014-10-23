@@ -2,6 +2,7 @@ package edu.iastate.cysquare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class StudentWelcome extends Activity{
+	public static final String PREFS_NAME = "MyPreferencesFile";
+	
 	private Button logout;
 	private Button checkIn;
 	private Button myFriends;
@@ -40,7 +43,11 @@ public class StudentWelcome extends Activity{
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				
-				//***CLEAR MYPREFERENCESFILE username VALUE*************
+				//clear username value to empty string
+				SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+				SharedPreferences.Editor editor = userData.edit();
+				editor.putString("username", "");
+				editor.commit();
 				
 				logout();
 			} //end onClick(View v)

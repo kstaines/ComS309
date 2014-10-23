@@ -144,8 +144,8 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 			http = new DefaultHttpClient();
 	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
 	    	
-	    	SharedPreferences username = getSharedPreferences(PREFS_NAME, 0);
-	    	SharedPreferences.Editor editor = username.edit();
+	    	SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+	    	SharedPreferences.Editor editor = userData.edit();
 	    	editor.putString("username", username.toString());
 	    	editor.commit();
 	    	
