@@ -97,7 +97,7 @@ public class CreateUserServlet extends HttpServlet {
 			try {
 				error_response.put("status", "The user type is blank.");
 				error_response.write(response.getWriter());
-				
+				return;
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -106,7 +106,7 @@ public class CreateUserServlet extends HttpServlet {
 		
 		//check if the username is already in the DAO 
 		UserAccount user = account_dao.getAccountInfo(username_string);
-		if(user != null && user.getUsername().equalsIgnoreCase(username_string))
+		if((user != null) && (user.getUsername() != null) && user.getUsername().equalsIgnoreCase(username_string))
 		{
 			JSONObject error_response = new JSONObject();
 			try{
