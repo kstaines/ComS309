@@ -12,8 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.iastate.dao.impl.AccountDAO;
+import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
-import edu.iastate.domain.Course;
 import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 
@@ -24,6 +24,7 @@ public class ProfilePageServlet extends HttpServlet{
 	
 	private AccountDAO accountDao = new AccountDAO();
 	private StudentCourseDAO course = new StudentCourseDAO();
+	private CourseDAO courseInfo = new CourseDAO();
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -65,31 +66,30 @@ public class ProfilePageServlet extends HttpServlet{
 			int points = user.getTotalPts();
 			profile.put("points", points);
 			
-			//course id and user id
-			Integer userId = user.getUserId();
-			
+			//course id and user id			
 			//get courses from the student course dao
-			List<StudentCourses> courseList = course.getCourses("" + userId);
-			int [] courseId = new int [courseList.size()];
+			//a list would be the course id
+			List<StudentCourses> courseList = course.getCourses("" + user.getUserId());
+			
+			//if course list is null or empty send message saying no courses
+			if(courseList == null || courseList.isEmpty())
+			{
+				profile.put("course", "You do not have any courses added to your profile, please add courses");
+				profile.write(response.getWriter());
+				return;
+			}
+			
+			//get the course table with that course id
 			for(int i = 0; i < courseList.size(); i++)
 			{
-				courseId [i]= courseList.get(i).getCourseId();
+				profile.put("course" + i, courseInfo.getCourseInfoById("" + courseList.get(i).getCourseId()));
 			}
-			//a list would be the course id
-			//get the course table with that course id
+			profile.write(response.getWriter());
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 
 }
