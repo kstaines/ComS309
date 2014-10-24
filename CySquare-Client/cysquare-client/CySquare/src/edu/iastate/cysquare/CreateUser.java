@@ -1,19 +1,29 @@
 package edu.iastate.cysquare;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.iastate.cysquare.domain.Parameter;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -29,28 +39,20 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class CreateUser extends ActionBarActivity implements OnItemSelectedListener {
-	public static final String PREFS_NAME = "MyPreferencesFile";
 
 	private Spinner spinner;
-	private Button back;
-	private Button create;
-	private Intent newIntent;
+	private Button back, create;
 	private HttpClient http;
 	private HttpPost request;
 	private HttpResponse response;
-	private EditText username;
-	private EditText password;
-	private EditText confirmPassword;
+	private EditText username, password, confirmPassword;
 	private String userType;
-	private Intent studentWelcomeIntent, unapprovedInstructorWelcomeIntent;
+	private Intent studentWelcomeIntent, unapprovedInstructorWelcomeIntent, mainIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_user);
-        //next two lines take care of NetworkOnMainThreadException
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 		
 		createDropDownMenu();
 		
@@ -64,8 +66,8 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				newIntent = new Intent(v.getContext(), MainActivity.class);
-				startActivity(newIntent);
+				mainIntent = new Intent(v.getContext(), MainActivity.class);
+				startActivity(mainIntent);
 			} //end onClick(View v)
 		}); //end logout.setOnClickListener
 	
@@ -129,14 +131,10 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 		protected String doInBackground(String... arg0) {
 			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/createUser";
+//			String url = "http://10.26.42.223:8081/createUser";
 			
 			http = new DefaultHttpClient();
 	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
-	    	
-	    	SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
-	    	SharedPreferences.Editor editor = userData.edit();
-	    	editor.putString("username", username.toString());
-	    	editor.commit();
 	    	
 	    	//Create message
 	    	JSONObject jo = new JSONObject();	
@@ -146,8 +144,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				jo.put("usertype", userType);
 				
 				//Send message and get response
-				JSONCommunication jc = new JSONCommunication();
-				String build = jc.sendPost(http, request, response, url, jo);
+				String build = sendPost(url, jo);
 				
 				return build;
 	    	}
@@ -178,13 +175,13 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 
 		    		// STUDENT/INSTRUCTOR WELCOME PAGE
 		    		if (userType.equals("student")){
-		    			startActivity(studentWelcomeIntent);
+		    			startActivityForResult(studentWelcomeIntent, 0);
 		    		}
 		    		else if (userType.equals("instructor")) {
-		    			startActivity(unapprovedInstructorWelcomeIntent);
+		    			startActivityForResult(unapprovedInstructorWelcomeIntent, 0);
 		    		}
 		    	}
-		    	else if (!responseObject.getBoolean("status")) {
+		    	else {
 		    		// Value in the response json object specifies the error
 		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
 		    	}
@@ -195,6 +192,29 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 		}
     }
 	
+	private String sendPost(String url, JSONObject jo) throws ClientProtocolException, IOException, JSONException {
+		
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		Iterator<String> keys = jo.keys();
+		while(keys.hasNext()) {
+			String key = keys.next();
+			Parameter param = new Parameter();
+			param.setName(key);
+			param.setValue(jo.getString(key));
+			parameters.add(param);
+		}
+		StringEntity mySE = new UrlEncodedFormEntity(parameters);
+		mySE.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/x-www-form-urlencoded;")); //setContentType sets content type of the response being sent to the client
+		request = new HttpPost(url);
+		request.setEntity(mySE);
+
+		response = http.execute(request);
+					
+		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+		String build = reader.readLine();
+		return build;
+	}
+
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {

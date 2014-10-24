@@ -109,8 +109,6 @@ public class MainActivity extends ActionBarActivity{
 				JSONCommunication jc = new JSONCommunication();
 				String build = jc.sendPost(http, request, response, url, jo);
 				
-				publishProgress();
-				
 				return build;
 	    	}
 	    	catch (JSONException e){
@@ -138,11 +136,8 @@ public class MainActivity extends ActionBarActivity{
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
 		    		startActivity(welcomeIntent);
 		    	}
-		    	else if (!responseObject.getBoolean("status")) {
-		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
-		    	}
 		    	else {
-		    		Toast.makeText(getApplicationContext(), responseObject.toString(), Toast.LENGTH_LONG).show();
+		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
 		    	}
 			}
 	    	catch (JSONException e){

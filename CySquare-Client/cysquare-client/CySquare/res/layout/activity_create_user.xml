@@ -17,7 +17,8 @@
       	android:layout_alignBottom="@+id/textView_username"
       	android:layout_marginLeft="2dp"
       	android:layout_toRightOf="@+id/textView_username"
-      	android:ems="10" />
+      	android:ems="10"
+      	android:inputType="text" />
    	
    	
    	<!-- //password text label "Password:"
@@ -95,7 +96,7 @@
         android:layout_alignLeft="@+id/TextView01"
         android:layout_below="@+id/TextView01"
         android:layout_marginTop="32dp"
-        android:text="User Type:"
+        android:text="@string/user_type"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner

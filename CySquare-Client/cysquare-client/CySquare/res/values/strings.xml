@@ -31,6 +31,7 @@
     <string name="confirm_password">Confirm Password:</string>
     <string name="or">or</string>
     <string name="unapproved_instructor_welcome_message">Welcome! Your instructor status is waiting for approval</string>
+    <string name="user_type">User Type:</string>
 
     <string-array name="user_types_array">
         <item>Student</item>
