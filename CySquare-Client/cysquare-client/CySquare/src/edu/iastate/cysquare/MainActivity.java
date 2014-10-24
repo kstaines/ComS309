@@ -2,6 +2,7 @@ package edu.iastate.cysquare;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -47,6 +49,7 @@ public class MainActivity extends ActionBarActivity{
         password = (EditText)findViewById(R.id.editText_password);
         login = (Button)findViewById(R.id.button_login); 
         createNewUser = (Button) findViewById(R.id.button_Create);
+        
         
         login.setOnClickListener(new View.OnClickListener() {
 			
@@ -134,6 +137,7 @@ public class MainActivity extends ActionBarActivity{
 			
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+		    		saveUsername();
 		    		startActivity(welcomeIntent);
 		    	}
 		    	else {
@@ -144,6 +148,14 @@ public class MainActivity extends ActionBarActivity{
 				e.printStackTrace();
 			}
 		}
+    }
+    
+    private void saveUsername() {
+    	
+		SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = userData.edit();
+		editor.putString("username", username.getText().toString());
+		editor.commit();
     }
     
 	
