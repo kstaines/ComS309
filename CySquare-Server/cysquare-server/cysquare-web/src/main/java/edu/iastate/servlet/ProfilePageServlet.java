@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
+import edu.iastate.domain.Course;
 import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 
