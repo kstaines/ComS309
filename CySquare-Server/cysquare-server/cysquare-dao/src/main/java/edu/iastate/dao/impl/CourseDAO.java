@@ -35,6 +35,29 @@ private Java2MySql mysqlConnector = new Java2MySql();
 		
 		return course;
 	}
+	
+	public Course getCourseInfoById(String courseId) {
+		Course course = new Course();
+		try {
+			Connection conn = mysqlConnector.makeConnection();
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE courseid=\"" + courseId + "\";");
+			if(res.next()) {
+				course.setCourseId(res.getInt("courseid"));
+				course.setName(res.getString("name"));
+				course.setLocation(res.getString("location"));
+				course.setUpdatedTimestamp(res.getString("ts_update"));
+				course.setTime(res.getString("time"));
+				course.setDays(res.getString("days"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return course;
+	}
 
 	public void createCourse(String name, String location, String time, String days) {
 		Connection conn;
