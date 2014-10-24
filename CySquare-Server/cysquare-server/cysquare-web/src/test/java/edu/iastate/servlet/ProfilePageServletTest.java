@@ -28,7 +28,11 @@ import edu.iastate.domain.UserAccount;
 public class ProfilePageServletTest {
 	@Mock
 	private AccountDAO accountDao;
+	
+	@Mock
 	private StudentCourseDAO courses;
+	
+	@Mock
 	private CourseDAO courseInfo;
 	
 	@InjectMocks
@@ -79,13 +83,18 @@ public class ProfilePageServletTest {
 		courseList.add(0, student);
 		//courseList.add(student);
 	
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		
 		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
 		Mockito.when(courses.getCourses("" + userAccount.getUserId())).thenReturn(courseList);
-		Mockito.when(courseList.get(0).getCourseId()).thenReturn(student.getCourseId());
+//		Mockito.when(courseList.get(0).getCourseId()).thenReturn(student.getCourseId());
 		Mockito.when(courseInfo.getCourseInfoById("" + course.getCourseId())).thenReturn(course);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
 		profile.doPost(request, response);
+		
+		Mockito.verify(courses).getCourses("123");
+		
 		System.out.println(stringWriter.toString());
 	}
 
