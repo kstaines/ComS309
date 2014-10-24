@@ -9,5 +9,6 @@ public class DAOLiterals {
 	public static final String MYSQL_DRIVER = "com.mysql.jdbc.Driver";
 	public static final String TABLE_USERS = "users";
 	public static final String TABLE_COURSES = "courses";
+	public static final String TABLE_STUDCOURSES = "studentcourses";
 	
 }
