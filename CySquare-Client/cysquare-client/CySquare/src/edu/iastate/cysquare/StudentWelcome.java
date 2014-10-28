@@ -43,11 +43,7 @@ public class StudentWelcome extends Activity{
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				
-				//clear username value to empty string
-				SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
-				SharedPreferences.Editor editor = userData.edit();
-				editor.putString("username", "");
-				editor.commit();
+				clearUsername();
 				
 				logout();
 			} //end onClick(View v)
@@ -105,6 +101,14 @@ public class StudentWelcome extends Activity{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    //clear username value to empty string
+    private void clearUsername(){
+		SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+		SharedPreferences.Editor editor = userData.edit();
+		editor.putString("username", "");
+		editor.commit();
     }
     
     private void logout(){

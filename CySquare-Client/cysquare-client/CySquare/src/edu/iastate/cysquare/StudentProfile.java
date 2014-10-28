@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class StudentProfile extends Activity{
 	private Button home;
@@ -33,6 +32,8 @@ public class StudentProfile extends Activity{
 	private HttpResponse response;
 	private Intent homeIntent;
 	private static final String profilePageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/profilePage";
+	String usernameFromPref;
+	int totalPointsFromJSON;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -43,12 +44,15 @@ public class StudentProfile extends Activity{
 		home = (Button)findViewById(R.id.home_button);
 		totalPointsServer = (TextView)findViewById(R.id.total_points_server);
 		
-		//clear username value to empty string
-		SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
-		String usernameFromPref =userData.getString("username", "false");
+		//get username from preferences file
+		usernameFromPref = retrieveUsername();
 		
-		String textFromJSON = "ThisTextisaTestText";
-		totalPointsServer.setText(textFromJSON);
+		new PostWithAsync().execute();
+		
+		//for testing: printing a string to a screen
+		//String textFromJSON = "ThisTextIsTestText";
+		
+		totalPointsServer.setText(totalPointsFromJSON + "");
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -59,7 +63,7 @@ public class StudentProfile extends Activity{
 		});
 	} //end onCreate(Bundle savedInstanceState)
 	
-    @Override
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -82,6 +86,54 @@ public class StudentProfile extends Activity{
     	startActivity(homeIntent);
     }
     
+    //gets username from preferences file, if username does not exist, returns "false"
+    private String retrieveUsername() {
+    	SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+		return usernameFromPref = userData.getString("username", "false");
+	}
+    
+    private class PostWithAsync extends AsyncTask<String, String, String>{
+    	@Override
+    	protected String doInBackground(String... arg0){
+    		 http = new DefaultHttpClient();
+    		 HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
+    		 
+    		 JSONObject jo = new JSONObject();
+    		 try{
+    			 jo.put("username", "usernameFromPref");
+    			 JSONCommunication jc = new JSONCommunication();
+    			 String build = jc.sendPost(http, request, response, profilePageURL, jo);
+    			 return build;
+    		 }
+    		 catch (JSONException e){
+ 				e.printStackTrace();
+ 			}
+ 	    	catch (UnsupportedEncodingException e) {
+ 				e.printStackTrace();
+ 			}
+ 	    	catch (ClientProtocolException e) {
+ 				e.printStackTrace();
+ 			}
+ 	    	catch (IOException e) {
+ 				e.printStackTrace();
+ 			} 
+    		
+			return null;
+    	} //end String doInBackground(String... arg0)
+    	
+    	protected void onPostExecute(String build){
+    		JSONObject responseObject;
+    		try {
+				responseObject = new JSONObject(build);
+				totalPointsFromJSON = responseObject.getInt("points");
+				//totalPointsFromJSON = 100; // <--for testing
+			} 
+    		catch (JSONException e) {
+				e.printStackTrace();
+			}
+    		
+    	} //end onPostExecute(String build)
+    } //end PostWithAsync extends AsyncTask<String, String, String>
 }
 
 

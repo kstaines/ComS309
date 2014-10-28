@@ -52,14 +52,11 @@ public class MainActivity extends ActionBarActivity{
         
         
         login.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				welcomeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				new PostWithAsync().execute();
-				
-			}//////////////////////////////////end onClick(View v)
-
+			} //end onClick(View v)
 		});
         
         createNewUser.setOnClickListener(new View.OnClickListener(){

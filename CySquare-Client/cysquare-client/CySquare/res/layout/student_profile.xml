@@ -41,7 +41,7 @@
     android:layout_alignBottom="@+id/total_points"
     android:layout_marginLeft="15dp"
     android:layout_toRightOf="@+id/total_points"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
-<!-- android:text="@string/total_points_server" -->
+    android:textAppearance="?android:attr/textAppearanceMedium" 
+    android:text="@string/total_points_server" />
 
 </RelativeLayout>
