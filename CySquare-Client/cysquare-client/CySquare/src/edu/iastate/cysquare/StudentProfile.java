@@ -52,7 +52,7 @@ public class StudentProfile extends Activity{
 		//for testing: printing a string to a screen
 		//String textFromJSON = "ThisTextIsTestText";
 		
-		totalPointsServer.setText(totalPointsFromJSON + "");
+		totalPointsServer.setText(Integer.toString(totalPointsFromJSON));
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -100,7 +100,7 @@ public class StudentProfile extends Activity{
     		 
     		 JSONObject jo = new JSONObject();
     		 try{
-    			 jo.put("username", "usernameFromPref");
+    			 jo.put("username", usernameFromPref);
     			 JSONCommunication jc = new JSONCommunication();
     			 String build = jc.sendPost(http, request, response, profilePageURL, jo);
     			 return build;
