@@ -36,7 +36,7 @@ private Java2MySql mysqlConnector = new Java2MySql();
 		return course;
 	}
 	
-	public Course getCourseInfoById(String courseId) {
+	public Course getCourseInfoById(Integer courseId) {
 		Course course = new Course();
 		try {
 			Connection conn = mysqlConnector.makeConnection();
@@ -78,6 +78,19 @@ private Java2MySql mysqlConnector = new Java2MySql();
 			conn = mysqlConnector.makeConnection();
 			Statement st = conn.createStatement();
 			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE name='" + name + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteCourseId(Integer courseId) {
+		Connection conn;
+		try {
+			conn = mysqlConnector.makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE courseid='" + courseId + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

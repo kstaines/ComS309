@@ -69,7 +69,7 @@ public class ProfilePageServlet extends HttpServlet{
 			//course id and user id			
 			//get courses from the student course dao
 			//a list would be the course id
-			List<StudentCourses> courseList = course.getCourses("" + user.getUserId());
+			List<StudentCourses> courseList = course.getCourses(user.getUserId());
 			
 			//if course list is null or empty send message saying no courses
 			if(courseList == null || courseList.isEmpty())
@@ -82,7 +82,7 @@ public class ProfilePageServlet extends HttpServlet{
 			//get the course table with that course id
 			for(int i = 0; i < courseList.size(); i++)
 			{
-				profile.put("course" + i, courseInfo.getCourseInfoById("" + courseList.get(i).getCourseId()));
+				profile.put("course" + i, courseInfo.getCourseInfoById(courseList.get(i).getCourseId()));
 			}
 			profile.write(response.getWriter());
 			

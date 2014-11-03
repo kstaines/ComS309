@@ -15,7 +15,7 @@ public class StudentCourseDAO {
 		
 	Java2MySql mysqlConnector = new Java2MySql();
 	
-	public List<StudentCourses> getCourses(String studentId) {
+	public List<StudentCourses> getCourses(Integer studentId) {
 		
 		List<StudentCourses> correlations = new ArrayList<StudentCourses>();
 		StudentCourses studentCourses = new StudentCourses();
@@ -38,7 +38,7 @@ public class StudentCourseDAO {
 		return correlations;
 	}
 	
-	public List<StudentCourses> getStudents(String courseId) {
+	public List<StudentCourses> getStudents(Integer courseId) {
 		List<StudentCourses> correlations = new ArrayList<StudentCourses>();
 		StudentCourses studentCourses = new StudentCourses();
 		
@@ -49,6 +49,8 @@ public class StudentCourseDAO {
 			if(res.next()) {
 				studentCourses.setStudentId(res.getInt("studentid"));
 				studentCourses.setCourseId(res.getInt("courseid"));
+				studentCourses.setPoints(res.getInt("points"));
+				studentCourses.setUpdatedTimestamp(res.getInt("ts_update"));
 				correlations.add(studentCourses);
 			}
 		} catch (SQLException e) {
@@ -60,7 +62,7 @@ public class StudentCourseDAO {
 		return correlations;
 	}
 
-	public void createCorrelation(String studentId, String courseId) {
+	public void createCorrelation(Integer studentId, Integer courseId) {
 		Connection conn;
 		try {
 			conn = mysqlConnector.makeConnection();
@@ -73,7 +75,7 @@ public class StudentCourseDAO {
 		}
 	}
 
-	public void deleteCorrelation(String studentId, String courseId) {
+	public void deleteCorrelation(Integer studentId, Integer courseId) {
 		Connection conn;
 		try {
 			conn = mysqlConnector.makeConnection();
@@ -86,7 +88,7 @@ public class StudentCourseDAO {
 		}
 	}
 	
-	public void deleteAllStudentCourses(String studentId) {
+	public void deleteAllStudentCourses(Integer studentId) {
 		Connection conn;
 		try {
 			conn = mysqlConnector.makeConnection();
@@ -99,7 +101,7 @@ public class StudentCourseDAO {
 		}
 	}
 	
-	public void deleteAllCourseStudents(String courseId) {
+	public void deleteAllCourseStudents(Integer courseId) {
 		Connection conn;
 		try {
 			conn = mysqlConnector.makeConnection();

@@ -34,7 +34,7 @@ public class AccountDAO {
 		return userAccount;
 	}
 	
-	public UserAccount getAccountInfoById(String userId) {
+	public UserAccount getAccountInfoById(Integer userId) {
 		UserAccount userAccount = new UserAccount();
 		try {
 			Connection conn = mysqlConnector.makeConnection();
@@ -84,6 +84,19 @@ public class AccountDAO {
 		}
 	}
 	
+	public void deleteUserAccountId(Integer userId) {
+		Connection conn;
+		try {
+			conn = mysqlConnector.makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE userid='" + userId + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void approveUserAccount(String username) {
 		Connection conn;
 		try {
@@ -91,6 +104,20 @@ public class AccountDAO {
 			Statement st = conn.createStatement();
 			//Update user account with an updated string of "Y".
 			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " SET `approved`='Y' WHERE  `username`='" + username + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void disapproveUserAccount(String username) {
+		Connection conn;
+		try {
+			conn = mysqlConnector.makeConnection();
+			Statement st = conn.createStatement();
+			//Update user account with an updated string of "N".
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " SET `approved`='N' WHERE  `username`='" + username + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

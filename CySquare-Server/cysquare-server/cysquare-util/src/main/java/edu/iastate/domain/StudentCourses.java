@@ -2,27 +2,34 @@ package edu.iastate.domain;
 
 public class StudentCourses {
 
-	private int studentId;
-	private int courseId;
-	private int updatedTimestamp;
+	private Integer studentId;
+	private Integer courseId;
+	private Integer points;
+	private Integer updatedTimestamp;
 	
-	public int getStudentId() {
+	public Integer getStudentId() {
 		return studentId;
 	}
-	public void setStudentId(int studentId) {
+	public void setStudentId(Integer studentId) {
 		this.studentId = studentId;
 	}
-	public int getCourseId() {
+	public Integer getPoints() {
+		return points;
+	}
+	public void setPoints(Integer points) {
+		this.points = points;
+	}
+	public Integer getCourseId() {
 		return courseId;
 	}
-	public void setCourseId(int courseId) {
+	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
 	}
 	
-	public int getUpdatedTimestamp() {
+	public Integer getUpdatedTimestamp() {
 		return updatedTimestamp;
 	}
-	public void setUpdatedTimestamp(int updatedTimestamp) {
+	public void setUpdatedTimestamp(Integer updatedTimestamp) {
 		this.updatedTimestamp = updatedTimestamp;
 	}
 	@Override

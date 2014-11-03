@@ -2,17 +2,17 @@ package edu.iastate.domain;
 
 public class Course {
 	
-	private int courseId;
+	private Integer courseId;
 	private String name;
 	private String location;
 	private String time;
 	private String updatedTimestamp;
 	private String days;
 	
-	public int getCourseId() {
+	public Integer getCourseId() {
 		return courseId;
 	}
-	public void setCourseId(int courseId) {
+	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
 	}
 	public String getName() {

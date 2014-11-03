@@ -34,7 +34,7 @@ public class StudentCourseDAOTest {
 //	}
 //
 //	private void createData() {
-//		studentCourseDao.createCourse("testCourse", "coov", "13:00:00", "MWF");		
+//		studentCourseDao.createCorrelation(0, 1);	
 //	}
 //	
 //	private void deleteData() {

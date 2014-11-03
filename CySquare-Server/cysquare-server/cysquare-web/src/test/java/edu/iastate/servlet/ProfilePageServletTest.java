@@ -42,10 +42,8 @@ public class ProfilePageServletTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		
 	}
 	
-
 	@Test
 	public void testParseJson() throws IOException, JSONException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -81,19 +79,17 @@ public class ProfilePageServletTest {
 		
 		List<StudentCourses> courseList = new ArrayList<StudentCourses> ();
 		courseList.add(0, student);
-		//courseList.add(student);
 	
 		Mockito.when(request.getParameter("username")).thenReturn("user");
 		
 		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
-		Mockito.when(courses.getCourses("" + userAccount.getUserId())).thenReturn(courseList);
-//		Mockito.when(courseList.get(0).getCourseId()).thenReturn(student.getCourseId());
-		Mockito.when(courseInfo.getCourseInfoById("" + course.getCourseId())).thenReturn(course);
+		Mockito.when(courses.getCourses(userAccount.getUserId())).thenReturn(courseList);
+		Mockito.when(courseInfo.getCourseInfoById(course.getCourseId())).thenReturn(course);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
 		profile.doPost(request, response);
 		
-		Mockito.verify(courses).getCourses("123");
+		Mockito.verify(courses).getCourses(123);
 		
 		System.out.println(stringWriter.toString());
 	}
