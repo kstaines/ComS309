@@ -1,11 +1,13 @@
-package edu.iastate.dao;
+package edu.iastate.dao.ifc;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import edu.iastate.literals.*;
+import edu.iastate.literals.DAOLiterals;
 
-public class Java2MySql {
-	
+public abstract class DatabaseAccess {
+
 	private Connection connection;
 	
 	public Connection makeConnection() throws Exception {
@@ -31,4 +33,5 @@ public class Java2MySql {
 			throw new Exception("Database connection could not be closed." + e);
 		}
 	}
+	
 }
