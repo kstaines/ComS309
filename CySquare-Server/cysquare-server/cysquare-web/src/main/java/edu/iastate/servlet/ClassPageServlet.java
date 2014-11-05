@@ -14,6 +14,8 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
+import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.UserAccount;
 @WebServlet("/classPage")
 public class ClassPageServlet extends HttpServlet {
 	
@@ -23,12 +25,14 @@ public class ClassPageServlet extends HttpServlet {
 	private StudentCourseDAO studentCourseDao = new StudentCourseDAO();
 	private CourseDAO courseDao = new CourseDAO();
 	private Course course = new Course();
+	private StudentCourses studentCourses = new StudentCourses ();
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String username_string = request.getParameter("username");
 		String edit_type = request.getParameter("editType");
 		String name = request.getParameter("name");
+		Integer courseId = Integer.valueOf(request.getParameter("id"));
 	
 		
 		//Set the content type to JSON for when this sends the response
@@ -36,6 +40,9 @@ public class ClassPageServlet extends HttpServlet {
 		
 		//the json object is classes
 		JSONObject classes = new JSONObject();
+		
+		//get user info to make or delete correlations 
+		UserAccount user = accountDao.getAccountInfo(username_string);
 		
 		//check if username_string is null or blank
 		checkNull(classes, username_string, "username",response);
@@ -49,9 +56,15 @@ public class ClassPageServlet extends HttpServlet {
 		checkNull(classes, name, "class name", response);
 		checkBlank(classes, name, "class name", response);
 		
+		//the parameter will always have the course id so must check if null or empty
+		checkNull(classes, "" + courseId, "course id", response);
+		checkBlank(classes, "" + courseId, "course id", response);
+		
 		//if the edit type is to delete then delete from the database
 		if(edit_type.equalsIgnoreCase("delete"))
 		{
+			
+			studentCourseDao.deleteCorrelation(user.getUserId(), courseId);
 			courseDao.deleteCourse(name);
 			putTrue(classes, response);
 		}
@@ -59,23 +72,25 @@ public class ClassPageServlet extends HttpServlet {
 		//if the edit type is to add a class to the database 
 		if(edit_type.equalsIgnoreCase("add"))
 		{
-			//the parameter will have the following shown below so must check if null or empty
+			
 			String location = request.getParameter("location");
 			String time = request.getParameter("time");
 			String days = request.getParameter("days");
+			
+			//Must check if null or empty
 			checkNull(classes, location, "location", response);
 			checkBlank(classes, location, "location", response);
 			checkNull(classes, time, "time", response);
 			checkBlank(classes, time, "time", response);
 			checkNull(classes, days, "days", response);
 			checkBlank(classes, days, "days", response);
+			
+			
+			studentCourses.setCourseId(courseId);
+			course.setCourseId(courseId);
+			studentCourseDao.createCorrelation(user.getUserId(), courseId);
 			courseDao.createCourse(name, location, time, days);
 			putTrue(classes, response);
-		}
-		//if the edit type is modify 
-		if(edit_type.equalsIgnoreCase("modify"))
-		{
-			
 		}
 		
 		
@@ -128,7 +143,7 @@ public class ClassPageServlet extends HttpServlet {
 	{
 		if(toCheck == null)
 		{
-			putError(object, "The " + toType + "is null.", response);
+			putError(object, "The " + toType + " is null.", response);
 		}
 	}
 	
@@ -136,7 +151,7 @@ public class ClassPageServlet extends HttpServlet {
 	{
 		if(toCheck.equalsIgnoreCase(""))
 		{
-			putError(object, "The " + toType + "is blank.", response);
+			putError(object, "The " + toType + " is blank.", response);
 		}
 	}
 
