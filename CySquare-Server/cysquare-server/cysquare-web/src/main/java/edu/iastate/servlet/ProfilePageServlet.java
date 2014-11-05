@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
+import edu.iastate.domain.Course;
 import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 
@@ -23,8 +24,9 @@ public class ProfilePageServlet extends HttpServlet{
 	private static final long serialVersionUID = -4151895874414506005L;
 	
 	private AccountDAO accountDao = new AccountDAO();
-	private StudentCourseDAO course = new StudentCourseDAO();
+	private StudentCourseDAO studentCourse = new StudentCourseDAO();
 	private CourseDAO courseInfo = new CourseDAO();
+	private Course course = new Course();
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -34,62 +36,77 @@ public class ProfilePageServlet extends HttpServlet{
 		//Set the content type to JSON for when this sends the response
 		response.setContentType("application/json");
 		
+		JSONObject profile = new JSONObject();
+		
 		//check if username_string is null or blank
 		if(username_string == null)
 		{
-			JSONObject error_response = new JSONObject();
-			try {
-				error_response.put("status", "The username is null");
-				error_response.write(response.getWriter());
-				return;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			putError(profile, "The username is null", response);
+			return;
 		}
 		if(username_string.equalsIgnoreCase(""))
 		{
-			JSONObject error_response = new JSONObject();
-			try {
-				error_response.put("status", "The username is blank");
-				error_response.write(response.getWriter());
-				return;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
+			putError(profile, "The username is blank", response);
+			return;
 			
 		}
 		
 		UserAccount user = accountDao.getAccountInfo(username_string);
-		JSONObject profile = new JSONObject();
-		
-		try {
+		try 
+		{
 			int points = user.getTotalPts();
 			profile.put("points", points);
 			
 			//course id and user id			
 			//get courses from the student course dao
 			//a list would be the course id
-			List<StudentCourses> courseList = course.getCourses(user.getUserId());
+			List<StudentCourses> courseList = studentCourse.getCourses(user.getUserId());
 			
 			//if course list is null or empty send message saying no courses
 			if(courseList == null || courseList.isEmpty())
 			{
-				profile.put("course", "You do not have any courses added to your profile, please add courses");
-				profile.write(response.getWriter());
+				putError(profile, "You do not have any courses added to your profile, please add courses", response);
 				return;
 			}
+			//put how many courses the user has 
+			profile.put("total", courseList.size());
 			
 			//get the course table with that course id
 			for(int i = 0; i < courseList.size(); i++)
 			{
-				profile.put("course" + i, courseInfo.getCourseInfoById(courseList.get(i).getCourseId()));
+				course = courseInfo.getCourseInfoById(courseList.get(i).getCourseId());
+				profile.put("course" + (i+1), "Course name: " + course.getName() + " Location: " + course.getLocation() + " Time: "+ course.getTime() + " Days: "+ course.getDays());
+				
 			}
 			profile.write(response.getWriter());
 			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+		} 
+		catch (JSONException e) 
+		{
+			
 			e.printStackTrace();
 		}
+	}
+	private void putError(JSONObject object, String message, HttpServletResponse response)
+	{
+		try 
+		{
+			object.put("status", "error");
+			object.put("error", message);
+			try 
+			{
+				object.write(response.getWriter());
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 }
