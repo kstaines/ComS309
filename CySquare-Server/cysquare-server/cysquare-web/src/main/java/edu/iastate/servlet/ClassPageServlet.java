@@ -60,7 +60,7 @@ public class ClassPageServlet extends HttpServlet {
 		checkNull(classes, section, "section", response);
 		checkBlank(classes, section, "section", response);
 		//get course id from the database based on the course name and section		
-		course = courseDao.getCourseInfo(name);
+		course = courseDao.getCourseInfoWithSection(name, section);
 		Integer courseId = course.getCourseId();
 		
 		//if the edit type is to delete then delete from the database
