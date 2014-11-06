@@ -2,11 +2,14 @@ package edu.iastate.dao.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.iastate.domain.Course;
+import edu.iastate.domain.StudentCourses;
 
 public class StudentCourseDAOTest {
 
@@ -15,29 +18,28 @@ public class StudentCourseDAOTest {
 	@Before
 	public void setUp() {
 		studentCourseDao = new StudentCourseDAO();
-//		deleteData();
-//		createData();
+		deleteData();
+		createData();
 	}
 
 	@After
 	public void cleanUp() {
-//		deleteData();
+		deleteData();
 	}
 
-//	@Test
-//	public void testGetTestCourse() {
-//		Course course = studentCourseDao.getCourses(studentId)
-//		assertEquals("testCourse", course.getName());
-//		assertEquals("coov", course.getLocation());
-//		assertEquals("13:00:00", course.getTime());
-//		assertNotNull(course.getUpdatedTimestamp());
-//	}
-//
-//	private void createData() {
-//		studentCourseDao.createCorrelation(0, 1);	
-//	}
-//	
-//	private void deleteData() {
-//		studentCourseDao.deleteCourse("testCourse");
-//	}
+	@Test
+	public void testGetTestCorrelation() {
+		List<StudentCourses> studCourses = studentCourseDao.getCourses(0);
+		assertNotNull(studCourses);
+		assertNotNull(studCourses.get(0));
+		assertEquals(Integer.valueOf(1), studCourses.get(0).getCourseId());
+	}
+
+	private void createData() {
+		studentCourseDao.createCorrelation(0, 1);	
+	}
+	
+	private void deleteData() {
+		studentCourseDao.deleteCorrelation(0, 1);
+	}
 }

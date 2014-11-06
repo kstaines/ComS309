@@ -4,6 +4,7 @@ public class Course {
 	
 	private Integer courseId;
 	private String name;
+	private String section;
 	private String location;
 	private String time;
 	private String updatedTimestamp;
@@ -20,6 +21,12 @@ public class Course {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getSection() {
+		return section;
+	}
+	public void setSection(String section) {
+		this.section = section;
 	}
 	public String getLocation() {
 		return location;

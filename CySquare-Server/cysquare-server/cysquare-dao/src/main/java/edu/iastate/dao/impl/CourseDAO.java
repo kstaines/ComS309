@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.iastate.dao.ifc.DatabaseAccess;
 import edu.iastate.domain.Course;
@@ -11,15 +13,42 @@ import edu.iastate.literals.DAOLiterals;
 
 public class CourseDAO extends DatabaseAccess {
 
-	public Course getCourseInfo(String courseName) {
-		Course course = new Course();
+	public List<Course> getCourseInfo(String courseName) {
+		List<Course> courses = new ArrayList<Course>();
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE name=\"" + courseName + "\";");
 			if(res.next()) {
+				Course course = new Course();
 				course.setCourseId(res.getInt("courseid"));
 				course.setName(res.getString("name"));
+				course.setSection(res.getString("section"));
+				course.setLocation(res.getString("location"));
+				course.setUpdatedTimestamp(res.getString("ts_update"));
+				course.setTime(res.getString("time"));
+				course.setDays(res.getString("days"));
+				courses.add(course);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return courses;
+	}
+	
+	public Course getCourseInfoWithSection(String courseName, String section) {
+		Course course = new Course();
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE name=\"" + courseName + "\" AND section=\"" + section + "\";");
+			if(res.next()) {
+				course.setCourseId(res.getInt("courseid"));
+				course.setName(res.getString("name"));
+				course.setSection(res.getString("section"));
 				course.setLocation(res.getString("location"));
 				course.setUpdatedTimestamp(res.getString("ts_update"));
 				course.setTime(res.getString("time"));
@@ -43,6 +72,7 @@ public class CourseDAO extends DatabaseAccess {
 			if(res.next()) {
 				course.setCourseId(res.getInt("courseid"));
 				course.setName(res.getString("name"));
+				course.setSection(res.getString("section"));
 				course.setLocation(res.getString("location"));
 				course.setUpdatedTimestamp(res.getString("ts_update"));
 				course.setTime(res.getString("time"));

@@ -78,7 +78,7 @@ public class StudentCourseDAO extends DatabaseAccess {
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " WHERE studentid='" + studentId + "' AND courseid='" + courseId + ";");
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " WHERE studentid='" + studentId + "' AND courseid='" + courseId + "';");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

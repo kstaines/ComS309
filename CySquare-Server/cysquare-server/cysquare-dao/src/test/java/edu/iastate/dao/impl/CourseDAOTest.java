@@ -2,6 +2,8 @@ package edu.iastate.dao.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,11 +28,11 @@ public class CourseDAOTest {
 
 	@Test
 	public void testGetTestCourse() {
-		Course course = courseDao.getCourseInfo("testCourse");
-		assertEquals("testCourse", course.getName());
-		assertEquals("coov", course.getLocation());
-		assertEquals("13:00:00", course.getTime());
-		assertNotNull(course.getUpdatedTimestamp());
+		List<Course> courses = courseDao.getCourseInfo("testCourse");
+		assertEquals("testCourse", courses.get(0).getName());
+		assertEquals("coov", courses.get(0).getLocation());
+		assertEquals("13:00:00", courses.get(0).getTime());
+		assertNotNull(courses.get(0).getUpdatedTimestamp());
 	}
 
 	private void createData() {
