@@ -14,7 +14,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
-import edu.iastate.domain.StudentCourses;
+//import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 @WebServlet("/classPage")
 public class ClassPageServlet extends HttpServlet {
@@ -25,14 +25,14 @@ public class ClassPageServlet extends HttpServlet {
 	private StudentCourseDAO studentCourseDao = new StudentCourseDAO();
 	private CourseDAO courseDao = new CourseDAO();
 	private Course course = new Course();
-	private StudentCourses studentCourses = new StudentCourses ();
+	//private StudentCourses studentCourses = new StudentCourses ();
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String username_string = request.getParameter("username");
 		String edit_type = request.getParameter("editType");
 		String name = request.getParameter("name");
-		Integer courseId = Integer.valueOf(request.getParameter("id"));
+		String section = request.getParameter("section");
 	
 		
 		//Set the content type to JSON for when this sends the response
@@ -57,23 +57,26 @@ public class ClassPageServlet extends HttpServlet {
 		checkBlank(classes, name, "class name", response);
 		
 		//the parameter will always have the course id so must check if null or empty
-		checkNull(classes, "" + courseId, "course id", response);
-		checkBlank(classes, "" + courseId, "course id", response);
+		checkNull(classes, section, "section", response);
+		checkBlank(classes, section, "section", response);
+		//get course id from the database based on the course name and section		
+		course = courseDao.getCourseInfo(name);
+		Integer courseId = course.getCourseId();
 		
 		//if the edit type is to delete then delete from the database
 		if(edit_type.equalsIgnoreCase("delete"))
 		{
 			
 			studentCourseDao.deleteCorrelation(user.getUserId(), courseId);
-			courseDao.deleteCourse(name);
+			//courseDao.deleteCourse(name);
 			putTrue(classes, response);
 		}
 		
-		//if the edit type is to add a class to the database 
+		//if the edit type is to add a class to their profile page
 		if(edit_type.equalsIgnoreCase("add"))
 		{
 			
-			String location = request.getParameter("location");
+			/*String location = request.getParameter("location");
 			String time = request.getParameter("time");
 			String days = request.getParameter("days");
 			
@@ -85,11 +88,11 @@ public class ClassPageServlet extends HttpServlet {
 			checkNull(classes, days, "days", response);
 			checkBlank(classes, days, "days", response);
 			
-			
+
 			studentCourses.setCourseId(courseId);
-			course.setCourseId(courseId);
+			course.setCourseId(courseId);*/
 			studentCourseDao.createCorrelation(user.getUserId(), courseId);
-			courseDao.createCourse(name, location, time, days);
+			
 			putTrue(classes, response);
 		}
 		
