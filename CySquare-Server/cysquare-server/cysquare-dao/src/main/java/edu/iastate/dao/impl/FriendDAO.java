@@ -14,6 +14,10 @@ public class FriendDAO extends DatabaseAccess {
 		return new ArrayList<Friend>();
 	}
 	
+	public void approveFriendship(Integer studentId, Integer friendId) {
+		//Set approved to Y
+	}
+	
 	public void createFriendship(Integer studentId, Integer friendId) {
 		
 	}
