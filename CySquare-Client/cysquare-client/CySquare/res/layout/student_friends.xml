@@ -21,6 +21,44 @@
     android:layout_height="40dp"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
-    android:text="@string/home" />    
+    android:text="@string/home" />
+
+<TextView
+    android:id="@+id/TextView_add_friends_title"
+    style="@style/PageTitle"
+    android:layout_alignLeft="@+id/home_button"
+    android:layout_below="@+id/home_button"
+    android:text="@string/add_a_friend"
+    android:textSize="15sp" />
+
+<TextView
+    android:id="@+id/TextView02"
+    style="@style/PageTitle"
+    android:layout_alignLeft="@+id/TextView_add_friends_title"
+    android:layout_below="@+id/student_friends"
+    android:text="@string/friend_username"
+    android:textSize="15sp" />
+
+<EditText
+    android:id="@+id/editText_enterFriendName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignBaseline="@+id/TextView02"
+    android:layout_alignBottom="@+id/TextView02"
+    android:layout_toRightOf="@+id/TextView02"
+    android:ems="10"
+    android:inputType="text" >
+
+    <requestFocus />
+</EditText>
+
+<Button
+    android:id="@+id/Button_add"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="68dp"
+    android:layout_height="40dp"
+    android:layout_below="@+id/TextView_add_friends_title"
+    android:layout_toRightOf="@+id/TextView02"
+    android:text="@string/add" />
 
 </RelativeLayout>
