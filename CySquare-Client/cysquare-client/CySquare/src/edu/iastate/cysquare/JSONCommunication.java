@@ -12,7 +12,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,8 +22,14 @@ import org.json.JSONObject;
 import edu.iastate.cysquare.domain.Parameter;
 
 public class JSONCommunication {
+	private HttpClient http;
+	private HttpPost request;
+	private HttpResponse response;
 	
-	public String sendPost(HttpClient http, HttpPost request, HttpResponse response, String url, JSONObject jo) throws JSONException, IllegalStateException, IOException{
+	public String sendPost(String url, JSONObject jo) throws JSONException, IllegalStateException, IOException{
+		
+		http = new DefaultHttpClient();
+    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); 
 		
 		List<Parameter> parameters = new ArrayList<Parameter>();
 		Iterator<String> keys = jo.keys();

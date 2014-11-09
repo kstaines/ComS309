@@ -3,12 +3,6 @@ package edu.iastate.cysquare;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,9 +22,6 @@ public class StudentProfile extends Activity{
 	private Button home;
 	private TextView totalPointsServer;
 	public static final String PREFS_NAME = "MyPreferencesFile";
-	private HttpClient http;
-	private HttpPost request;
-	private HttpResponse response;
 	private Intent homeIntent;
 	private static final String profilePageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/profilePage";
 	String usernameFromPref;
@@ -95,23 +86,18 @@ public class StudentProfile extends Activity{
     private class PostWithAsync extends AsyncTask<String, String, String>{
     	@Override
     	protected String doInBackground(String... arg0){
-    		 http = new DefaultHttpClient();
-    		 HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
     		 
     		 JSONObject jo = new JSONObject();
     		 try{
     			 jo.put("username", usernameFromPref);
     			 JSONCommunication jc = new JSONCommunication();
-    			 String build = jc.sendPost(http, request, response, profilePageURL, jo);
+    			 String build = jc.sendPost(profilePageURL, jo);
     			 return build;
     		 }
     		 catch (JSONException e){
  				e.printStackTrace();
  			}
  	    	catch (UnsupportedEncodingException e) {
- 				e.printStackTrace();
- 			}
- 	    	catch (ClientProtocolException e) {
  				e.printStackTrace();
  			}
  	    	catch (IOException e) {

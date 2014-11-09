@@ -2,12 +2,6 @@ package edu.iastate.cysquare;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpConnectionParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,9 +24,6 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 
 	private Spinner spinner;
 	private Button back, create;
-	private HttpClient http;
-	private HttpPost request;
-	private HttpResponse response;
 	private EditText username, password, confirmPassword;
 	private String userType;
 	private Intent studentWelcomeIntent, unapprovedInstructorWelcomeIntent, mainIntent;
@@ -120,11 +111,8 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/createUser";
 //			String url = "http://10.26.42.223:8081/createUser";
-			
-			http = new DefaultHttpClient();
-	    	HttpConnectionParams.setConnectionTimeout(http.getParams(), 100000); //Timeout Limit
-	    	
-	    	//Create message
+
+			//Create message
 	    	JSONObject jo = new JSONObject();	
 	    	try{
 	    		jo.put("username", username.getText().toString());
@@ -133,7 +121,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				
 				//Send message and get response
 				JSONCommunication jc = new JSONCommunication();
-				String build = jc.sendPost(http, request, response, url, jo);
+				String build = jc.sendPost(url, jo);
 				
 				return build;
 	    	}
@@ -141,9 +129,6 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				e.printStackTrace();
 			}
 	    	catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-	    	catch (ClientProtocolException e) {
 				e.printStackTrace();
 			}
 	    	catch (IOException e) {
