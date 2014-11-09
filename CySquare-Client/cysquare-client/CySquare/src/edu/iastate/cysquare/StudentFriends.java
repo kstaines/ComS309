@@ -1,22 +1,37 @@
 package edu.iastate.cysquare;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class StudentFriends extends Activity{
-	private Button home;
+	private Button home, add;
+	private EditText friend_username;
 	private Intent homeIntent;
+	private String studentFriendPageURL, editType, username;
+			
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.student_friends); //sets screen layout
 		
 		home = (Button)findViewById(R.id.home_button);
+		add = (Button)findViewById(R.id.add_button);
+		friend_username = (EditText)findViewById(R.id.editText_enterFriendName);
+		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -24,6 +39,17 @@ public class StudentFriends extends Activity{
 				goHome();
 			} //end onClick(View v)
 		});
+		
+		add.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				username = friend_username.getText().toString();
+				editType = "add";
+				new PostWithAsync().execute();
+			}
+			
+		});
+		
 	} //end onCreate(Bundle savedInstanceState)
 	
     @Override
@@ -47,6 +73,48 @@ public class StudentFriends extends Activity{
     
     private void goHome(){
     	startActivity(homeIntent);
+    }
+    
+    private class PostWithAsync extends AsyncTask<String, String, String> {
+
+		@Override
+		protected String doInBackground(String... arg0) {
+			studentFriendPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/";
+		
+			JSONObject jo = new JSONObject();
+			try{
+				jo.put("username", username);
+				jo.put("editType", editType);
+				
+				//Send message and get response
+				JSONCommunication jc = new JSONCommunication();
+				String build = jc.sendPost(studentFriendPageURL, jo);
+				
+				return build;
+	    	}
+	    	catch (JSONException e){
+				e.printStackTrace();
+			}
+	    	catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	    	catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+		
+		protected void onPostExecute(String build) {
+			JSONObject responseObject;
+			try {
+				responseObject = new JSONObject(build);
+	    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
+			}
+	    	catch (JSONException e){
+				e.printStackTrace();
+			}
+		}
     }
 
 }
