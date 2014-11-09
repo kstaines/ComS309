@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class StudentProfile extends Activity{
 	private static final String profilePageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/profilePage";
 	String usernameFromPref;
 	int totalPointsFromJSON;
+	Handler myHandler;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -44,16 +46,10 @@ public class StudentProfile extends Activity{
 		home = (Button)findViewById(R.id.home_button);
 		totalPointsServer = (TextView)findViewById(R.id.total_points_server);
 		
-		//get username from preferences file
-		usernameFromPref = retrieveUsername();
+		usernameFromPref = retrieveUsername();	//get username from preferences file
 		
-		new PostWithAsync().execute();
-		
-		//for testing: printing a string to a screen
-		//String textFromJSON = "ThisTextIsTestText";
-		
-		totalPointsServer.setText(Integer.toString(totalPointsFromJSON));
-		
+		printTotalPoints();
+				
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -92,6 +88,10 @@ public class StudentProfile extends Activity{
 		return usernameFromPref = userData.getString("username", "false");
 	}
     
+    private void printTotalPoints() {	
+    	new PostWithAsync().execute();
+    }
+
     private class PostWithAsync extends AsyncTask<String, String, String>{
     	@Override
     	protected String doInBackground(String... arg0){
@@ -126,7 +126,7 @@ public class StudentProfile extends Activity{
     		try {
 				responseObject = new JSONObject(build);
 				totalPointsFromJSON = responseObject.getInt("points");
-				//totalPointsFromJSON = 100; // <--for testing
+				totalPointsServer.setText(Integer.toString(totalPointsFromJSON));
 			} 
     		catch (JSONException e) {
 				e.printStackTrace();
