@@ -19,9 +19,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class StudentProfile extends Activity{
+	public static final String PREFS_NAME = "MyPreferencesFile";
 	private Button home;
 	private TextView totalPointsServer;
-	public static final String PREFS_NAME = "MyPreferencesFile";
 	private Intent homeIntent;
 	private static final String profilePageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/profilePage";
 	String usernameFromPref;

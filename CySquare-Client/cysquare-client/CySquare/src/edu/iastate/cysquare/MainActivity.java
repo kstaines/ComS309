@@ -3,6 +3,7 @@ package edu.iastate.cysquare;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,7 +26,12 @@ public class MainActivity extends ActionBarActivity{
 	private EditText username;
 	private EditText password;
 	private Button login, createNewUser;
-	private Intent welcomeIntent, createIntent;
+	private String usertype;
+	//private String usernameFromJSON;
+	private Intent createIntent;
+	private Intent welcomeIntent;
+	private Intent adminWelcomeIntent;
+	private Intent instructorWelcomeIntent;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +47,18 @@ public class MainActivity extends ActionBarActivity{
         login = (Button)findViewById(R.id.button_login); 
         createNewUser = (Button) findViewById(R.id.button_Create);
         
-        
+        //listen for click on login button
         login.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				welcomeIntent = new Intent(v.getContext(), StudentWelcome.class);
+				adminWelcomeIntent = new Intent(v.getContext(), AdminWelcome.class);
+				instructorWelcomeIntent = new Intent(v.getContext(), InstructorWelcome.class);
 				new PostWithAsync().execute();
 			} //end onClick(View v)
 		});
         
+        //listen for click on createNewUser button
         createNewUser.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
@@ -86,7 +95,7 @@ public class MainActivity extends ActionBarActivity{
 			
 			String url = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/login";
 //			String url = "http://10.24.84.79:8081/login";		// Local server used for debugging
-	    	
+			
 	    	//Create message
 	    	JSONObject jo = new JSONObject();	
 	    	try{
@@ -105,6 +114,9 @@ public class MainActivity extends ActionBarActivity{
 	    	catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+	    	catch (ClientProtocolException e) {
+				e.printStackTrace();
+			}
 	    	catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -119,8 +131,24 @@ public class MainActivity extends ActionBarActivity{
 			
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
+		    		usertype = responseObject.getString("usertype");
 		    		saveUsername();
-		    		startActivity(welcomeIntent);
+		    		
+		    		if(usertype.equalsIgnoreCase("student")){
+		    			Toast.makeText(getApplicationContext(), "usertype is student", Toast.LENGTH_LONG).show();
+		    			startActivity(welcomeIntent);
+		    		}
+		    		else if(usertype.equalsIgnoreCase("instructor")){
+		    			Toast.makeText(getApplicationContext(), "usertype is instructor", Toast.LENGTH_LONG).show();
+		    			startActivity(instructorWelcomeIntent);
+		    		}
+					else if(usertype.equalsIgnoreCase("admin")){
+		    			Toast.makeText(getApplicationContext(), "usertype is admin", Toast.LENGTH_LONG).show();
+		    			startActivity(adminWelcomeIntent);
+		    		}
+		    		else{
+		    			Toast.makeText(getApplicationContext(), "usertype does not exist", Toast.LENGTH_LONG).show();
+		    		}
 		    	}
 		    	else {
 		    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
@@ -129,14 +157,14 @@ public class MainActivity extends ActionBarActivity{
 	    	catch (JSONException e){
 				e.printStackTrace();
 			}
-		}
+		} //end onPostExecute(String build)
     }
     
     private void saveUsername() {
-    	
 		SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
 		SharedPreferences.Editor editor = userData.edit();
 		editor.putString("username", username.getText().toString());
+		editor.putString("usertype", usertype.toString());
 		editor.commit();
     }
     

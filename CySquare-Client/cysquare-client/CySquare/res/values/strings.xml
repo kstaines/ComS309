@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<!-- main page -->
     <string name="app_name">CySquare</string>
     <string name="action_settings">Settings</string>
     <string name="Welcome_to_CySquare">Welcome to CySquare!</string>
@@ -8,6 +9,23 @@
     <string name="password">Password:</string>
     <string name="Login">Login</string>
     
+<!-- create user page -->    
+    <string name="title_activity_create_user">Create User</string>
+    <string name="CreateNewUser">Create New User</string>
+    <string name="create_user">Create User</string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="or">or</string>
+    <string name="unapproved_instructor_welcome_message">Welcome! Your instructor status is waiting for approval</string>
+    <string name="user_type">User Type:</string>
+    <string-array name="user_types_array">
+        <item>Student</item>
+        <item>Instructor</item>
+        <item>Admin</item>
+    </string-array>
+    <string name="Back">Back</string>
+    <string name="title_activity_unapproved_instructor_welcome">UnapprovedInstructorWelcome</string>
+    
+<!-- student welcome page -->    
     <string name="logout">Logout</string>
     <string name="student_welcome">Welcome!</string>
     <string name="check_in">Check In</string>
@@ -15,28 +33,39 @@
     <string name="my_friends">My Friends</string>
     <string name="my_profile">My Profile</string>
     
+<!-- student check in page -->
     <string name="student_checkin">Check In</string>
-    <string name="home">Home</string>
-    <string name="student_profile">My Profile</string>
     
+<!-- student friends page -->    
+    <string name="student_friends">Friends</string>
+    <string name="home">Home</string>
+    
+<!-- student profile page -->    
+    <string name="student_profile">My Profile</string>
     <string name="total_points">Total Points:</string>
     <string name="total_points_server">Points</string>
-    
+ 
+<!-- student classes page --> 
     <string name="student_classes">My Classes</string>
-    <string name="title_activity_create_user">Create User</string>
     <string name="hello_world">Hello world!</string>
-    <string name="CreateNewUser">Create New User</string>
-    <string name="create_user">Create User</string>
-    <string name="confirm_password">Confirm Password:</string>
-    <string name="or">or</string>
-    <string name="unapproved_instructor_welcome_message">Welcome! Your instructor status is waiting for approval</string>
-    <string name="user_type">User Type:</string>
 
-    <string-array name="user_types_array">
-        <item>Student</item>
-        <item>Instructor</item>
-        <item>Admin</item>
-    </string-array>
+<!-- instructor welcome page -->
+    <string name="instructor_welcome">Welcome!</string>
+    <string name="current_checkins">View Current Check Ins</string>
+    <string name="post_question">Post a Question</string>
+    <string name="notifications">Notifications</string>
+    
+<!-- instructor profile page -->
+	<string name="instructor_profile">My Profile</string>
+	
+<!-- instructor current check ins page -->
+	<string name="instructor_current_checkins">Current Check Ins</string>	
+	
+<!-- instructor post question page -->
+	<string name="question">Post a Question</string>	
+    
+<!-- admin welcome page -->    
+    <string name="admin_welcome">Welcome!</string>
 
     <string name="Back">Back</string>
     <string name="title_activity_unapproved_instructor_welcome">UnapprovedInstructorWelcome</string>

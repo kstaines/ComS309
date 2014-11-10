@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class CreateUser extends ActionBarActivity implements OnItemSelectedListener {
+	public static final String PREFS_NAME = "MyPreferencesFile";
 
 	private Spinner spinner;
 	private Button back, create;
@@ -48,7 +50,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				startActivity(mainIntent);
 			} //end onClick(View v)
-		}); //end logout.setOnClickListener
+		}); //end back.setOnClickListener
 	
 		create.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -61,7 +63,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				}
 				
 			} //end onClick(View v)
-		}); //end logout.setOnClickListener
+		}); //end create.setOnClickListener
 	}
 
 	@Override
@@ -146,6 +148,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				if(responseObject.getString("status").equals("true")){ //login info was correct/true
 		    		
 		    		Toast.makeText(getApplicationContext(), "Create User Successful", Toast.LENGTH_LONG).show();
+		    		saveUserInfo(); //saves username and usertype to preferences file
 
 		    		// STUDENT/INSTRUCTOR WELCOME PAGE
 		    		if (userType.equals("student")){
@@ -163,6 +166,14 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 	    	catch (JSONException e){
 				e.printStackTrace();
 			}
+		}
+
+		private void saveUserInfo() {
+			SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+			SharedPreferences.Editor editor = userData.edit();
+			editor.putString("username", username.getText().toString());
+			editor.putString("userType", userType.toString());
+			editor.commit();
 		}
     }
 	

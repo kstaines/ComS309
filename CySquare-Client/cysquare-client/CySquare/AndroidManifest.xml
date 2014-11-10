@@ -59,6 +59,32 @@
             android:name=".UnapprovedInstructorWelcome"
             android:label="@string/app_name" >
         </activity>
+        
+        <activity 
+        	android:name=".InstructorWelcome"
+        	android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+        	android:name=".InstructorProfile"
+        	android:label="@string/app_name">
+        </activity>
+        
+        <activity
+        	android:name=".InstructorCurrentCheckIns"
+        	android:label="@string/app_name">
+        </activity>
+        
+        <activity
+        	android:name=".InstructorPostQuestion"
+        	android:label="@string/app_name">
+        </activity>
+        
+        <activity
+        	android:name=".AdminWelcome"
+        	android:label="@string/app_name" >
+        </activity>
+        
     </application>
 
 </manifest>
