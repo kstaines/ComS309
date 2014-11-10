@@ -41,15 +41,19 @@ public class FriendsPageServlet extends HttpServlet{
 		{
 			putError(friend, "Currently has no friends.", response);
 		}
+		//counter values 
+		int approveCounter = 0;
+		int notApproveCounter = 0;
 		//Loop through the friend list to return the friends of this user
 		for (int i = 0; i < friendList.size(); i++)
 		{
-			if(friendList.get(i).getApproved().equalsIgnoreCase("y"))
+			if(friendList.get(i).getApprovalStatus().equalsIgnoreCase("y"))
 			{
 				try
 				{
 					UserAccount friendAccount = accountDao.getAccountInfoById(friendList.get(i).getFriendId());
-					friend.put("friendapproved" + (i+1), friendAccount.getUsername());
+					friend.put("friendapproved" + (approveCounter+1), friendAccount.getUsername());
+					approveCounter = approveCounter + 1;
 				} 
 				catch (JSONException e) {
 					
@@ -63,7 +67,8 @@ public class FriendsPageServlet extends HttpServlet{
 				//put a friends awaiting 
 				UserAccount friendAccount = accountDao.getAccountInfoById(friendList.get(i).getFriendId());
 				try {
-					friend.put("friendnotapproved" + (i+1), friendAccount.getUsername());
+					friend.put("friendnotapproved" + (notApproveCounter+1), friendAccount.getUsername());
+					notApproveCounter = notApproveCounter + 1;
 				} catch (JSONException e) {
 	
 					e.printStackTrace();
