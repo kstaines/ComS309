@@ -1,6 +1,7 @@
 package edu.iastate.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,11 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.iastate.dao.impl.AccountDAO;
+import edu.iastate.dao.impl.FriendDAO;
+import edu.iastate.domain.Friend;
+import edu.iastate.domain.UserAccount;
+
 
 @WebServlet("/friendsPage")
 public class FriendsPageServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 3563797253016667883L;
+	private AccountDAO accountDao = new AccountDAO ();
+	private FriendDAO friendDao = new FriendDAO ();
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -26,7 +34,30 @@ public class FriendsPageServlet extends HttpServlet{
 		checkNull(friend, username, "user", response);
 		checkBlank(friend, username, "user", response);
 		
-		//checkNull(friend)
+		checkNull(friend, friendName, "friends name", response);
+		checkBlank(friend, friendName, "friends name", response);
+		
+		UserAccount userAccount = accountDao.getAccountInfo(username);
+		List<Friend> friendList = friendDao.getFriendList(userAccount.getUserId());
+		
+		//Loop through the friend list to return the friends of this user
+		for (int i = 0; i < friendList.size(); i++)
+		{
+			if(friendList.get(i).getApprovalStatus().equalsIgnoreCase("y"))
+			{
+				try
+				{
+					friend.put("friend" + (i+1), friendList.get(i).getFriendId());
+				} 
+				catch (JSONException e) {
+					
+					e.printStackTrace();
+				}
+			
+				
+			}
+			
+		}
 		
 		
 	}
