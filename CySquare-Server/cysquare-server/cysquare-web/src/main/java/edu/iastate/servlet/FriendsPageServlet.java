@@ -27,19 +27,20 @@ public class FriendsPageServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String username = request.getParameter("user");
-		String friendName = request.getParameter("friend");
 		
 		JSONObject friend = new JSONObject ();
 		
 		checkNull(friend, username, "user", response);
 		checkBlank(friend, username, "user", response);
 		
-		checkNull(friend, friendName, "friends name", response);
-		checkBlank(friend, friendName, "friends name", response);
-		
 		UserAccount userAccount = accountDao.getAccountInfo(username);
 		List<Friend> friendList = friendDao.getFriendList(userAccount.getUserId());
 		
+		//check if the user has any friends
+		if(friendList.size() == 0 || friendList == null)
+		{
+			putError(friend, "Currently has no friends.", response);
+		}
 		//Loop through the friend list to return the friends of this user
 		for (int i = 0; i < friendList.size(); i++)
 		{
@@ -47,7 +48,8 @@ public class FriendsPageServlet extends HttpServlet{
 			{
 				try
 				{
-					friend.put("friend" + (i+1), friendList.get(i).getFriendId());
+					UserAccount friendAccount = accountDao.getAccountInfoById(friendList.get(i).getFriendId());
+					friend.put("friendapproved" + (i+1), friendAccount.getUsername());
 				} 
 				catch (JSONException e) {
 					
@@ -55,6 +57,17 @@ public class FriendsPageServlet extends HttpServlet{
 				}
 			
 				
+			}
+			else
+			{
+				//put a friends awaiting 
+				UserAccount friendAccount = accountDao.getAccountInfoById(friendList.get(i).getFriendId());
+				try {
+					friend.put("friendnotapproved" + (i+1), friendAccount.getUsername());
+				} catch (JSONException e) {
+	
+					e.printStackTrace();
+				}
 			}
 			
 		}
