@@ -74,7 +74,15 @@ public class FriendsPageServlet extends HttpServlet{
 					e.printStackTrace();
 				}
 			}
-			
+		}
+		
+		//send the counter values to the client
+		try {
+			friend.put("approveCounter", approveCounter);
+			friend.put("notApproveCounter", notApproveCounter);
+		} catch (JSONException e) {
+		
+			e.printStackTrace();
 		}
 		
 		
@@ -106,7 +114,7 @@ public class FriendsPageServlet extends HttpServlet{
 		
 	}
 	
-	private void putTrue(JSONObject object, HttpServletResponse response)
+	/*private void putTrue(JSONObject object, HttpServletResponse response)
 	{
 		try
 		{
@@ -125,7 +133,7 @@ public class FriendsPageServlet extends HttpServlet{
 		{
 			e.printStackTrace();
 		}
-	}
+	}*/
 	private void checkNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck == null)
