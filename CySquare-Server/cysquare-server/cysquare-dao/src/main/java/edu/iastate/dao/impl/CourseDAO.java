@@ -86,6 +86,21 @@ public class CourseDAO extends DatabaseAccess {
 		
 		return course;
 	}
+	
+	public List<Course> getAvailableCourseList() {
+		Connection conn;
+		try {
+			conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeQuery("");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return new ArrayList<Course>();
+	}
 
 	public void createCourse(String name, String location, String time, String days) {
 		Connection conn;

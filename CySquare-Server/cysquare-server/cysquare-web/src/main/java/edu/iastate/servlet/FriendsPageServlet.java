@@ -44,7 +44,7 @@ public class FriendsPageServlet extends HttpServlet{
 		//Loop through the friend list to return the friends of this user
 		for (int i = 0; i < friendList.size(); i++)
 		{
-			if(friendList.get(i).getApprovalStatus().equalsIgnoreCase("y"))
+			if(friendList.get(i).getApproved().equalsIgnoreCase("y"))
 			{
 				try
 				{
