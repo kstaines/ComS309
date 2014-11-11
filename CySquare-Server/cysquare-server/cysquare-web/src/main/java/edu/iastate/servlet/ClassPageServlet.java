@@ -25,7 +25,6 @@ public class ClassPageServlet extends HttpServlet {
 	private StudentCourseDAO studentCourseDao = new StudentCourseDAO();
 	private CourseDAO courseDao = new CourseDAO();
 	private Course course = new Course();
-	//private StudentCourses studentCourses = new StudentCourses ();
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -68,31 +67,13 @@ public class ClassPageServlet extends HttpServlet {
 		{
 			
 			studentCourseDao.deleteCorrelation(user.getUserId(), courseId);
-			//courseDao.deleteCourse(name);
 			putTrue(classes, response);
 		}
 		
 		//if the edit type is to add a class to their profile page
 		if(edit_type.equalsIgnoreCase("add"))
 		{
-			
-			/*String location = request.getParameter("location");
-			String time = request.getParameter("time");
-			String days = request.getParameter("days");
-			
-			//Must check if null or empty
-			checkNull(classes, location, "location", response);
-			checkBlank(classes, location, "location", response);
-			checkNull(classes, time, "time", response);
-			checkBlank(classes, time, "time", response);
-			checkNull(classes, days, "days", response);
-			checkBlank(classes, days, "days", response);
-			
-
-			studentCourses.setCourseId(courseId);
-			course.setCourseId(courseId);*/
 			studentCourseDao.createCorrelation(user.getUserId(), courseId);
-			
 			putTrue(classes, response);
 		}
 		
