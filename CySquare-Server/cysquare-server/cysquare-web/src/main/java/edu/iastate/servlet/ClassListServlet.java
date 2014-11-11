@@ -25,6 +25,11 @@ public class ClassListServlet extends HttpServlet{
 		JSONObject list = new JSONObject ();
 		try
 		{
+			if(courseList.isEmpty())
+			{
+				putError(list, "There is no class lists in the database.", response);
+			}
+			list.put("size", courseList.size());
 			for(int i = 0; i < courseList.size(); i++)
 			{
 				Course course = courseList.get(i);
@@ -39,6 +44,27 @@ public class ClassListServlet extends HttpServlet{
 			
 			e.printStackTrace();
 		}
+	}
+	private void putError(JSONObject object, String message, HttpServletResponse response)
+	{
+		try 
+		{
+			object.put("status", "error");
+			object.put("error", message);
+			try 
+			{
+				object.write(response.getWriter());
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		} 
+		catch (JSONException e) 
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 }

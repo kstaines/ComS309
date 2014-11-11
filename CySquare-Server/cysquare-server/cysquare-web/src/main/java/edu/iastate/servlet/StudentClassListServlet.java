@@ -40,6 +40,7 @@ public class StudentClassListServlet extends HttpServlet {
 			{
 				putError(object, "You do not have any courses yet. Please add courses.", response);
 			}
+			object.put("size", course.size());
 			for(int i = 0; i < course.size(); i++)
 			{
 				courseInfo = courseDao.getCourseInfoById(course.get(i).getCourseId());

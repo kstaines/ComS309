@@ -26,12 +26,12 @@ public class FriendsPageServlet extends HttpServlet{
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		String username = request.getParameter("user");
+		String username = request.getParameter("username");
 		
 		JSONObject friend = new JSONObject ();
 		
-		checkNull(friend, username, "user", response);
-		checkBlank(friend, username, "user", response);
+		checkNull(friend, username, "username", response);
+		checkBlank(friend, username, "username", response);
 		
 		UserAccount userAccount = accountDao.getAccountInfo(username);
 		List<Friend> friendList = friendDao.getFriendList(userAccount.getUserId());
@@ -78,8 +78,8 @@ public class FriendsPageServlet extends HttpServlet{
 		
 		//send the counter values to the client
 		try {
-			friend.put("approveCounter", approveCounter);
-			friend.put("notApproveCounter", notApproveCounter);
+			friend.put("approveSize", approveCounter);
+			friend.put("notApproveSize", notApproveCounter);
 		} catch (JSONException e) {
 		
 			e.printStackTrace();
