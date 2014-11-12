@@ -31,8 +31,8 @@ public class InstructorWelcome extends Activity{
 		setContentView(R.layout.instructor_welcome);
 		
 		logout = (Button)findViewById(R.id.logout_button);
-		myProfile = (Button)findViewById(R.id.instructor_profile);
-		currentCheckins = (Button)findViewById(R.id.instructor_current_checkins);
+		myProfile = (Button)findViewById(R.id.instructor_profile_button);
+		currentCheckins = (Button)findViewById(R.id.instructor_checkins_button);
 		postQuestion = (Button)findViewById(R.id.post_question_button);
 		notifications = (Button)findViewById(R.id.notifications_button);
 		
