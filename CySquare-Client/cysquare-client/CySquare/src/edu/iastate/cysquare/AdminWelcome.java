@@ -18,12 +18,14 @@ public class AdminWelcome extends Activity{
 	private Button manageClasses;
 	private Button reset;
 	private Button manageUsers;
+	private Button notifications;
 	
 	private Intent mainIntent;
 	private Intent profileIntent;
 	private Intent manageClassesIntent;
 	private Intent resetIntent;
 	private Intent manageUsersIntent;
+	private Intent notificationsIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -31,10 +33,11 @@ public class AdminWelcome extends Activity{
 		setContentView(R.layout.admin_welcome);
 		
 		logout = (Button)findViewById(R.id.logout_button);
-		myProfile = (Button)findViewById(R.id.admin_profile_button); //fix
-		manageClasses = (Button)findViewById(R.id.manage_classes_button); //fix
-		reset = (Button)findViewById(R.id.reset_all_button); //fix
-		manageUsers = (Button)findViewById(R.id.manage_users_button); //fix
+		myProfile = (Button)findViewById(R.id.admin_profile_button);
+		manageClasses = (Button)findViewById(R.id.manage_classes_button);
+		reset = (Button)findViewById(R.id.reset_all_button);
+		manageUsers = (Button)findViewById(R.id.manage_users_button);
+		notifications = (Button)findViewById(R.id.notifications_button);
 		
 		logout.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -75,6 +78,14 @@ public class AdminWelcome extends Activity{
 			public void onClick(View v) {
 				manageUsersIntent = new Intent(v.getContext(), AdminUsers.class);
 				manageUsers();
+			} //end onClick(View v)
+		}); //end manageUsers.setOnClickListener
+		
+		notifications.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				notificationsIntent = new Intent(v.getContext(), Notifications.class);
+				notifications();
 			} //end onClick(View v)
 		}); //end manageUsers.setOnClickListener
 		
@@ -125,6 +136,10 @@ public class AdminWelcome extends Activity{
     
     private void manageUsers(){
     	startActivity(manageUsersIntent);
+    }
+    
+    private void notifications(){
+    	startActivity(notificationsIntent);
     }
 
 }

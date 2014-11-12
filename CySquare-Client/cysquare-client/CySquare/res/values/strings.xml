@@ -73,7 +73,6 @@
     <string name="manage_classes">Manage Classes</string>
     <string name="manage_users">Manage Users</string>
     <string name="reset_all">Reset All</string>
-    <string name="my_profile">My Profile</string>
     
 <!-- admin classes page -->
 	<string name="admin_classes">Manage Classes</string>

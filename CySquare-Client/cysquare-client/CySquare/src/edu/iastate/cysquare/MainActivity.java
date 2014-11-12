@@ -135,15 +135,15 @@ public class MainActivity extends ActionBarActivity{
 		    		saveUsername();
 		    		
 		    		if(usertype.equalsIgnoreCase("student")){
-		    			Toast.makeText(getApplicationContext(), "usertype is student", Toast.LENGTH_LONG).show();
+		    			//Toast.makeText(getApplicationContext(), "usertype is student", Toast.LENGTH_LONG).show();
 		    			startActivity(welcomeIntent);
 		    		}
 		    		else if(usertype.equalsIgnoreCase("instructor")){
-		    			Toast.makeText(getApplicationContext(), "usertype is instructor", Toast.LENGTH_LONG).show();
+		    			//Toast.makeText(getApplicationContext(), "usertype is instructor", Toast.LENGTH_LONG).show();
 		    			startActivity(instructorWelcomeIntent);
 		    		}
 					else if(usertype.equalsIgnoreCase("admin")){
-		    			Toast.makeText(getApplicationContext(), "usertype is admin", Toast.LENGTH_LONG).show();
+		    			//Toast.makeText(getApplicationContext(), "usertype is admin", Toast.LENGTH_LONG).show();
 		    			startActivity(adminWelcomeIntent);
 		    		}
 		    		else{
