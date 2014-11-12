@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-public class StudentClasses extends Activity{
+public class AdminClasses extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
 	private Button home;
@@ -17,13 +17,13 @@ public class StudentClasses extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.student_classes); //sets screen layout
+		setContentView(R.layout.admin_classes); //sets screen layout
 		
 		home = (Button)findViewById(R.id.home_button);
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				homeIntent = new Intent(v.getContext(), StudentWelcome.class);
+				homeIntent = new Intent(v.getContext(), AdminWelcome.class);
 				goHome();
 			} //end onClick(view v)
 		});

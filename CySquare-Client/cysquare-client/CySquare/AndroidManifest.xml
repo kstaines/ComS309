@@ -86,6 +86,26 @@
         </activity>
         
         <activity
+        	android:name=".AdminProfile"
+        	android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+        	android:name=".AdminClasses"
+        	android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+        	android:name=".AdminUsers"
+        	android:label="@string/app_name" >
+        </activity>
+        
+        <activity
+        	android:name=".AdminReset"
+        	android:label="@string/app_name" >
+        </activity>
+        
+        <activity
         	android:name=".Notifications"
         	android:label="@string/app_name" >
         </activity>

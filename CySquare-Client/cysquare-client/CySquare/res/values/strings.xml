@@ -39,6 +39,10 @@
 <!-- student friends page -->    
     <string name="student_friends">Friends</string>
     <string name="home">Home</string>
+    <string name="student_friends">Friends</string>
+    <string name="add_a_friend">Add a Friend</string>
+    <string name="friend_username">Friend\'s Username:</string>
+	<string name="add">Add</string>
     
 <!-- student profile page -->    
     <string name="student_profile">My Profile</string>
@@ -66,14 +70,26 @@
     
 <!-- admin welcome page -->    
     <string name="admin_welcome">Welcome!</string>
+    <string name="manage_classes">Manage Classes</string>
+    <string name="manage_users">Manage Users</string>
+    <string name="reset_all">Reset All</string>
+    <string name="my_profile">My Profile</string>
+    
+<!-- admin classes page -->
+	<string name="admin_classes">Manage Classes</string>
+	
+<!-- admin profile page -->
+	<string name="admin_profile">My Profile</string>
+	
+<!-- admin reset page -->
+	<string name="admin_reset">Reset</string>
+
+<!-- admin users page -->
+	<string name="admin_users">Manage Users</string>
+
 
     <string name="Back">Back</string>
     <string name="title_activity_unapproved_instructor_welcome">UnapprovedInstructorWelcome</string>
-    
-    <string name="student_friends">Friends</string>
-    <string name="add_a_friend">Add a Friend</string>
-    <string name="friend_username">Friend\'s Username:</string>
-	<string name="add">Add</string>
 	
 <!-- notifications page -->
 	<string name="notifications_title">Notifications</string>
