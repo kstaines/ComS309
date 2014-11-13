@@ -165,7 +165,7 @@ public class ClassPageServlet extends HttpServlet {
 		List<StudentCourse> studentCourse = studentCourseDao.getCourses(userId);
 		for(int i = 0; i < studentCourse.size(); i++)
 		{
-			if(studentCourse.get(i).getCourseId() == courseId)
+			if(studentCourse.get(i).getCourseId().equals(courseId))
 			{
 				return true;
 			}

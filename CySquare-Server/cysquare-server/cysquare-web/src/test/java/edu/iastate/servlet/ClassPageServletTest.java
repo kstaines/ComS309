@@ -74,6 +74,15 @@ public class ClassPageServletTest {
 			userAccount.setUpdatedTimestamp("2");
 			userAccount.setUserType("student");
 			
+			Course courseNew = new Course ();
+			courseNew.setCourseId(154);
+			courseNew.setName("COMS");
+			courseNew.setDays("MWF");
+			courseNew.setLocation("Coover");
+			courseNew.setTime("9am");
+			courseNew.setUpdatedTimestamp("2");
+			courseNew.setSection("A");
+			
 			
 			StudentCourse studentcourse = new StudentCourse ();
 			studentcourse.setCourseId(154);
@@ -84,14 +93,7 @@ public class ClassPageServletTest {
 			List<StudentCourse> correlationList = new ArrayList<StudentCourse> ();
 			correlationList.add(studentcourse);
 			
-			Course courseNew = new Course ();
-			courseNew.setCourseId(154);
-			courseNew.setName("COMS");
-			courseNew.setDays("MWF");
-			courseNew.setLocation("Coover");
-			courseNew.setTime("9am");
-			courseNew.setUpdatedTimestamp("2");
-			courseNew.setSection("A");
+			
 			
 
 			Mockito.when(request.getParameter("username")).thenReturn("user");
@@ -102,9 +104,9 @@ public class ClassPageServletTest {
 			
 			
 			Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
-			Mockito.when(studentCourseDao.getCourses(123)).thenReturn(correlationList);
 			Mockito.when(courseDao.getCourseInfoWithSection(courseNew.getName(), courseNew.getSection())).thenReturn(courseNew);
 			Mockito.when(course.getCourseId()).thenReturn(154);
+			Mockito.when(studentCourseDao.getCourses(123)).thenReturn(correlationList);
 			
 			Mockito.when(response.getWriter()).thenReturn(printWriter);
 			
