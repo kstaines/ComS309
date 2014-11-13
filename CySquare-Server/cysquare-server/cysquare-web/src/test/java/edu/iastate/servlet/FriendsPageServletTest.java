@@ -35,7 +35,7 @@ public class FriendsPageServletTest {
 	
 	
 	@InjectMocks
-	private FriendsListServlet friendsPage = new FriendsListServlet();
+	private FriendsPageServlet friendsPage = new FriendsPageServlet();
 	
 	@Before
 	public void setUp() {

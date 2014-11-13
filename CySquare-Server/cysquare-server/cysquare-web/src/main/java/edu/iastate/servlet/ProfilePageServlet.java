@@ -69,7 +69,7 @@ public class ProfilePageServlet extends HttpServlet{
 				return;
 			}
 			//put how many courses the user has 
-			profile.put("size", courseList.size());
+			profile.put("total", courseList.size());
 			
 			//get the course table with that course id
 			for(int i = 0; i < courseList.size(); i++)
