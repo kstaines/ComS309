@@ -163,6 +163,13 @@ public class ClassPageServlet extends HttpServlet {
 	private boolean foundCorrelation(Integer userId, Integer courseId)
 	{
 		List<StudentCourses> studentCourse = studentCourseDao.getCourses(userId);
+		for(int i = 0; i < studentCourse.size(); i++)
+		{
+			if(studentCourse.get(i).getCourseId() == courseId)
+			{
+				return true;
+			}
+		}
 		
 		
 		return false;

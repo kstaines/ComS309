@@ -8,6 +8,9 @@ import java.io.StringWriter;
 //import java.util.ArrayList;
 //import java.util.List;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +27,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
+import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 
 public class ClassPageServletTest {
@@ -70,6 +74,16 @@ public class ClassPageServletTest {
 			userAccount.setUpdatedTimestamp("2");
 			userAccount.setUserType("student");
 			
+			
+			StudentCourses studentcourse = new StudentCourses ();
+			studentcourse.setCourseId(154);
+			studentcourse.setStudentId(123);
+			
+			studentCourseDao.createCorrelation(123, 154);
+			
+			List<StudentCourses> correlationList = new ArrayList<StudentCourses> ();
+			correlationList.add(studentcourse);
+			
 			Course courseNew = new Course ();
 			courseNew.setCourseId(154);
 			courseNew.setName("COMS");
@@ -88,6 +102,7 @@ public class ClassPageServletTest {
 			
 			
 			Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
+			Mockito.when(studentCourseDao.getCourses(123)).thenReturn(correlationList);
 			Mockito.when(courseDao.getCourseInfoWithSection(courseNew.getName(), courseNew.getSection())).thenReturn(courseNew);
 			Mockito.when(course.getCourseId()).thenReturn(154);
 			
