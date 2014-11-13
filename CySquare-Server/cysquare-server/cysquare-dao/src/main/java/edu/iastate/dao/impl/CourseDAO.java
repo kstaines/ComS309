@@ -20,14 +20,7 @@ public class CourseDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE name=\"" + courseName + "\";");
 			if(res.next()) {
-				Course course = new Course();
-				course.setCourseId(res.getInt("courseid"));
-				course.setName(res.getString("name"));
-				course.setSection(res.getString("section"));
-				course.setLocation(res.getString("location"));
-				course.setUpdatedTimestamp(res.getString("ts_update"));
-				course.setTime(res.getString("time"));
-				course.setDays(res.getString("days"));
+				Course course = populateCourse(res);
 				courses.add(course);
 			}
 		} catch (SQLException e) {
@@ -39,6 +32,26 @@ public class CourseDAO extends DatabaseAccess {
 		return courses;
 	}
 	
+	public List<Course> getAvailableCourseList() {
+		List<Course> courses = new ArrayList<Course>();
+		try {
+			Connection conn;
+			conn = makeConnection();
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + ";");
+			if(res.next()) {
+				Course course = populateCourse(res);
+				courses.add(course);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return courses;
+	}
+
 	public Course getCourseInfoWithSection(String courseName, String section) {
 		Course course = new Course();
 		try {
@@ -46,13 +59,7 @@ public class CourseDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE name=\"" + courseName + "\" AND section=\"" + section + "\";");
 			if(res.next()) {
-				course.setCourseId(res.getInt("courseid"));
-				course.setName(res.getString("name"));
-				course.setSection(res.getString("section"));
-				course.setLocation(res.getString("location"));
-				course.setUpdatedTimestamp(res.getString("ts_update"));
-				course.setTime(res.getString("time"));
-				course.setDays(res.getString("days"));
+				course = populateCourse(res);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -70,13 +77,7 @@ public class CourseDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " WHERE courseid=\"" + courseId + "\";");
 			if(res.next()) {
-				course.setCourseId(res.getInt("courseid"));
-				course.setName(res.getString("name"));
-				course.setSection(res.getString("section"));
-				course.setLocation(res.getString("location"));
-				course.setUpdatedTimestamp(res.getString("ts_update"));
-				course.setTime(res.getString("time"));
-				course.setDays(res.getString("days"));
+				course = populateCourse(res);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -86,21 +87,8 @@ public class CourseDAO extends DatabaseAccess {
 		
 		return course;
 	}
+
 	
-	public List<Course> getAvailableCourseList() {
-		Connection conn;
-		try {
-			conn = makeConnection();
-			Statement st = conn.createStatement();
-			st.executeQuery("");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return new ArrayList<Course>();
-	}
 
 	public void createCourse(String name, String location, String time, String days) {
 		Connection conn;
@@ -139,6 +127,18 @@ public class CourseDAO extends DatabaseAccess {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private Course populateCourse(ResultSet res) throws SQLException {
+		Course course = new Course();
+		course.setCourseId(res.getInt("courseid"));
+		course.setName(res.getString("name"));
+		course.setSection(res.getString("section"));
+		course.setLocation(res.getString("location"));
+		course.setUpdatedTimestamp(res.getString("ts_update"));
+		course.setTime(res.getString("time"));
+		course.setDays(res.getString("days"));
+		return course;
 	}
 
 }

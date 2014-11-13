@@ -55,9 +55,10 @@ public class Course {
 	
 	@Override
 	public String toString() {
-		return "Course [courseId=" + courseId + ", name=" + name
-				+ ", location=" + location + ", time=" + time + ", days="
-				+ days + "]";
+		return "Course [courseId=" + courseId + ", name=" + name + ", section="
+				+ section + ", location=" + location + ", time=" + time
+				+ ", updatedTimestamp=" + updatedTimestamp + ", days=" + days
+				+ "]";
 	}
 	
 }
