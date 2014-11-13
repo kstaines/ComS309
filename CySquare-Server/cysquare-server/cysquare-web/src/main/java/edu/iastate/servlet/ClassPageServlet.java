@@ -40,24 +40,25 @@ public class ClassPageServlet extends HttpServlet {
 		//the json object is classes
 		JSONObject classes = new JSONObject();
 		
-		//get user info to make or delete correlations 
-		UserAccount user = accountDao.getAccountInfo(username_string);
-		
 		//check if username_string is null or blank
-		checkNull(classes, username_string, "username",response);
-		checkBlank(classes, username_string, "username", response);
+		if(isNull(classes, username_string, "username",response)) return;
+		if(isBlank(classes, username_string, "username", response)) return;
 		
 		//check if the edit type is null or blank
-		checkNull(classes, edit_type, "edit type", response);
-		checkBlank(classes, edit_type, "edit type", response);
+		if(isNull(classes, edit_type, "edit type", response)) return;
+		if(isBlank(classes, edit_type, "edit type", response)) return;
 		
 		//the parameter will always have the class name so must check if null or empty
-		checkNull(classes, name, "class name", response);
-		checkBlank(classes, name, "class name", response);
+		if(isNull(classes, name, "class name", response)) return;
+		if(isBlank(classes, name, "class name", response)) return;
 		
 		//the parameter will always have the course id so must check if null or empty
-		checkNull(classes, section, "section", response);
-		checkBlank(classes, section, "section", response);
+		if(isNull(classes, section, "section", response)) return;
+		if(isBlank(classes, section, "section", response)) return;
+		
+		//get user info to make or delete correlations 
+		UserAccount user = accountDao.getAccountInfo(username_string);
+				
 		//get course id from the database based on the course name and section		
 		course = courseDao.getCourseInfoWithSection(name, section);
 		Integer courseId = course.getCourseId();
@@ -68,6 +69,7 @@ public class ClassPageServlet extends HttpServlet {
 			
 			studentCourseDao.deleteCorrelation(user.getUserId(), courseId);
 			putTrue(classes, response);
+			return;
 		}
 		
 		//if the edit type is to add a class to their profile page
@@ -75,6 +77,7 @@ public class ClassPageServlet extends HttpServlet {
 		{
 			studentCourseDao.createCorrelation(user.getUserId(), courseId);
 			putTrue(classes, response);
+			return;
 		}
 		
 		
@@ -123,19 +126,29 @@ public class ClassPageServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	private void checkNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	private boolean isNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck == null)
 		{
 			putError(object, "The " + toType + " is null.", response);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	
-	private void checkBlank(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	private boolean isBlank(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck.equalsIgnoreCase(""))
 		{
 			putError(object, "The " + toType + " is blank.", response);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 

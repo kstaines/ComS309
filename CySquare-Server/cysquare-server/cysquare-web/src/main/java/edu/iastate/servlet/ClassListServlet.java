@@ -28,6 +28,7 @@ public class ClassListServlet extends HttpServlet{
 			if(courseList.isEmpty())
 			{
 				putError(list, "There is no class lists in the database.", response);
+				return;
 			}
 			list.put("size", courseList.size());
 			for(int i = 0; i < courseList.size(); i++)
@@ -37,6 +38,7 @@ public class ClassListServlet extends HttpServlet{
 							 " Location: " + course.getLocation() + " Days: " + course.getDays() + " Time: " + course.getTime());
 			}
 			list.write(response.getWriter());
+			return;
 		}
 		
 		catch (JSONException e)
@@ -54,6 +56,7 @@ public class ClassListServlet extends HttpServlet{
 			try 
 			{
 				object.write(response.getWriter());
+				
 			} 
 			catch (IOException e) 
 			{
