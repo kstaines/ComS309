@@ -39,7 +39,6 @@
 <!-- student friends page -->    
     <string name="student_friends">Friends</string>
     <string name="home">Home</string>
-    <string name="student_friends">Friends</string>
     <string name="add_a_friend">Add a Friend</string>
     <string name="friend_username">Friend\'s Username:</string>
 	<string name="add">Add</string>
@@ -48,6 +47,7 @@
     <string name="student_profile">My Profile</string>
     <string name="total_points">Total Points:</string>
     <string name="total_points_server">Points</string>
+    <string name="class_points"></string>
  
 <!-- student classes page --> 
     <string name="student_classes">My Classes</string>
@@ -85,10 +85,6 @@
 
 <!-- admin users page -->
 	<string name="admin_users">Manage Users</string>
-
-
-    <string name="Back">Back</string>
-    <string name="title_activity_unapproved_instructor_welcome">UnapprovedInstructorWelcome</string>
 	
 <!-- notifications page -->
 	<string name="notifications_title">Notifications</string>

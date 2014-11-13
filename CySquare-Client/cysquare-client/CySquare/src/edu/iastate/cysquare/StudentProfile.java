@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class StudentProfile extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	private Button home;
-	private TextView totalPointsServer;
+	private TextView totalPointsServer, classPoints;
 	private Intent homeIntent;
 	private static final String profilePageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/profilePage";
 	String usernameFromPref;
@@ -38,6 +38,7 @@ public class StudentProfile extends Activity{
 		
 		home = (Button)findViewById(R.id.home_button);
 		totalPointsServer = (TextView)findViewById(R.id.total_points_server);
+		classPoints = (TextView)findViewById(R.id.textView_class_points);
 		
 		usernameFromPref = retrieveUsername();	//get username from preferences file
 		
@@ -115,6 +116,21 @@ public class StudentProfile extends Activity{
 				responseObject = new JSONObject(build);
 				totalPointsFromJSON = responseObject.getInt("points");
 				totalPointsServer.setText(Integer.toString(totalPointsFromJSON));
+				
+				String classPointsList = "";
+				int total = responseObject.getInt("total");
+				for (int i=0; i<total; i++){
+					String courseKey = "course";
+					int courseKeyNumber = i+1;
+					courseKey = courseKey.concat(Integer.toString(courseKeyNumber));
+					if (i==0){
+						classPointsList = classPointsList.concat(responseObject.getString(courseKey));
+					}
+					else {
+						classPointsList = classPointsList.concat("\n" + responseObject.getString(courseKey));
+					}
+				}
+				classPoints.setText(classPointsList.toString());
 			} 
     		catch (JSONException e) {
 				e.printStackTrace();

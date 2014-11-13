@@ -21,7 +21,8 @@ public class StudentFriends extends Activity{
 	private Button home, add;
 	private EditText friend_username;
 	private Intent homeIntent;
-	private String studentFriendPageURL, editType, username;
+	private String username;
+	private String friendsURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/friendsPage";
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -44,8 +45,8 @@ public class StudentFriends extends Activity{
 			@Override
 			public void onClick(View v) {
 				username = friend_username.getText().toString();
-				editType = "add";
-				new PostWithAsync().execute();
+				JSONObject jo = createAddDeleteJSONObj(username, "add");
+				new PostWithAsync(friendsURL, jo).execute();
 			}
 			
 		});
@@ -76,19 +77,20 @@ public class StudentFriends extends Activity{
     }
     
     private class PostWithAsync extends AsyncTask<String, String, String> {
+    	private String URL;
+    	private JSONObject sendJSONObject;
+		public PostWithAsync(String friendsURL, JSONObject jo) {
+			URL = friendsURL;
+			sendJSONObject = jo;
+		}
 
 		@Override
 		protected String doInBackground(String... arg0) {
-			studentFriendPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/";
 		
-			JSONObject jo = new JSONObject();
 			try{
-				jo.put("username", username);
-				jo.put("editType", editType);
-				
 				//Send message and get response
 				JSONCommunication jc = new JSONCommunication();
-				String build = jc.sendPost(studentFriendPageURL, jo);
+				String build = jc.sendPost(URL, sendJSONObject);
 				
 				return build;
 	    	}
@@ -116,5 +118,17 @@ public class StudentFriends extends Activity{
 			}
 		}
     }
+    
+    private JSONObject createAddDeleteJSONObj(String username, String editType) {
+    	JSONObject jobj = new JSONObject();
+		try {
+			jobj.put("username", username);
+			jobj.put("editType", editType);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	return jobj;
+    }
+    
 
 }

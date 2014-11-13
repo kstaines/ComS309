@@ -44,4 +44,12 @@
     android:textAppearance="?android:attr/textAppearanceMedium" 
     android:text="@string/total_points_server" />
 
+<TextView
+    android:id="@+id/textView_class_points"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/total_points_server"
+    android:text="@string/class_points"
+    android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>
