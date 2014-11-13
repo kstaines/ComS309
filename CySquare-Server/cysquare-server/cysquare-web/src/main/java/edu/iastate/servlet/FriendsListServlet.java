@@ -17,8 +17,8 @@ import edu.iastate.domain.Friend;
 import edu.iastate.domain.UserAccount;
 
 
-@WebServlet("/friendsPage")
-public class FriendsPageServlet extends HttpServlet{
+@WebServlet("/friendsList")
+public class FriendsListServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 3563797253016667883L;
 	private AccountDAO accountDao = new AccountDAO ();

@@ -1,6 +1,7 @@
 package edu.iastate.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
+import edu.iastate.domain.StudentCourses;
 //import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 @WebServlet("/classPage")
@@ -63,10 +65,17 @@ public class ClassPageServlet extends HttpServlet {
 		course = courseDao.getCourseInfoWithSection(name, section);
 		Integer courseId = course.getCourseId();
 		
+		
+		
 		//if the edit type is to delete then delete from the database
 		if(edit_type.equalsIgnoreCase("delete"))
 		{
-			
+			//check if they actually have the class in order to delete from their class list
+			if(!foundCorrelation(user.getUserId(), courseId))
+			{
+				putError(classes, "You do not have this class to be deleted from your class list.", response);
+				return;
+			}
 			studentCourseDao.deleteCorrelation(user.getUserId(), courseId);
 			putTrue(classes, response);
 			return;
@@ -150,6 +159,13 @@ public class ClassPageServlet extends HttpServlet {
 		{
 			return false;
 		}
+	}
+	private boolean foundCorrelation(Integer userId, Integer courseId)
+	{
+		List<StudentCourses> studentCourse = studentCourseDao.getCourses(userId);
+		
+		
+		return false;
 	}
 
 }
