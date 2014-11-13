@@ -76,7 +76,7 @@ public class ProfilePageServlet extends HttpServlet{
 			{
 				course = courseInfo.getCourseInfoById(courseList.get(i).getCourseId());
 				
-				profile.put("course" + (i+1), "Course name: " + course.getName() + "Points: " + courseList.get(i).getPoints());
+				profile.put("course" + (i+1), "Course name: " + course.getName() + " Points: " + courseList.get(i).getPoints());
 				
 			}
 			profile.write(response.getWriter());

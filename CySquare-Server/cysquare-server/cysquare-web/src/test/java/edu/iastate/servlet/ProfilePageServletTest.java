@@ -45,7 +45,7 @@ public class ProfilePageServletTest {
 	}
 	
 	@Test
-	public void testParseJson() throws IOException, JSONException {
+	public void testInitialProfile() throws IOException, JSONException {
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		
@@ -67,6 +67,7 @@ public class ProfilePageServletTest {
 		StudentCourses student = new StudentCourses ();
 		student.setStudentId(123);
 		student.setCourseId(154);
+		student.setPoints(5);
 		student.setUpdatedTimestamp(2);
 		
 		Course course = new Course ();
@@ -92,6 +93,88 @@ public class ProfilePageServletTest {
 		Mockito.verify(courses).getCourses(123);
 		
 		System.out.println(stringWriter.toString());
+	}
+	
+	@Test
+	public void testNoClass() throws IOException, JSONException
+	{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		
+		JSONObject obj = new JSONObject();
+		obj.put("username", "user");
+		
+		UserAccount userAccount = new UserAccount();
+		userAccount.setUsername("user");
+		userAccount.setTotalPts(10);
+		userAccount.setUserId(123);
+		userAccount.setApproved("y");
+		userAccount.setPassword("password");
+		userAccount.setUpdatedTimestamp("2");
+		userAccount.setUserType("student");
+		
+		StudentCourses student = new StudentCourses ();
+		student.setStudentId(123);
+		student.setCourseId(154);
+		student.setPoints(5);
+		student.setUpdatedTimestamp(2);
+
+		
+		List<StudentCourses> courseList = new ArrayList<StudentCourses> ();
+	
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
+		Mockito.when(courses.getCourses(userAccount.getUserId())).thenReturn(courseList);
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		profile.doPost(request, response);
+		
+		Mockito.verify(courses).getCourses(123);
+		
+		System.out.println(stringWriter.toString());
+		
+	}
+	
+	@Test
+	public void testUserNull() throws IOException, JSONException
+	{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		
+		Mockito.when(request.getParameter("username")).thenReturn(null);
+		
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		profile.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+		
+	}
+	
+	@Test
+	public void testUserBlank() throws IOException, JSONException
+	{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		
+		Mockito.when(request.getParameter("username")).thenReturn("");
+		
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		profile.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+		
 	}
 
 

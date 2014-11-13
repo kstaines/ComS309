@@ -30,8 +30,8 @@ public class FriendsPageServlet extends HttpServlet{
 		
 		JSONObject friend = new JSONObject ();
 		
-		checkNull(friend, username, "username", response);
-		checkBlank(friend, username, "username", response);
+		if(isNull(friend, username, "username", response)) return;
+		if(isBlank(friend, username, "username", response)) return;
 		
 		UserAccount userAccount = accountDao.getAccountInfo(username);
 		List<Friend> friendList = friendDao.getFriendList(userAccount.getUserId());
@@ -40,6 +40,7 @@ public class FriendsPageServlet extends HttpServlet{
 		if(friendList.size() == 0 || friendList == null)
 		{
 			putError(friend, "Currently has no friends.", response);
+			return;
 		}
 		//counter values 
 		int approveCounter = 0;
@@ -80,6 +81,7 @@ public class FriendsPageServlet extends HttpServlet{
 		try {
 			friend.put("approveSize", approveCounter);
 			friend.put("notApproveSize", notApproveCounter);
+			friend.write(response.getWriter());
 		} catch (JSONException e) {
 		
 			e.printStackTrace();
@@ -114,40 +116,24 @@ public class FriendsPageServlet extends HttpServlet{
 		
 	}
 	
-	/*private void putTrue(JSONObject object, HttpServletResponse response)
-	{
-		try
-		{
-			object.put("status", true);
-			try
-			{
-				object.write(response.getWriter());
-				return;
-			}
-			catch (IOException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		catch (JSONException e)
-		{
-			e.printStackTrace();
-		}
-	}*/
-	private void checkNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	private boolean isNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck == null)
 		{
 			putError(object, "The " + toType + " is null.", response);
+			return true;
 		}
+		return false;
 	}
 	
-	private void checkBlank(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	private boolean isBlank(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck.equalsIgnoreCase(""))
 		{
 			putError(object, "The " + toType + " is blank.", response);
+			return true;
 		}
+		return false;
 	}
 }
 
