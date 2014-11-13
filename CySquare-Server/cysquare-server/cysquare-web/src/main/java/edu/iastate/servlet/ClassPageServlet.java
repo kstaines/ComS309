@@ -15,7 +15,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
-import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.StudentCourse;
 //import edu.iastate.domain.StudentCourses;
 import edu.iastate.domain.UserAccount;
 @WebServlet("/classPage")
@@ -162,7 +162,7 @@ public class ClassPageServlet extends HttpServlet {
 	}
 	private boolean foundCorrelation(Integer userId, Integer courseId)
 	{
-		List<StudentCourses> studentCourse = studentCourseDao.getCourses(userId);
+		List<StudentCourse> studentCourse = studentCourseDao.getCourses(userId);
 		for(int i = 0; i < studentCourse.size(); i++)
 		{
 			if(studentCourse.get(i).getCourseId() == courseId)

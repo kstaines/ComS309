@@ -22,7 +22,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
-import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.StudentCourse;
 import edu.iastate.domain.UserAccount;
 
 public class ProfilePageServletTest {
@@ -64,7 +64,7 @@ public class ProfilePageServletTest {
 		userAccount.setUpdatedTimestamp("2");
 		userAccount.setUserType("student");
 		
-		StudentCourses student = new StudentCourses ();
+		StudentCourse student = new StudentCourse ();
 		student.setStudentId(123);
 		student.setCourseId(154);
 		student.setPoints(5);
@@ -78,7 +78,7 @@ public class ProfilePageServletTest {
 		course.setTime("9am");
 		course.setUpdatedTimestamp("2");
 		
-		List<StudentCourses> courseList = new ArrayList<StudentCourses> ();
+		List<StudentCourse> courseList = new ArrayList<StudentCourse> ();
 		courseList.add(0, student);
 	
 		Mockito.when(request.getParameter("username")).thenReturn("user");
@@ -116,14 +116,14 @@ public class ProfilePageServletTest {
 		userAccount.setUpdatedTimestamp("2");
 		userAccount.setUserType("student");
 		
-		StudentCourses student = new StudentCourses ();
+		StudentCourse student = new StudentCourse ();
 		student.setStudentId(123);
 		student.setCourseId(154);
 		student.setPoints(5);
 		student.setUpdatedTimestamp(2);
 
 		
-		List<StudentCourses> courseList = new ArrayList<StudentCourses> ();
+		List<StudentCourse> courseList = new ArrayList<StudentCourse> ();
 	
 		Mockito.when(request.getParameter("username")).thenReturn("user");
 		

@@ -15,7 +15,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
-import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.StudentCourse;
 import edu.iastate.domain.UserAccount;
 
 @WebServlet("/profilePage")
@@ -60,7 +60,7 @@ public class ProfilePageServlet extends HttpServlet{
 			//course id and user id			
 			//get courses from the student course dao
 			//a list would be the course id
-			List<StudentCourses> courseList = studentCourse.getCourses(user.getUserId());
+			List<StudentCourse> courseList = studentCourse.getCourses(user.getUserId());
 			
 			//if course list is null or empty send message saying no courses
 			if(courseList == null || courseList.isEmpty())

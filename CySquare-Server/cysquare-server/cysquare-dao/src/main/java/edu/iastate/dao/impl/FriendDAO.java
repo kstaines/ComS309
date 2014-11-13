@@ -22,11 +22,7 @@ public class FriendDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_FRIENDS + " WHERE studentid=\"" + studentId + "\" OR friendid=\"" + studentId + "\";");
 			if(res.next()) {
-				Friend friend = new Friend();
-				friend.setStudentId(res.getInt("studentid"));
-				friend.setFriendId(res.getInt("friendid"));
-				friend.setApproved(res.getString("approved"));
-				friend.setUpdatedTimestamp(res.getString("ts_update"));
+				Friend friend = populateFriend(res);
 				friends.add(friend);
 			}
 		} catch (SQLException e) {
@@ -36,7 +32,7 @@ public class FriendDAO extends DatabaseAccess {
 		}
 		return friends;
 	}
-	
+
 	public void approveFriendship(Integer studentId, Integer friendId) {
 		Connection conn;
 		try {

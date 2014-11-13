@@ -129,16 +129,4 @@ public class CourseDAO extends DatabaseAccess {
 		}
 	}
 
-	private Course populateCourse(ResultSet res) throws SQLException {
-		Course course = new Course();
-		course.setCourseId(res.getInt("courseid"));
-		course.setName(res.getString("name"));
-		course.setSection(res.getString("section"));
-		course.setLocation(res.getString("location"));
-		course.setUpdatedTimestamp(res.getString("ts_update"));
-		course.setTime(res.getString("time"));
-		course.setDays(res.getString("days"));
-		return course;
-	}
-
 }

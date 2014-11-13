@@ -15,7 +15,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
-import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.StudentCourse;
 
 @WebServlet("/classStudent")
 public class StudentClassListServlet extends HttpServlet {
@@ -30,7 +30,7 @@ public class StudentClassListServlet extends HttpServlet {
 	{
 		String user = request.getParameter("username");
 		//get the list of all the courses the student user has
-		List<StudentCourses> course = studentCourseDao.getCourses(account.getAccountInfo(user).getUserId());
+		List<StudentCourse> course = studentCourseDao.getCourses(account.getAccountInfo(user).getUserId());
 		
 		JSONObject object = new JSONObject ();
 		try

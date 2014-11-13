@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.iastate.dao.ifc.DatabaseAccess;
 import edu.iastate.dao.impl.AccountDAO;
 
 @WebServlet("/checkIn")
@@ -17,7 +18,7 @@ public class CheckInServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 943348396279963269L;
 	
-	private AccountDAO account_dao = new AccountDAO();
+	private DatabaseAccess account_dao = new AccountDAO();
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{

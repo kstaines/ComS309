@@ -8,24 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.iastate.dao.ifc.DatabaseAccess;
-import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.StudentCourse;
 import edu.iastate.literals.DAOLiterals;
 
 public class StudentCourseDAO extends DatabaseAccess {
 		
-	public List<StudentCourses> getCourses(Integer studentId) {
+	public List<StudentCourse> getCourses(Integer studentId) {
 		
-		List<StudentCourses> correlations = new ArrayList<StudentCourses>();
-		StudentCourses studentCourses = new StudentCourses();
+		List<StudentCourse> correlations = new ArrayList<StudentCourse>();
 		
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " WHERE studentid=\"" + studentId + "\";");
 			if(res.next()) {
-				studentCourses.setStudentId(res.getInt("studentid"));
-				studentCourses.setCourseId(res.getInt("courseid"));
-				correlations.add(studentCourses);
+				StudentCourse studentCourse = populateStudentCourses(res);
+				correlations.add(studentCourse);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -35,21 +33,17 @@ public class StudentCourseDAO extends DatabaseAccess {
 		
 		return correlations;
 	}
-	
-	public List<StudentCourses> getStudents(Integer courseId) {
-		List<StudentCourses> correlations = new ArrayList<StudentCourses>();
-		StudentCourses studentCourses = new StudentCourses();
+
+	public List<StudentCourse> getStudents(Integer courseId) {
+		List<StudentCourse> correlations = new ArrayList<StudentCourse>();
 		
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " WHERE courseid=\"" + courseId + "\";");
 			if(res.next()) {
-				studentCourses.setStudentId(res.getInt("studentid"));
-				studentCourses.setCourseId(res.getInt("courseid"));
-				studentCourses.setPoints(res.getInt("points"));
-				studentCourses.setUpdatedTimestamp(res.getInt("ts_update"));
-				correlations.add(studentCourses);
+				StudentCourse studentCourse = populateStudentCourses(res);
+				correlations.add(studentCourse);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

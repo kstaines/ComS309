@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.iastate.domain.StudentCourses;
+import edu.iastate.domain.StudentCourse;
 
 public class StudentCourseDAOTest {
 
@@ -29,7 +29,7 @@ public class StudentCourseDAOTest {
 
 	@Test
 	public void testGetTestCorrelation() {
-		List<StudentCourses> studCourses = studentCourseDao.getCourses(0);
+		List<StudentCourse> studCourses = studentCourseDao.getCourses(0);
 		assertNotNull(studCourses);
 		assertNotNull(studCourses.get(0));
 		assertEquals(Integer.valueOf(1), studCourses.get(0).getCourseId());

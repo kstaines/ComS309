@@ -1,6 +1,6 @@
 package edu.iastate.domain;
 
-public class StudentCourses {
+public class StudentCourse {
 
 	private Integer studentId;
 	private Integer courseId;

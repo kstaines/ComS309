@@ -18,13 +18,7 @@ public class AccountDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE username=\"" + username + "\";");
 			if(res.next()) {
-				userAccount.setUserId(res.getInt("userid"));
-				userAccount.setUsername(res.getString("username"));
-				userAccount.setPassword(res.getString("password"));
-				userAccount.setUpdatedTimestamp(res.getString("ts_update"));
-				userAccount.setUserType(res.getString("userType"));
-				userAccount.setTotalPts(res.getInt("totalPts"));
-				userAccount.setApproved(res.getString("approved"));
+				userAccount = populateUserAccount(res);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -34,7 +28,7 @@ public class AccountDAO extends DatabaseAccess {
 		
 		return userAccount;
 	}
-	
+
 	public UserAccount getAccountInfoById(Integer userId) {
 		UserAccount userAccount = new UserAccount();
 		try {
@@ -42,13 +36,7 @@ public class AccountDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE userid=\"" + userId + "\";");
 			if(res.next()) {
-				userAccount.setUserId(res.getInt("userid"));
-				userAccount.setUsername(res.getString("username"));
-				userAccount.setPassword(res.getString("password"));
-				userAccount.setUpdatedTimestamp(res.getString("ts_update"));
-				userAccount.setUserType(res.getString("userType"));
-				userAccount.setTotalPts(res.getInt("totalPts"));
-				userAccount.setApproved(res.getString("approved"));
+				userAccount = populateUserAccount(res);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
