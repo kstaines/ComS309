@@ -29,14 +29,14 @@ import android.widget.Toast;
 public class StudentClasses extends Activity implements OnItemSelectedListener{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
-	private Button home;
+	private Button home, add;
 	private Intent homeIntent;
 	private Spinner spinner;
 	private final static String classListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classList";
+	private final static String addDeleteClassURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classPage";
 	private final static String studentClassListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classStudent";
-	private JSONObject addClassJSONObj  = new JSONObject();
-	private List<String> list, studentClassList;
-	private ListView listView;
+	private String className, section;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -47,6 +47,25 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		
 		createClassListSpinner();
 
+		add = (Button)findViewById(R.id.add_button);
+		
+		add.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+				JSONObject addClass = new JSONObject();
+				addClass.put("name", className);
+				addClass.put("section", section);
+				addClass.put("editType", "add");
+				String user = getUsername();
+				addClass.put("username", user);
+				
+				new PostWithAsync(addDeleteClassURL, addClass);
+				
+			} catch (JSONException e) {
+			}
+			} //end onClick(view v)
+		});
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -123,9 +142,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     @Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
-		int position = spinner.getSelectedItemPosition();
-		String courseInfo = list.get(position);
-		String section = null, className = null;
+		String courseInfo = (String) spinner.getSelectedItem();
 		Scanner scan = new Scanner(courseInfo);
 		while (scan.hasNext()) {
 			if (scan.next().equals("name:")) {
@@ -139,20 +156,27 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 			}
 		}
 		scan.close();
-		try {
-			addClassJSONObj.put("name", className);
-			addClassJSONObj.put("section", section);
-			
-		} catch (JSONException e) {
-		}
 	}
     
-
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		
+		//Do Nothing
 	}
 	
+    private void checkAddDeleteResponse(JSONObject response) {
+    	try {
+			if (response.getString("status").equals("true")) {
+				Toast.makeText(getApplicationContext(), "Class has been added. Logout to refresh your screen!", Toast.LENGTH_LONG).show();
+			}
+			else {
+				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	
+    }
+
 	private class PostWithAsync extends AsyncTask<String, String, String> {
 		private String url;
 		private JSONObject jo;
@@ -186,6 +210,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				responseObject = new JSONObject(build);
 			
 				if(url.equals(classListURL)) createSpinnerArray(responseObject);
+				else if (url.equals(addDeleteClassURL)) checkAddDeleteResponse(responseObject);
 			}
 	    	catch (JSONException e){
 				e.printStackTrace();
