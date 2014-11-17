@@ -185,7 +185,6 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     
     private void createClassListArray(JSONObject response) {
     	try {
-//			if (response.getString("status").equals("true")) {
 				int size = response.getInt("size");
 				String[] studentClasses = new String[size];
 				for (int i=0; i<size; i++) {
@@ -194,10 +193,6 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 					courseKey = courseKey.concat(Integer.toString(courseKeyNumber));
 					studentClasses[i] = response.getString(courseKey);
 				}
-//			}
-//			else {
-				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
-//			}
 				
 	    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, studentClasses);
 	    	ListView classList = (ListView)findViewById(R.id.studentClassesListView);
