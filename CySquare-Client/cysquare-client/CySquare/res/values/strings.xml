@@ -43,6 +43,8 @@
     <string name="friend_username">Friend\'s Username:</string>
 	<string name="add">Add</string>
 	<string name="delete">Delete</string>
+	<string name="approved_friends_title">Approved Friends:</string>
+	<string name="unapproved_friends_title">Unapproved Friends:</string>
     
 <!-- student profile page -->    
     <string name="student_profile">My Profile</string>
