@@ -29,7 +29,7 @@ import android.widget.Toast;
 public class StudentClasses extends Activity implements OnItemSelectedListener{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
-	private Button home, add;
+	private Button home, add, delete;
 	private Intent homeIntent;
 	private Spinner spinner;
 	private final static String classListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classList";
@@ -47,6 +47,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		createClassListSpinner();
 
 		add = (Button)findViewById(R.id.add_button);
+		delete = (Button)findViewById(R.id.delete_button);
 		
 		displayStudentClassListView();
 		
@@ -63,9 +64,25 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				
 				new PostWithAsync(addDeleteClassURL, addClass);
 				
-			} catch (JSONException e) {
-			}
+				} catch (JSONException e) {
+				}
 			} //end onClick(view v)
+		});
+		
+		delete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+				JSONObject deleteClass = new JSONObject();
+				deleteClass.put("name", className);
+				deleteClass.put("section", section);
+				deleteClass.put("editType", "delete");
+				deleteClass.put("username", getUsername());
+				
+				new PostWithAsync(addDeleteClassURL, deleteClass);
+				} catch (JSONException e) {
+				}
+			}
 		});
 		
 		home.setOnClickListener(new View.OnClickListener() {
