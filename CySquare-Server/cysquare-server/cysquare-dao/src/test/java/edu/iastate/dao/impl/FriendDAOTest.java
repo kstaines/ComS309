@@ -30,9 +30,10 @@ public class FriendDAOTest {
 	}
 
 	@Test
-	public void testGetTestCourse() {
+	public void testGetTestFriend() {
 		Friend testFriend = createFriend(studentId, friendId, "Y");
 		List<Friend> friends = friendDao.getFriendList(studentId);
+		System.out.println(friends.toString());
 		assertNotNull(friends);
 		assertFalse(friends.isEmpty());
 		assertNotNull(friends.get(0));
@@ -43,6 +44,14 @@ public class FriendDAOTest {
 		assertEquals(testFriend.getStudentId(), friends.get(0).getStudentId());
 		assertEquals(testFriend.getFriendId(), friends.get(0).getFriendId());
 		assertEquals(testFriend.getApproved(), friends.get(0).getApproved());
+	}
+	
+	@Test
+	public void testGetMultipleFriends() {
+		List<Friend> friends = friendDao.getFriendList(1);
+		System.out.println(friends);
+		assertNotNull(friends);
+		assertFalse(friends.isEmpty());
 	}
 
 	private void createData() {

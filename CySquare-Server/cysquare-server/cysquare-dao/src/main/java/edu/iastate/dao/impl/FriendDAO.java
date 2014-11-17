@@ -20,8 +20,8 @@ public class FriendDAO extends DatabaseAccess {
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_FRIENDS + " WHERE studentid=\"" + studentId + "\" OR friendid=\"" + studentId + "\";");
-			if(res.next()) {
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_FRIENDS + " WHERE `studentid`=" + studentId + " OR `friendid`=" + studentId + ";");
+			while(res.next()) {
 				Friend friend = populateFriend(res);
 				friends.add(friend);
 			}
