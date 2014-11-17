@@ -36,6 +36,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 	private final static String addDeleteClassURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classPage";
 	private final static String studentClassListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classStudent";
 	private String className, section;
+	private String[] studentClasses;
 
 	
 	@Override
@@ -48,6 +49,8 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		createClassListSpinner();
 
 		add = (Button)findViewById(R.id.add_button);
+		
+		displayStudentClassListView();
 		
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -176,6 +179,41 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		}
     	
     }
+    
+    private void displayStudentClassListView() {
+    	String user = getUsername();
+    	JSONObject jo = new JSONObject();
+    	try {
+			jo.put("username", user);
+			new PostWithAsync(studentClassListURL, jo).execute();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private void createClassListArray(JSONObject response) {
+    	try {
+			if (response.getString("status").equals("true")) {
+				int size = response.getInt("size");
+				for (int i=0; i<size; i++) {
+					String courseKey = "course";
+					int courseKeyNumber = i+1;
+					courseKey = courseKey.concat(Integer.toString(courseKeyNumber));
+					studentClasses[i] = response.getString(courseKey);
+				}
+			}
+			else {
+				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+    	
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, studentClasses);
+    	ListView classList = (ListView)findViewById(R.id.studentClassesListView);
+    	classList.setAdapter(adapter);
+    }
+    
 
 	private class PostWithAsync extends AsyncTask<String, String, String> {
 		private String url;
@@ -211,6 +249,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 			
 				if(url.equals(classListURL)) createSpinnerArray(responseObject);
 				else if (url.equals(addDeleteClassURL)) checkAddDeleteResponse(responseObject);
+				else if (url.equals(studentClassListURL)) createClassListArray(responseObject);
 			}
 	    	catch (JSONException e){
 				e.printStackTrace();

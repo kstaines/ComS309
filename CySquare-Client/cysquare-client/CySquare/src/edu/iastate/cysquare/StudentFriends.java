@@ -25,15 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StudentFriends extends Activity{
-	private Button home, add;
+	private Button home, add, delete;
 	private EditText friend_username;
-	private ListView friendList;
 	private Intent homeIntent;
-	private String username;
-	private String studentFriendsURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/friendsPage";
+	private String fusername, clickedFriend;
+	private static final String studentFriendsURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/friendsList";
+	private static final String friendsPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/friendsPage";
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	private JSONObject responseObject;
-	private List<String> friends;
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -42,17 +41,14 @@ public class StudentFriends extends Activity{
 		
 		home = (Button)findViewById(R.id.home_button);
 		add = (Button)findViewById(R.id.add_button);
+		delete = (Button)findViewById(R.id.delete_button);
 		friend_username = (EditText)findViewById(R.id.editText_enterFriendName);
 		
-//		populateFriendListView();
-//		registerClick();
-		
-		friendList = (ListView)findViewById(R.id.friendListView);
-		new PostWithAsync().execute();
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, friends);  
-		
-		friendList.setAdapter(adapter);
+		populateFriendListView();
 		registerClick();
+		
+//		friendList = (ListView)findViewById(R.id.friendListView);
+//		new PostWithAsync().execute();
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -62,27 +58,71 @@ public class StudentFriends extends Activity{
 			} //end onClick(View v)
 		});
 		
-//		add.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				username = friend_username.getText().toString();
-//				JSONObject jo = createAddDeleteJSONObj(username, "add");
-//				new PostWithAsync(studentFriendsURL, jo).execute();
-//			}
-//			
-//		});
+		add.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				fusername = friend_username.getText().toString();
+				JSONObject jo = new JSONObject();
+				try {
+					jo.put("username", getUsername());
+					jo.put("editType", "add");
+					jo.put("friendname", fusername);
+					new PostWithAsync(friendsPageURL, jo).execute();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		delete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				JSONObject jo = new JSONObject();
+				try {
+					jo.put("username", getUsername());
+					jo.put("editType", "delete");
+					jo.put("friendname", clickedFriend);
+					new PostWithAsync(friendsPageURL, jo).execute();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+			
 		
 	} //end onCreate(Bundle savedInstanceState)
 	
-//	private void populateFriendListView() {
-//		//Array
-//		String[] f = {"Friend1", "Friend2", "Friend3"};
-//		// Build adapter
-//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, f);
-//		//ListView
-//		ListView friends = (ListView)findViewById(R.id.friendListView);
-//		friends.setAdapter(adapter);
-//	}
+	private void populateFriendListView() {
+		//Array
+		JSONObject jo = new JSONObject();
+		try {
+			jo.put("username", getUsername());
+			new PostWithAsync(studentFriendsURL, jo).execute();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	private void createFriendArray(JSONObject response) {
+		try {
+			int size = response.getInt("approveSize");
+			String[] friends = new String[size];
+			for (int i=0; i<size; i++) {
+				String friendName = "friendapproved";
+				friendName = friendName.concat(Integer.toString(i+1));
+				friends[i] = response.getString(friendName);
+			}
+			
+			// Build adapter
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, friends);
+			//ListView
+			ListView friendList = (ListView)findViewById(R.id.friendListView);
+			friendList.setAdapter(adapter);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private void registerClick() {
 		ListView friendList = (ListView)findViewById(R.id.friendListView);
@@ -92,13 +132,24 @@ public class StudentFriends extends Activity{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long id) {
 				TextView tv = (TextView) arg1;
-				String message = tv.getText().toString();
-				Toast.makeText(StudentFriends.this, message, Toast.LENGTH_LONG).show();
+				clickedFriend = tv.getText().toString();
+				Toast.makeText(StudentFriends.this, clickedFriend, Toast.LENGTH_LONG).show();
 			}
 		});
 	}
 	
-	
+	private void checkAddDeleteResponse(JSONObject response) {
+		try {
+			if (response.getString("status").equals("true")) {
+				Toast.makeText(StudentFriends.this, "Add/Delete was successful", Toast.LENGTH_LONG).show();
+			}
+			else {
+				Toast.makeText(StudentFriends.this, response.getString("error"), Toast.LENGTH_LONG).show();
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -132,29 +183,22 @@ public class StudentFriends extends Activity{
     }
     
     private class PostWithAsync extends AsyncTask<String, String, String> {
-//    	private String URL;
-//    	private JSONObject sendJSONObject;
-//		public PostWithAsync(String friendsURL, JSONObject jo) {
-//			URL = friendsURL;
-//			sendJSONObject = jo;
-//		}
+    	private String URL;
+    	private JSONObject sendJSONObject;
+		public PostWithAsync(String friendsURL, JSONObject jo) {
+			URL = friendsURL;
+			sendJSONObject = jo;
+		}
 
 		@Override
 		protected String doInBackground(String... arg0) {
 		
 			try{
-				JSONObject jo = new JSONObject();
-				jo.put("username", getUsername());
-				
 				JSONCommunication jc = new JSONCommunication();
-				String build = jc.sendPost(studentFriendsURL, jo);
-				
+				String build = jc.sendPost(URL, sendJSONObject);
 				return build;
 	    	}
 	    	catch (JSONException e){
-				e.printStackTrace();
-			}
-	    	catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 	    	catch (IOException e) {
@@ -168,15 +212,14 @@ public class StudentFriends extends Activity{
 			JSONObject responseObject;
 			try {
 				responseObject = new JSONObject(build);
-				friends = new ArrayList<String>();
-				int size = responseObject.getInt("approveSize");
-				for (int i=0; i<size; i++) {
-					String friendName = "friendapproved";
-					friendName = friendName.concat(Integer.toString(i+1));
-					friends.add(responseObject.getString(friendName));
+				if (responseObject.getString("status").equals("true")) {
+					if (URL.equals(studentFriendsURL)) createFriendArray(responseObject);
+					else if (URL.equals(friendsPageURL)) checkAddDeleteResponse(responseObject);
 				}
-				
-	    		Toast.makeText(getApplicationContext(), responseObject.getString("status"), Toast.LENGTH_LONG).show();
+				else {
+		    		Toast.makeText(getApplicationContext(), responseObject.getString("error"), Toast.LENGTH_LONG).show();
+
+				}
 			}
 	    	catch (JSONException e){
 				e.printStackTrace();

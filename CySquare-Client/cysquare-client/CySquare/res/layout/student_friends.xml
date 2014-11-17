@@ -69,4 +69,12 @@
     android:layout_below="@+id/add_button" >
 </ListView>
 
+<Button
+    android:id="@+id/delete_button"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="68dp"
+    android:layout_height="40dp"
+    android:layout_below="@+id/friendListView"
+    android:layout_toRightOf="@+id/TextView02"
+    android:text="@string/delete" />
 </RelativeLayout>
