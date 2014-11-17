@@ -36,8 +36,6 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 	private final static String addDeleteClassURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classPage";
 	private final static String studentClassListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classStudent";
 	private String className, section;
-	private String[] studentClasses;
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -110,20 +108,15 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     
     private void createSpinnerArray(JSONObject response) {
     	try {
-			if (response.getString("status").equals("true")) {
 				int size = response.getInt("size");
 				String[] spinnerArray = new String[size];
 				for (int i=0; i<size; i++) {
-					String courseKey = "course";
+					String courseKey = "Course";
 					int courseKeyNumber = i+1;
 					courseKey = courseKey.concat(Integer.toString(courseKeyNumber));
 					spinnerArray[i] = response.getString(courseKey);
 				}
 				finishSpinner(spinnerArray);
-			}
-			else {
-				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
-			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -148,7 +141,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		String courseInfo = (String) spinner.getSelectedItem();
 		Scanner scan = new Scanner(courseInfo);
 		while (scan.hasNext()) {
-			if (scan.next().equals("name:")) {
+			if (scan.next().equals("Name:")) {
 				className = scan.next();
 			}
 			else if (scan.next().equals("Section:")) {
@@ -181,10 +174,9 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     }
     
     private void displayStudentClassListView() {
-    	String user = getUsername();
     	JSONObject jo = new JSONObject();
     	try {
-			jo.put("username", user);
+			jo.put("username", getUsername());
 			new PostWithAsync(studentClassListURL, jo).execute();
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -193,25 +185,27 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     
     private void createClassListArray(JSONObject response) {
     	try {
-			if (response.getString("status").equals("true")) {
+//			if (response.getString("status").equals("true")) {
 				int size = response.getInt("size");
+				String[] studentClasses = new String[size];
 				for (int i=0; i<size; i++) {
-					String courseKey = "course";
+					String courseKey = "Course";
 					int courseKeyNumber = i+1;
 					courseKey = courseKey.concat(Integer.toString(courseKeyNumber));
 					studentClasses[i] = response.getString(courseKey);
 				}
-			}
-			else {
+//			}
+//			else {
 				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
-			}
+//			}
+				
+	    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, studentClasses);
+	    	ListView classList = (ListView)findViewById(R.id.studentClassesListView);
+	    	classList.setAdapter(adapter);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
     	
-    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, studentClasses);
-    	ListView classList = (ListView)findViewById(R.id.studentClassesListView);
-    	classList.setAdapter(adapter);
     }
     
 
