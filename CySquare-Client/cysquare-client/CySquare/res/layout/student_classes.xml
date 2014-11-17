@@ -46,4 +46,13 @@
     android:layout_below="@+id/add_button" >
 </ListView>
 
+<Button
+    android:id="@+id/delete_button"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/classList_spinner"
+    android:layout_below="@+id/studentClassesListView"
+    android:text="@string/delete_button" />
+
 </RelativeLayout>
