@@ -209,7 +209,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 			e.printStackTrace();
 		}
     	
-    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, studentClasses);
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, studentClasses);
     	ListView classList = (ListView)findViewById(R.id.studentClassesListView);
     	classList.setAdapter(adapter);
     }

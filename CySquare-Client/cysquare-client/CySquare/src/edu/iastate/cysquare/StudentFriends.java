@@ -115,7 +115,7 @@ public class StudentFriends extends Activity{
 			}
 			
 			// Build adapter
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, friends);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, friends);
 			//ListView
 			ListView friendList = (ListView)findViewById(R.id.friendListView);
 			friendList.setAdapter(adapter);
