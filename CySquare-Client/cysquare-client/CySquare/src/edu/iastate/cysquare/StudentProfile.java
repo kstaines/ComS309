@@ -29,7 +29,6 @@ public class StudentProfile extends Activity{
 	int totalPointsFromJSON;
 	Handler myHandler;
 	
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		

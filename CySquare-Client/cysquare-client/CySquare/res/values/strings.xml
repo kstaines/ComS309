@@ -51,7 +51,7 @@
  
 <!-- student classes page --> 
     <string name="student_classes">My Classes</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="add_button">Add</string>
 
 <!-- instructor welcome page -->
     <string name="instructor_welcome">Welcome!</string>

@@ -61,4 +61,12 @@
     android:layout_toRightOf="@+id/TextView02"
     android:text="@string/add" />
 
+<ListView
+    android:id="@+id/friendListView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignLeft="@+id/TextView02"
+    android:layout_below="@+id/add_button" >
+</ListView>
+
 </RelativeLayout>
