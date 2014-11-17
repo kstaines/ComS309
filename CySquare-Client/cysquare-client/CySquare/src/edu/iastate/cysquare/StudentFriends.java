@@ -44,7 +44,8 @@ public class StudentFriends extends Activity{
 		delete = (Button)findViewById(R.id.delete_button);
 		friend_username = (EditText)findViewById(R.id.editText_enterFriendName);
 		
-		populateFriendListView();
+//		populateFriendListView();
+		createFriendArray(null);
 		registerClick();
 		
 //		friendList = (ListView)findViewById(R.id.friendListView);
@@ -105,28 +106,61 @@ public class StudentFriends extends Activity{
 	}
 	
 	private void createFriendArray(JSONObject response) {
-		try {
-			int size = response.getInt("approveSize");
-			String[] friends = new String[size];
-			for (int i=0; i<size; i++) {
-				String friendName = "friendapproved";
-				friendName = friendName.concat(Integer.toString(i+1));
-				friends[i] = response.getString(friendName);
-			}
+//		try {
+			//APPROVED FRIENDS
+//			int size = response.getInt("approveSize");
+//			String[] friends = new String[size];
+//			for (int i=0; i<size; i++) {
+//				String friendName = "friendapproved";
+//				friendName = friendName.concat(Integer.toString(i+1));
+//				friends[i] = response.getString(friendName);
+//			}
+//			
+			String[] f = {"friend1", "friend 2", "friend3"};
 			
 			// Build adapter
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, friends);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, f);	//switch to friends for array from server
 			//ListView
 			ListView friendList = (ListView)findViewById(R.id.friendListView);
 			friendList.setAdapter(adapter);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+			
+			//UNAPPROVED FRIENDS
+//			size = response.getInt("notApproveSize");
+//			String[] notFriends = new String[size];
+//			for (int i=0; i<size; i++) {
+//				String friendName = "friendnotapproved";
+//				friendName = friendName.concat(Integer.toString(i+1));
+//				notFriends[i] = response.getString(friendName);
+//			}
+			
+			String[] nf = {"friend4", "friend5", "friend6"};
+			
+			// Build adapter
+			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.listview_items, nf);	//switch to friends for array from server
+			//ListView
+			ListView notFriendList = (ListView)findViewById(R.id.notFriendsListView);
+			notFriendList.setAdapter(adapter2);
+			
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	private void registerClick() {
 		ListView friendList = (ListView)findViewById(R.id.friendListView);
 		friendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long id) {
+				TextView tv = (TextView) arg1;
+				clickedFriend = tv.getText().toString();
+				Toast.makeText(StudentFriends.this, clickedFriend, Toast.LENGTH_LONG).show();
+			}
+		});
+		
+		ListView notFriendList = (ListView)findViewById(R.id.notFriendsListView);
+		notFriendList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
@@ -226,18 +260,6 @@ public class StudentFriends extends Activity{
 			}
 		}
     }
-    
-//    private JSONObject createAddDeleteJSONObj(String username, String editType) {
-//    	JSONObject jobj = new JSONObject();
-//		try {
-//			jobj.put("username", username);
-//			jobj.put("editType", editType);
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//    	return jobj;
-//    }
-    
     
     private String getUsername() {
     	SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
