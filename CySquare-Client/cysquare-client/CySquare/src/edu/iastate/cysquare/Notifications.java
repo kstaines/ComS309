@@ -2,16 +2,21 @@ package edu.iastate.cysquare;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Notifications extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
+	String usertypeFromPrefs;
 	private Button home;
-	private Intent homeIntent;
+	private Intent studentHomeIntent;
+	private Intent instructorHomeIntent;
+	private Intent adminHomeIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -23,7 +28,10 @@ public class Notifications extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				homeIntent = new Intent(v.getContext(), InstructorWelcome.class);
+				studentHomeIntent = new Intent(v.getContext(), StudentWelcome.class);
+				instructorHomeIntent = new Intent(v.getContext(), InstructorWelcome.class);
+				adminHomeIntent = new Intent(v.getContext(), AdminWelcome.class);
+				getUsertype();
 				goHome();
 			} //end onClick(View v)
 		});
@@ -48,8 +56,24 @@ public class Notifications extends Activity{
         return super.onOptionsItemSelected(item);
     }
     
+    private void getUsertype(){
+    	SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+		usertypeFromPrefs = userData.getString("usertype", "false");
+    }
+    
     private void goHome(){
-    	startActivity(homeIntent);
+    	if(usertypeFromPrefs.equalsIgnoreCase("student")){
+    		startActivity(studentHomeIntent);
+    	}
+    	else if(usertypeFromPrefs.equalsIgnoreCase("instructor")){
+    		startActivity(instructorHomeIntent);
+    	}
+    	else if(usertypeFromPrefs.equalsIgnoreCase("admin")){
+    		startActivity(adminHomeIntent);
+    	}
+    	else{
+    		Toast.makeText(getApplicationContext(), "Could not get usertype from preferences file", Toast.LENGTH_LONG).show();
+    	}
     }
 
 }
