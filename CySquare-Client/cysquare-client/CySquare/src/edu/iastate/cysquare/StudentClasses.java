@@ -45,6 +45,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		home = (Button)findViewById(R.id.home_button);
 		
 		createClassListSpinner();
+		spinner.setOnItemSelectedListener(this);
 
 		add = (Button)findViewById(R.id.add_button);
 		delete = (Button)findViewById(R.id.delete_button);
@@ -158,14 +159,12 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		String courseInfo = (String) spinner.getSelectedItem();
 		Scanner scan = new Scanner(courseInfo);
 		while (scan.hasNext()) {
-			if (scan.next().equals("Name:")) {
+			String scanned = scan.next();
+			if (scanned.equals("Name:")) {
 				className = scan.next();
 			}
-			else if (scan.next().equals("Section:")) {
+			else if (scanned.equals("Section:")) {
 				section = scan.next();
-			}
-			else {
-				scan.next();
 			}
 		}
 		scan.close();
@@ -179,7 +178,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     private void checkAddDeleteResponse(JSONObject response) {
     	try {
 			if (response.getString("status").equals("true")) {
-				Toast.makeText(getApplicationContext(), "Class has been added. Logout to refresh your screen!", Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), "Class has been added!", Toast.LENGTH_LONG).show();
 			}
 			else {
 				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
@@ -252,10 +251,14 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 			JSONObject responseObject;
 			try {
 				responseObject = new JSONObject(build);
-			
-				if(url.equals(classListURL)) createSpinnerArray(responseObject);
-				else if (url.equals(addDeleteClassURL)) checkAddDeleteResponse(responseObject);
-				else if (url.equals(studentClassListURL)) createClassListArray(responseObject);
+				if (responseObject.has("status")) {
+					Toast.makeText(StudentClasses.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
+				}
+				else {
+					if(url.equals(classListURL)) createSpinnerArray(responseObject);
+					else if (url.equals(addDeleteClassURL)) checkAddDeleteResponse(responseObject);
+					else if (url.equals(studentClassListURL)) createClassListArray(responseObject);
+				}
 			}
 	    	catch (JSONException e){
 				e.printStackTrace();

@@ -45,11 +45,7 @@ public class StudentFriends extends Activity{
 		friend_username = (EditText)findViewById(R.id.editText_enterFriendName);
 		
 		populateFriendListView();
-//		createFriendArray(null);
 		registerClick();
-		
-//		friendList = (ListView)findViewById(R.id.friendListView);
-//		new PostWithAsync().execute();
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -105,7 +101,7 @@ public class StudentFriends extends Activity{
 
 	}
 	
-	private void createFriendArray(JSONObject response) {
+	private void createFriendArrayFromServerResponse(JSONObject response) {
 		try {
 			//APPROVED FRIENDS
 			int size = response.getInt("approveSize");
@@ -115,11 +111,9 @@ public class StudentFriends extends Activity{
 				friendName = friendName.concat(Integer.toString(i+1));
 				friends[i] = response.getString(friendName);
 			}
-//			
-			String[] f = {"friend1", "friend 2", "friend3"};
 			
 			// Build adapter
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, friends);	//switch to friends for array from server
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, friends);
 			//ListView
 			ListView friendList = (ListView)findViewById(R.id.friendListView);
 			friendList.setAdapter(adapter);
@@ -133,10 +127,8 @@ public class StudentFriends extends Activity{
 				notFriends[i] = response.getString(friendName);
 			}
 			
-			String[] nf = {"friend4", "friend5", "friend6"};
-			
 			// Build adapter
-			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.listview_items, notFriends);	//switch to friends for array from server
+			ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.listview_items, notFriends);
 			//ListView
 			ListView notFriendList = (ListView)findViewById(R.id.notFriendsListView);
 			notFriendList.setAdapter(adapter2);
@@ -155,7 +147,7 @@ public class StudentFriends extends Activity{
 					long id) {
 				TextView tv = (TextView) arg1;
 				clickedFriend = tv.getText().toString();
-				Toast.makeText(StudentFriends.this, clickedFriend, Toast.LENGTH_LONG).show();
+				Toast.makeText(StudentFriends.this, "Friend selected is " + clickedFriend, Toast.LENGTH_LONG).show();
 			}
 		});
 		
@@ -167,7 +159,7 @@ public class StudentFriends extends Activity{
 					long id) {
 				TextView tv = (TextView) arg1;
 				clickedFriend = tv.getText().toString();
-				Toast.makeText(StudentFriends.this, clickedFriend, Toast.LENGTH_LONG).show();
+				Toast.makeText(StudentFriends.this, "Friend selected is " + clickedFriend, Toast.LENGTH_LONG).show();
 			}
 		});
 	}
@@ -184,14 +176,6 @@ public class StudentFriends extends Activity{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 	
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -246,8 +230,13 @@ public class StudentFriends extends Activity{
 			JSONObject responseObject;
 			try {
 				responseObject = new JSONObject(build);
-					if (URL.equals(studentFriendsURL)) createFriendArray(responseObject);
+				if(responseObject.has("status")) {
+					Toast.makeText(StudentFriends.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
+				}
+				else {
+					if (URL.equals(studentFriendsURL)) createFriendArrayFromServerResponse(responseObject);
 					else if (URL.equals(friendsPageURL)) checkAddDeleteResponse(responseObject);
+				}
 			}
 	    	catch (JSONException e){
 				e.printStackTrace();
