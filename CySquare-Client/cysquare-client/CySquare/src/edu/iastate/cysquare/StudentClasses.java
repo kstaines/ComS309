@@ -63,7 +63,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				String user = getUsername();
 				addClass.put("username", user);
 				
-				new PostWithAsync(addDeleteClassURL, addClass);
+				new PostWithAsync(addDeleteClassURL, addClass).execute();
 				
 				} catch (JSONException e) {
 				}
@@ -80,7 +80,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				deleteClass.put("editType", "delete");
 				deleteClass.put("username", getUsername());
 				
-				new PostWithAsync(addDeleteClassURL, deleteClass);
+				new PostWithAsync(addDeleteClassURL, deleteClass).execute();
 				} catch (JSONException e) {
 				}
 			}
@@ -160,10 +160,10 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		Scanner scan = new Scanner(courseInfo);
 		while (scan.hasNext()) {
 			String scanned = scan.next();
-			if (scanned.equals("Name:")) {
+			if (scanned.equalsIgnoreCase("Name:")) {
 				className = scan.next();
 			}
-			else if (scanned.equals("Section:")) {
+			else if (scanned.equalsIgnoreCase("Section:")) {
 				section = scan.next();
 			}
 		}
@@ -251,7 +251,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 			JSONObject responseObject;
 			try {
 				responseObject = new JSONObject(build);
-				if (responseObject.has("status")) {
+				if (responseObject.has("status") && responseObject.getString("status").equals("error")) {
 					Toast.makeText(StudentClasses.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
 				}
 				else {
