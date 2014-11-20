@@ -2,8 +2,6 @@ package edu.iastate.cysquare;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import org.json.JSONException;
@@ -14,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class StudentClasses extends Activity implements OnItemSelectedListener{
@@ -51,6 +49,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		delete = (Button)findViewById(R.id.delete_button);
 		
 		displayStudentClassListView();
+		registerClick();
 		
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -157,17 +156,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 			long arg3) {
 		String courseInfo = (String) spinner.getSelectedItem();
-		Scanner scan = new Scanner(courseInfo);
-		while (scan.hasNext()) {
-			String scanned = scan.next();
-			if (scanned.equalsIgnoreCase("Name:")) {
-				className = scan.next();
-			}
-			else if (scanned.equalsIgnoreCase("Section:")) {
-				section = scan.next();
-			}
-		}
-		scan.close();
+		getClassNameAndSection(courseInfo);
 	}
     
 	@Override
@@ -219,6 +208,34 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     	
     }
     
+	private void registerClick() {
+		ListView studentClassList = (ListView)findViewById(R.id.studentClassesListView);
+		studentClassList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long id) {
+				TextView tv = (TextView) arg1;
+				getClassNameAndSection(tv.getText().toString());
+				Toast.makeText(StudentClasses.this, className + " is selected", Toast.LENGTH_LONG).show();
+			}
+		});
+		
+	}
+	
+	private void getClassNameAndSection(String courseInfo) {
+		Scanner scan = new Scanner(courseInfo);
+		while (scan.hasNext()) {
+			String scanned = scan.next();
+			if (scanned.equalsIgnoreCase("Name:")) {
+				className = scan.next();
+			}
+			else if (scanned.equalsIgnoreCase("Section:")) {
+				section = scan.next();
+			}
+		}
+		scan.close();
+	}
 
 	private class PostWithAsync extends AsyncTask<String, String, String> {
 		private String url;

@@ -1,13 +1,8 @@
 package edu.iastate.cysquare;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,7 +27,6 @@ public class StudentFriends extends Activity{
 	private static final String studentFriendsURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/friendsList";
 	private static final String friendsPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/friendsPage";
 	public static final String PREFS_NAME = "MyPreferencesFile";
-	private JSONObject responseObject;
 			
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
