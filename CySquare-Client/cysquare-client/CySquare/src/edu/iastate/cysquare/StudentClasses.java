@@ -28,7 +28,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
 	private Button home, add, delete;
-	private Intent homeIntent;
+	private Intent homeIntent, classesIntent;
 	private Spinner spinner;
 	private final static String classListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classList";
 	private final static String addDeleteClassURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classPage";
@@ -66,6 +66,9 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				
 				} catch (JSONException e) {
 				}
+				
+				classesIntent = new Intent(v.getContext(), StudentClasses.class);
+				startActivity(classesIntent);
 			} //end onClick(view v)
 		});
 		
@@ -82,6 +85,9 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				new PostWithAsync(addDeleteClassURL, deleteClass).execute();
 				} catch (JSONException e) {
 				}
+				
+				classesIntent = new Intent(v.getContext(), StudentClasses.class);
+				startActivity(classesIntent);
 			}
 		});
 		
@@ -163,20 +169,6 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 	public void onNothingSelected(AdapterView<?> arg0) {
 		//Do Nothing
 	}
-	
-    private void checkAddDeleteResponse(JSONObject response) {
-    	try {
-			if (response.getString("status").equals("true")) {
-				Toast.makeText(getApplicationContext(), "Class has been added!", Toast.LENGTH_LONG).show();
-			}
-			else {
-				Toast.makeText(getApplicationContext(), response.getString("error"), Toast.LENGTH_LONG).show();
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-    	
-    }
     
     private void displayStudentClassListView() {
     	JSONObject jo = new JSONObject();
@@ -273,7 +265,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 				}
 				else {
 					if(url.equals(classListURL)) createSpinnerArray(responseObject);
-					else if (url.equals(addDeleteClassURL)) checkAddDeleteResponse(responseObject);
+					else if (url.equals(addDeleteClassURL)) Toast.makeText(getApplicationContext(), "Add/Delete was successful", Toast.LENGTH_LONG).show();
 					else if (url.equals(studentClassListURL)) createClassListArray(responseObject);
 				}
 			}
