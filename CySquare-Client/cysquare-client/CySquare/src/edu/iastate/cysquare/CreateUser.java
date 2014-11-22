@@ -28,7 +28,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 	private Button back, create;
 	private EditText username, password, confirmPassword;
 	private String userType;
-	private Intent studentWelcomeIntent, unapprovedInstructorWelcomeIntent, mainIntent;
+	private Intent studentWelcomeIntent, mainIntent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,6 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 				
 				if (checkForMatchingPasswords()) {
 					studentWelcomeIntent = new Intent(v.getContext(), StudentWelcome.class);
-					unapprovedInstructorWelcomeIntent = new Intent(v.getContext(), UnapprovedInstructorWelcome.class);
 					new PostWithAsync().execute();
 				}
 				
@@ -153,9 +152,6 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 		    		// STUDENT/INSTRUCTOR WELCOME PAGE
 		    		if (userType.equals("student")){
 		    			startActivityForResult(studentWelcomeIntent, 0);
-		    		}
-		    		else if (userType.equals("instructor")) {
-		    			startActivityForResult(unapprovedInstructorWelcomeIntent, 0);
 		    		}
 		    	}
 		    	else {
