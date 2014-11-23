@@ -80,6 +80,7 @@
     
 <!-- admin classes page -->
 	<string name="admin_classes">Manage Classes</string>
+	<string name="admin_current_classes">Current Class List</string>
 	
 <!-- admin profile page -->
 	<string name="admin_profile">My Profile</string>
