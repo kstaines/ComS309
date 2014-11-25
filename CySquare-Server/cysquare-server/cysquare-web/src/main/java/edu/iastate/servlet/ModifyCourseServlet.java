@@ -1,92 +1,82 @@
 package edu.iastate.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.iastate.dao.impl.AccountDAO;
-import edu.iastate.dao.impl.FriendDAO;
-import edu.iastate.domain.Friend;
-import edu.iastate.domain.UserAccount;
+import edu.iastate.dao.impl.CourseDAO;
 
-@WebServlet("/friendsPage")
-public class FriendsPageServlet extends HttpServlet{
+@WebServlet("/modifyCourse")
+public class ModifyCourseServlet extends HttpServlet {
 
 	
-	private static final long serialVersionUID = -9026444719267002619L;
-	private FriendDAO friendDao = new FriendDAO ();
-	private AccountDAO accountDao = new AccountDAO ();
+	private static final long serialVersionUID = 963016886349131227L;
 	
+	private CourseDAO courseDao = new CourseDAO ();
+		
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		
-		//Get the parameters
-		String username = request.getParameter("username");
-		String friend = request.getParameter("friendname");
+		//Get the always be sent parameter from the client
+		String courseName = request.getParameter("coursename");
 		String editType = request.getParameter("editType");
 		
 		JSONObject object = new JSONObject ();
 		
-		
-		//Check if the parameter are null or blank
-		if(isNull(object, username, "username", response)) return;
-		if(isBlank(object, username, "username", response)) return;
-		
-		if(isNull(object, friend, "friend", response)) return;
-		if(isBlank(object, friend, "friend", response)) return;
-		
+		//Check if the parameters are null or blank
+		if(isNull(object, courseName, "course name", response)) return;
+		if(isBlank(object, courseName, "course name", response)) return;
 		if(isNull(object, editType, "edit type", response)) return;
 		if(isBlank(object, editType, "edit type", response)) return;
 		
-		//Get the user account info from the user and the friend
-		UserAccount useraccount = accountDao.getAccountInfo(username);
-		UserAccount friendaccount = accountDao.getAccountInfo(friend);
-		
-		//Get the user id and friend id
-		Integer userId = useraccount.getUserId();
-		Integer friendId = friendaccount.getUserId();
-		
-		if(editType.equalsIgnoreCase("delete"))
+		//if edit type is not delete or add the send an error message
+		if(!(editType.equalsIgnoreCase("delete") || editType.equalsIgnoreCase("add")))
 		{
-			friendDao.deleteFriendship(userId, friendId);
-			putTrue(object, response);
+			putError(object, "The edit type should be either delete or add", response);
 			return;
 		}
-		else if(editType.equalsIgnoreCase("add"))
+		
+		
+		//If the edit type is delete then delete the course
+		if(editType.equalsIgnoreCase("delete"))
 		{
-			//If the friend and the user try to add each other then they are automatically approved
-			List<Friend> friendList = friendDao.getFriendList(userId);
-			
-			//if the friend list is not empty then check if they both wanted to add each other
-			if(!friendList.isEmpty())
-			{
-				for(int i = 0; i < friendList.size(); i++)
-				{
-					if(friendList.get(i).getFriendId().equals(friendId))
-					{
-						friendDao.approveFriendship(userId, friendId);
-					}
-				}
-			}
-			
-			friendDao.createFriendship(userId, friendId);
+			courseDao.deleteCourse(courseName);
 			putTrue(object, response);
 			return;
 		}
 		else
 		{
-			putError(object, "The edit type should be delete or add", response);
+			//Get the rest of the parameters and check if null or blank
+			String location = request.getParameter("location");
+			String time = request.getParameter("time");
+			String section = request.getParameter("section");
+			String days = request.getParameter("days");
+			
+			if(isNull(object, location, "location", response)) return;
+			if(isBlank(object, location, "location", response)) return;
+			if(isNull(object, time, "time", response)) return;
+			if(isBlank(object, time, "time", response)) return;
+			if(isNull(object, section, "section", response)) return;
+			if(isBlank(object, section, "section", response)) return;
+			if(isNull(object, days, "days", response)) return;
+			if(isBlank(object, days, "days", response)) return;
+			
+			//Awaiting for the course dao to be changed to include the section
+			courseDao.createCourse(courseName, location, time, days);
+			putTrue(object, response);
 			return;
 		}
-		
 	}
+
 	
 	private void putError(JSONObject object, String message, HttpServletResponse response)
 	{
