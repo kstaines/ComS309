@@ -1,6 +1,7 @@
 package edu.iastate.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.iastate.dao.impl.CourseDAO;
+import edu.iastate.domain.Course;
 
 @WebServlet("/modifyCourse")
 public class ModifyCourseServlet extends HttpServlet {
@@ -70,6 +74,26 @@ public class ModifyCourseServlet extends HttpServlet {
 			if(isNull(object, days, "days", response)) return;
 			if(isBlank(object, days, "days", response)) return;
 			
+			//Check if the course name is already in the current list
+			List<Course> currentList = courseDao.getAvailableCourseList();
+			
+			boolean found = false;
+			if(!(currentList.isEmpty() || currentList == null))
+			{
+				//Loop to see if the course is in current list
+				for(int i = 0; i < currentList.size(); i++)
+				{
+					Course currentCourse = currentList.get(i);
+					if(currentCourse.getName().equalsIgnoreCase(courseName) && currentCourse.getSection().equalsIgnoreCase(section))
+					{
+						found = true;
+						putError(object, "The course is already in the data base. Please add a different course or delete the course you want to modify and add it again.", response);
+						return;
+					}
+				}
+				
+			}
+			if(found) return;
 			//Awaiting for the course dao to be changed to include the section
 			courseDao.createCourse(courseName, location, time, days);
 			putTrue(object, response);
