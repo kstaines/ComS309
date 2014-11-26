@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CheckIn extends Activity{
@@ -28,11 +29,11 @@ public class CheckIn extends Activity{
 	private Button home;
 	private ListView classList;
 	private Intent homeIntent;
-	String usernameFromPref;
-	String selectedClassName;
-	String selectedSection;
-	int totalNumOfClasses;
-	private String[] courseInfo = new String[3]; //[totalNumOfClasses];
+	private String usernameFromPref;
+	private String selectedClassName;
+	private String selectedSection;
+	private String clickedClass;
+	private JSONObject responseObject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -43,23 +44,32 @@ public class CheckIn extends Activity{
 		classList = (ListView)findViewById(R.id.checkin_classes_list);
 		usernameFromPref = retrieveUsername();
 		
-		//new PostWithAsync().execute();
-		String[] courseInfo = new String[] {"course1", "course2", "course3"};
-		
-		ArrayAdapter<String> arrAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, courseInfo);
-		classList.setAdapter(arrAdapter);
-		
-		classList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-				//ListView Clicked item index
-				int itemPosition = position;
-				//ListView Clicked item value
-				String itemValue = (String)classList.getItemAtPosition(position);
-				//show alert
-				Toast.makeText(getApplicationContext(), "Position : "+itemPosition+" Listitem : "+itemValue,  Toast.LENGTH_LONG).show();
-			} //end onItemClick(AdapterView<?>
-		});
+		//populate checkin class list
+		populateCheckInListView();
+		registerClick();
+
+		//all this is in registerClick();
+//		classList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+//				JSONObject jo = new JSONObject();
+//				String splitClassString[] = clickedClass.split(" ");
+//				String classDept = splitClassString[3];
+//				String classNum = splitClassString[4];
+//				String classSec = splitClassString[6];
+//				String className = classDept + " " + classNum;
+//				try{
+//					jo.put("username", usernameFromPref);
+//					jo.put("classname", className);
+//					jo.put("section", classSec);
+//					new PostWithAsync(checkinPageURL, jo).execute();
+//				}
+//				catch(JSONException e){
+//					e.printStackTrace();
+//				}
+//				
+//			} //end onItemClick(AdapterView<?>
+//		});
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -89,6 +99,83 @@ public class CheckIn extends Activity{
         return super.onOptionsItemSelected(item);
     }
     
+    private void populateCheckInListView(){
+    	JSONObject jo = new JSONObject();
+    	try{
+    		jo.put("username", usernameFromPref);
+    		new PostWithAsync(classListPageURL, jo).execute();
+    	}
+    	catch(JSONException e){
+    		e.printStackTrace();
+    	}
+    }
+    
+    private void createCheckInArrayFromServerResponse(JSONObject responseObject){
+    	try{
+    		int size = responseObject.getInt("size");
+    		//Toast.makeText(getApplicationContext(), size, Toast.LENGTH_SHORT).show();
+    		
+    		String[] classes = new String[size];
+    		for (int i=0; i<size; i++){
+    			String courseID = "course";
+    			courseID = courseID.concat(Integer.toString(i+1));
+    			classes[i] = responseObject.getString(courseID);
+    			//Toast.makeText(getApplicationContext(), classes[i], Toast.LENGTH_LONG).show();
+    		}
+    		
+    		//build adapter
+    		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, classes);
+    		//ListView
+    		ListView classList = (ListView)findViewById(R.id.checkin_classes_list);
+    		classList.setAdapter(adapter);
+    	}
+    	catch(JSONException e){
+    		e.printStackTrace();
+    	}
+    }
+    
+    private void registerClick(){
+    	ListView classList = (ListView)findViewById(R.id.checkin_classes_list);
+    	classList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    		@Override
+    		public void onItemClick(AdapterView<?> arg0, View v, int position, long id){
+    			TextView tv = (TextView) v;
+    			clickedClass = tv.getText().toString();
+    			Toast.makeText(CheckIn.this, "Class selected is " + clickedClass, Toast.LENGTH_LONG).show();
+    			
+    			String splitClassString[] = clickedClass.split(" ");
+				String classDept = splitClassString[3];
+				String classNum = splitClassString[4];
+				String classSec = splitClassString[6];
+				String className = classDept + " " + classNum;
+				JSONObject jo = new JSONObject();
+				try{
+					jo.put("username", usernameFromPref);
+					jo.put("classname", className);
+					jo.put("section", classSec);
+					new PostWithAsync(checkinPageURL, jo).execute();
+				}
+				catch(JSONException e){
+					e.printStackTrace();
+				}
+    		}
+		});
+    } //end registerClick
+    
+    private void checkInClass(JSONObject responseObject){
+    	try{
+    		if(responseObject.getString("Status").equals("true")){
+    			Toast.makeText(CheckIn.this, "You have been checked in!", Toast.LENGTH_LONG).show();
+    		}
+    		else{
+    			Toast.makeText(CheckIn.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
+    		}
+    	}
+    	catch(JSONException e){
+    		e.printStackTrace();
+    	}
+    }
+    
     private void goHome(){
     	startActivity(homeIntent);
     }
@@ -100,16 +187,18 @@ public class CheckIn extends Activity{
     
     //this PostWithAsync will retrieve class list to display
     private class PostWithAsync extends AsyncTask<String, String, String>{
+    	private String URL;
+    	private JSONObject sendJSONObject;
+    	public PostWithAsync(String classesURL, JSONObject jo){
+    		URL = classesURL;
+    		sendJSONObject = jo;
+    	}
+    	
     	@Override
     	protected String doInBackground(String... arg0){
-    		 
-    		 JSONObject jo = new JSONObject();
     		 try{
-    			 //jo.put("username", usernameFromPref);
-    			 //jo.put("classname", selectedClassName);
-    			 //jo.put("section", selectedSection);
     			 JSONCommunication jc = new JSONCommunication();
-    			 String build = jc.sendPost(classListPageURL, jo);
+    			 String build = jc.sendPost(URL, sendJSONObject);
     			 return build;
     		 }
     		 catch (JSONException e){
@@ -126,23 +215,22 @@ public class CheckIn extends Activity{
     	} //end String doInBackground(String... arg0)
     	
     	protected void onPostExecute(String build){
-    		JSONObject responseObject;
+    		
     		try {
 				responseObject = new JSONObject(build);
-				totalNumOfClasses = responseObject.getInt("size");
-				if(totalNumOfClasses==0){
-					String noClassesError = responseObject.getString("error");
-		    		Toast.makeText(getApplicationContext(), noClassesError, Toast.LENGTH_LONG).show();
+				if(responseObject.has("status")){
+					Toast.makeText(CheckIn.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
 				}
-				
-				
-/*				for(int i=1; i<=totalNumOfClasses; i++){
-					String courseNum = "Course" + i;
-					//String courseFromJSON = responseObject.getString(courseNum);
-					courseInfo[i-1] = responseObject.getString(courseNum);
-				}*/
-				
-				String[] courseInfo = {"course1", "course2", "course3"};
+				else{
+					if(URL.equals(classListPageURL)){
+						Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
+						createCheckInArrayFromServerResponse(responseObject);
+					}
+					else if(URL.equals(checkinPageURL)){
+						Toast.makeText(getApplicationContext(), "111111111111", Toast.LENGTH_LONG).show();
+						checkInClass(responseObject);
+					}
+				}
 			}
 			catch (JSONException e) {
 				e.printStackTrace();
