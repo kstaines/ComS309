@@ -90,12 +90,12 @@ public class CourseDAO extends DatabaseAccess {
 
 	
 
-	public void createCourse(String name, String location, String time, String days) {
+	public void createCourse(String name, String location, String time, String days, String section) {
 		Connection conn;
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " (`name`, `location`, `time`, `days`) VALUES ('" + name + "', '" + location + "', '" + time + "', '" + days + "');");
+			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_COURSES + " (`name`, `location`, `time`, `days`, `section`) VALUES ('" + name + "', '" + location + "', '" + time + "', '" + days + "', '" + section + "');");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

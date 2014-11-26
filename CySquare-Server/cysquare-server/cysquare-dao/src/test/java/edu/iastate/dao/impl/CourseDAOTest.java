@@ -33,6 +33,7 @@ public class CourseDAOTest {
 		assertEquals("testCourse", courses.get(0).getName());
 		assertEquals("coov", courses.get(0).getLocation());
 		assertEquals("13:00:00", courses.get(0).getTime());
+		assertEquals("A", courses.get(0).getSection());
 		assertNotNull(courses.get(0).getUpdatedTimestamp());
 	}
 	
@@ -43,7 +44,7 @@ public class CourseDAOTest {
 	}
 
 	private void createData() {
-		courseDao.createCourse("testCourse", "coov", "13:00:00", "MWF");		
+		courseDao.createCourse("testCourse", "coov", "13:00:00", "MWF", "A");		
 	}
 	
 	private void deleteData() {

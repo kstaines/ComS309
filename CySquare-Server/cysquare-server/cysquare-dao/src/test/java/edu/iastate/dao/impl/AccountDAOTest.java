@@ -2,6 +2,8 @@ package edu.iastate.dao.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,12 +56,38 @@ public class AccountDAOTest {
 		
 	}
 	
+	@Test
+	public void testGetUnapprovedUsers() {
+		accountDao.deleteUserAccount("use1");
+		accountDao.deleteUserAccount("use2");
+		accountDao.deleteUserAccount("use3");
+		accountDao.createUserAccount("use1", "pass", "INSTRUCTOR");
+		accountDao.createUserAccount("use2", "pass", "INSTRUCTOR");
+		accountDao.createUserAccount("use3", "pass", "INSTRUCTOR");
+		List<UserAccount> users = accountDao.getUnapprovedUsers();
+		assertEquals(false, users.isEmpty());
+		System.out.println(users.size());
+		accountDao.deleteUserAccount("use1");
+		accountDao.deleteUserAccount("use2");
+		accountDao.deleteUserAccount("use3");
+	}
+	
+	@Test
+	public void testGetAllUsers() {
+		List<UserAccount> users = accountDao.getAllUsers();
+		assertEquals(false, users.isEmpty());
+		System.out.println(users.size());
+	}
+	
 	private void createData() {
 		accountDao.createUserAccount("use", "pass", "STUDENT");
 	}
 	
 	private void deleteData() {
 		accountDao.deleteUserAccount("use");
+		accountDao.deleteUserAccount("use1");
+		accountDao.deleteUserAccount("use2");
+		accountDao.deleteUserAccount("use3");
 	}
 
 }

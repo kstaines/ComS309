@@ -95,7 +95,7 @@ public class ModifyCourseServlet extends HttpServlet {
 			}
 			if(found) return;
 			//Awaiting for the course dao to be changed to include the section
-			courseDao.createCourse(courseName, location, time, days);
+			courseDao.createCourse(courseName, location, time, days, section);
 			putTrue(object, response);
 			return;
 		}

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.iastate.dao.ifc.DatabaseAccess;
 import edu.iastate.domain.UserAccount;
@@ -112,5 +114,45 @@ public class AccountDAO extends DatabaseAccess {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<UserAccount> getUnapprovedUsers() {
+		List<UserAccount> users = new ArrayList<UserAccount>();
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE approved='N' OR approved='n';");
+			while(res.next()) {
+				UserAccount userAccount = new UserAccount();
+				userAccount = populateUserAccount(res);
+				users.add(userAccount);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return users;
+	}
+	
+	public List<UserAccount> getAllUsers() {
+		List<UserAccount> users = new ArrayList<UserAccount>();
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + ";");
+			while(res.next()) {
+				UserAccount userAccount = new UserAccount();
+				userAccount = populateUserAccount(res);
+				users.add(userAccount);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return users;
 	}
 }
