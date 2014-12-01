@@ -64,6 +64,8 @@ public class FriendsPageServlet extends HttpServlet{
 			//If the friend and the user try to add each other then they are automatically approved
 			List<Friend> friendList = friendDao.getFriendList(userId);
 			
+			boolean approved = false;
+			
 			//if the friend list is not empty then check if they both wanted to add each other
 			if(!friendList.isEmpty())
 			{
@@ -72,11 +74,22 @@ public class FriendsPageServlet extends HttpServlet{
 					if(friendList.get(i).getFriendId().equals(friendId))
 					{
 						friendDao.approveFriendship(userId, friendId);
+						approved = true;
+						break;
+					}
+					else if(friendList.get(i).getStudentId().equals(friendId))
+					{
+						friendDao.approveFriendship(friendId, userId);
+						approved = true;
+						break;
 					}
 				}
 			}
+			if(!approved)
+			{
+				friendDao.createFriendship(userId, friendId);
+			}
 			
-			friendDao.createFriendship(userId, friendId);
 			putTrue(object, response);
 			return;
 		}
