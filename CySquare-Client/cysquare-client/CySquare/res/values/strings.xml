@@ -97,5 +97,16 @@
     <string name="notifications_title">Notifications</string>
     <string name="title_activity_create_new_class">CreateNewClass</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_class">CreateClass</string>
 
+     <!-- create class page -->
+    <string name="newClassInstructions">Please enter the new class information with no spaces in the class name and days</string>
+    <string name="className">Class Name:</string>
+    <string name="section">Section:</string>
+    <string name="location">Location:</string>
+    <string name="days">Days:\n(MTWRF)</string>
+    <string name="time">Time:</string>
+    
+    
+    
 </resources>

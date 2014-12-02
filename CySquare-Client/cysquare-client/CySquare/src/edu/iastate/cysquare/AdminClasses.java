@@ -24,8 +24,8 @@ import android.widget.Toast;
 public class AdminClasses extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
-	private Button home;
-	private Intent homeIntent;
+	private Button home, add;
+	private Intent homeIntent, addIntent;
 	private final static String classListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classList";
 	private String className, section;
 	
@@ -35,6 +35,7 @@ public class AdminClasses extends Activity{
 		setContentView(R.layout.admin_classes); //sets screen layout
 		
 		home = (Button)findViewById(R.id.home_button);
+		add = (Button)findViewById(R.id.add_button);
 		
 		displayAllClasses();
 		registerClick();
@@ -44,6 +45,14 @@ public class AdminClasses extends Activity{
 			public void onClick(View v) {
 				homeIntent = new Intent(v.getContext(), AdminWelcome.class);
 				goHome();
+			} //end onClick(view v)
+		});
+		
+		add.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addIntent = new Intent(v.getContext(), CreateClass.class);
+				startActivity(addIntent);
 			} //end onClick(view v)
 		});
 	} //end onCreate(Bundle savedInstanceState)
