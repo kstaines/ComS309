@@ -27,7 +27,15 @@ public class ModifyCourseServlet extends HttpServlet {
 	private static final long serialVersionUID = 963016886349131227L;
 	
 	private CourseDAO courseDao = new CourseDAO ();
-		
+	/**
+	 * Returns a HTTP response back to the client as a JSON object with the status of either true or an error message.
+	 * This method receives the request from the client and processes
+	 * the course information given by the client, which is checked and given to the DAO (Database Access Object)
+	 * to be added to the database.
+	 * 
+	 * @param request An HTTP request received by the client to be processed
+	 * @param response An HTTP response to send to the client as a JSON object with the status of the process	
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//Get the always be sent parameter from the client
@@ -77,7 +85,9 @@ public class ModifyCourseServlet extends HttpServlet {
 			//Check if the course name is already in the current list
 			List<Course> currentList = courseDao.getAvailableCourseList();
 			
+			//boolean key used to return the error message back to the client
 			boolean found = false;
+			//If the list is not empty or null proceed to see if the course is already in the database.
 			if(!(currentList.isEmpty() || currentList == null))
 			{
 				//Loop to see if the course is in current list
@@ -88,20 +98,25 @@ public class ModifyCourseServlet extends HttpServlet {
 					{
 						found = true;
 						putError(object, "The course is already in the data base. Please add a different course or delete the course you want to modify and add it again.", response);
-						return;
+						break;
 					}
 				}
-				
 			}
+		
 			if(found) return;
-			//Awaiting for the course dao to be changed to include the section
+			//Add the course to the database
 			courseDao.createCourse(courseName, location, time, days, section);
 			putTrue(object, response);
 			return;
 		}
 	}
 
-	
+	/*
+	 * Private Helper Method to send an error message to the client
+	 * @param object A JSONObject type to be sent to the client
+	 * @param message A String that contains the message to be sent to the client
+	 * @param response An HttpServletResponse to be sent to the client
+	 */
 	private void putError(JSONObject object, String message, HttpServletResponse response)
 	{
 		try 
@@ -124,7 +139,11 @@ public class ModifyCourseServlet extends HttpServlet {
 		}
 		
 	}
-	
+	/*
+	 * Private Helper Method to send a true message to the client.
+	 * @param object A JSONObject type to be sent to the client
+	 * @param response An HttpServletResponse to be sent to the client
+	 */
 	private void putTrue(JSONObject object, HttpServletResponse response)
 	{
 		try
@@ -145,7 +164,13 @@ public class ModifyCourseServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
+	 * Private Helper Method that will check if it is null and send a message back to the client
+	 * @param object A JSON object to be sent to the client
+	 * @param toCheck A String that needs to be checked if it is null
+	 * @param toType A String word to help identify what is null
+	 * @param response A HttpServletResponse sent to the client
+	 */
 	private boolean isNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck == null)
@@ -156,6 +181,13 @@ public class ModifyCourseServlet extends HttpServlet {
 		return false;
 	}
 	
+	/*
+	 * Private Helper Method that will check if it is blank and send a message back to the client
+	 * @param object A JSON object to be sent to the client
+	 * @param toCheck A String that needs to be checked if it is blank
+	 * @param toType A String word to help identify what is blank
+	 * @param response A HttpServletResponse sent to the client
+	 */
 	private boolean isBlank(JSONObject object, String toCheck, String toType, HttpServletResponse response)
 	{
 		if(toCheck.equalsIgnoreCase(""))

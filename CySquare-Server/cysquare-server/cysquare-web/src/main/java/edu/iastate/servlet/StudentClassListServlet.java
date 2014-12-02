@@ -29,14 +29,19 @@ public class StudentClassListServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String user = request.getParameter("username");
-		//get the list of all the courses the student user has
-		List<StudentCourse> course = studentCourseDao.getCourses(account.getAccountInfo(user).getUserId());
 		
 		JSONObject object = new JSONObject ();
+		if(isNull(object, user, "user name", response)) return;
+		if(isBlank(object, user, "user name", response)) return;
+		//get the list of all the courses the student user has
+		Integer userId = account.getAccountInfo(user).getUserId();
+		List<StudentCourse> course = studentCourseDao.getCourses(userId);
+		
+		
 		try
 		{
 			//check if the user has any courses
-			if(course.isEmpty())
+			if(course.isEmpty() || course == null)
 			{
 				putError(object, "You do not have any courses yet. Please add courses.", response);
 			}
@@ -57,6 +62,12 @@ public class StudentClassListServlet extends HttpServlet {
 		
 		
 	}
+	/*
+	 * Private Helper Method to send an error message to the client
+	 * @param object A JSONObject type to be sent to the client
+	 * @param message A String that contains the message to be sent to the client
+	 * @param response An HttpServletResponse to be sent to the client
+	 */
 	private void putError(JSONObject object, String message, HttpServletResponse response)
 	{
 		try 
@@ -79,4 +90,38 @@ public class StudentClassListServlet extends HttpServlet {
 		}
 		
 	}
+	/*
+	 * Private Helper Method that will check if it is null and send a message back to the client
+	 * @param object A JSON object to be sent to the client
+	 * @param toCheck A String that needs to be checked if it is null
+	 * @param toType A String word to help identify what is null
+	 * @param response A HttpServletResponse sent to the client
+	 */
+	private boolean isNull(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	{
+		if(toCheck == null)
+		{
+			putError(object, "The " + toType + " is null.", response);
+			return true;
+		}
+		return false;
+	}
+	
+	/*
+	 * Private Helper Method that will check if it is blank and send a message back to the client
+	 * @param object A JSON object to be sent to the client
+	 * @param toCheck A String that needs to be checked if it is blank
+	 * @param toType A String word to help identify what is blank
+	 * @param response A HttpServletResponse sent to the client
+	 */
+	private boolean isBlank(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	{
+		if(toCheck.equalsIgnoreCase(""))
+		{
+			putError(object, "The " + toType + " is blank.", response);
+			return true;
+		}
+		return false;
+	}
+
 }

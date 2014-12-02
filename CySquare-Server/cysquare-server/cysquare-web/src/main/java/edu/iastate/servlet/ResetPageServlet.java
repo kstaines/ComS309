@@ -71,7 +71,7 @@ public class ResetPageServlet extends HttpServlet{
 	}
 
 	/*
-	 * Private Helper Method to put an error message to the client
+	 * Private Helper Method to send an error message to the client
 	 * @param object A JSONObject type to be sent to the client
 	 * @param message A String that contains the message to be sent to the client
 	 * @param response An HttpServletResponse to be sent to the client
@@ -100,7 +100,7 @@ public class ResetPageServlet extends HttpServlet{
 	}
 	
 	/*
-	 * Private Helper Method to put a true message to the client.
+	 * Private Helper Method to send a true message to the client.
 	 * @param object A JSONObject type to be sent to the client
 	 * @param response An HttpServletResponse to be sent to the client
 	 */

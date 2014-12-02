@@ -54,5 +54,69 @@ public class ResetPageServletTest {
 		System.out.println(stringWriter.toString());
 		
 	}
+	@Test
+	public void testNullList () throws IOException, JSONException
+	{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		List<UserAccount> userList = null;
+		
+		Mockito.when(accountDao.getAllUsers()).thenReturn(userList);
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		resetPageServlet.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+	}
+	@Test
+	public void testNoStudentUsers () throws IOException, JSONException
+	{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		List<UserAccount> userList = new ArrayList<UserAccount> ();
+		UserAccount adminUser = new UserAccount ();
+		adminUser.setUserType("admin");
+		userList.add(adminUser);
+		
+		Mockito.when(accountDao.getAllUsers()).thenReturn(userList);
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		resetPageServlet.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+	}
+	@Test
+	public void testResetPage () throws IOException, JSONException
+	{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		List<UserAccount> userList = new ArrayList<UserAccount> ();
+		UserAccount studentUser1 = new UserAccount ();
+		studentUser1.setUserType("student");
+		UserAccount studentUser2 = new UserAccount ();
+		studentUser2.setUserType("student");
+		UserAccount adminUser = new UserAccount ();
+		adminUser.setUserType("admin");
+		userList.add(studentUser1);
+		userList.add(studentUser2);
+		userList.add(adminUser);
+		
+		Mockito.when(accountDao.getAllUsers()).thenReturn(userList);
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		resetPageServlet.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+	}
+	
 
 }
