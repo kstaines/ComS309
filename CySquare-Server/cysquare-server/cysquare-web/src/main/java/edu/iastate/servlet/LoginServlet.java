@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
 	private AccountDAO accountDao = new AccountDAO();
 
 	/**
-	 * Returns a HTTP response back to the client as a JSON object.
+	 * Returns a HTTP response back to the client as a JSON object with the status and the users account type.
 	 * This method receives the request from the client and processes
 	 * the login information with the information received by the DAO (Database Access Object).
 	 * 
