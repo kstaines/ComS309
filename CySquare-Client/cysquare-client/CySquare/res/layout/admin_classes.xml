@@ -25,21 +25,20 @@
         android:layout_toRightOf="@+id/home_button"
         android:text="@string/admin_classes" />
     
+    <Button
+	    android:id="@+id/add_button"
+	    style="?android:attr/buttonStyleSmall"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/home_button"
+	    android:text="@string/addNewClass_button" />
+    
     <TextView
         android:id="@+id/admin_classList"
         style="@style/PageTitle"
         android:layout_marginLeft="18dp"
-        android:layout_below="@+id/home_button"
+        android:layout_below="@+id/add_button"
         android:text="@string/admin_current_classes" />
-
-    <ListView
-        android:id="@+id/allClassesListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/home_button"
-        android:layout_below="@+id/admin_classes"
-        android:layout_marginTop="14dp" >
-    </ListView>
     
     <Button
 	    android:id="@+id/delete_button"
@@ -48,5 +47,13 @@
 	    android:layout_height="wrap_content"
 	    android:layout_below="@+id/allClassesListView"
 	    android:text="@string/delete_button" />
+
+    <ListView
+        android:id="@+id/allClassesListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/admin_classList"
+        android:layout_marginTop="30dp" >
+    </ListView>
 
 </RelativeLayout>

@@ -117,7 +117,7 @@ public class CheckIn extends Activity{
     		
     		String[] classes = new String[size];
     		for (int i=0; i<size; i++){
-    			String courseID = "course";
+    			String courseID = "Course";
     			courseID = courseID.concat(Integer.toString(i+1));
     			classes[i] = responseObject.getString(courseID);
     			//Toast.makeText(getApplicationContext(), classes[i], Toast.LENGTH_LONG).show();
@@ -126,7 +126,7 @@ public class CheckIn extends Activity{
     		//build adapter
     		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, classes);
     		//ListView
-    		ListView classList = (ListView)findViewById(R.id.checkin_classes_list);
+//    		ListView classList = (ListView)findViewById(R.id.checkin_classes_list);
     		classList.setAdapter(adapter);
     	}
     	catch(JSONException e){
@@ -218,7 +218,7 @@ public class CheckIn extends Activity{
     		
     		try {
 				responseObject = new JSONObject(build);
-				if(responseObject.has("status")){
+				if(responseObject.has("status") && responseObject.getString("status").equals("error")){
 					Toast.makeText(CheckIn.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
 				}
 				else{

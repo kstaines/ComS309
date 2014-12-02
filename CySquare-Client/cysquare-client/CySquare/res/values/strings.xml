@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!-- main page -->
+    <!-- main page -->
     <string name="app_name">CySquare</string>
     <string name="action_settings">Settings</string>
     <string name="Welcome_to_CySquare">Welcome to CySquare!</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="Login">Login</string>
-    
-<!-- create user page -->    
+
+    <!-- create user page -->
     <string name="title_activity_create_user">Create User</string>
     <string name="CreateNewUser">Create New User</string>
     <string name="create_user">Create User</string>
@@ -17,82 +17,85 @@
     <string name="or">or</string>
     <string name="unapproved_instructor_welcome_message">Welcome! Your instructor status is waiting for approval</string>
     <string name="user_type">User Type:</string>
+
     <string-array name="user_types_array">
         <item>Student</item>
         <item>Instructor</item>
         <item>Admin</item>
     </string-array>
+
     <string name="Back">Back</string>
-    <string name="title_activity_unapproved_instructor_welcome">UnapprovedInstructorWelcome</string>
-    
-<!-- student welcome page -->    
+
+    <!-- student welcome page -->
     <string name="logout">Logout</string>
     <string name="student_welcome">Welcome!</string>
     <string name="check_in">Check In</string>
     <string name="my_classes">My Classes</string>
     <string name="my_friends">My Friends</string>
     <string name="my_profile">My Profile</string>
-    
-<!-- student check in page -->
+
+    <!-- student check in page -->
     <string name="student_checkin">Check In</string>
-    
-<!-- student friends page -->    
+
+    <!-- student friends page -->
     <string name="student_friends">Friends</string>
     <string name="home">Home</string>
     <string name="add_a_friend">Add a Friend</string>
     <string name="friend_username">Friend\'s Username:</string>
-	<string name="add">Add</string>
-	<string name="delete">Delete</string>
-	<string name="approved_friends_title">Approved Friends:</string>
-	<string name="unapproved_friends_title">Unapproved Friends:</string>
-    
-<!-- student profile page -->    
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="approved_friends_title">Approved Friends:</string>
+    <string name="unapproved_friends_title">Unapproved Friends:</string>
+
+    <!-- student profile page -->
     <string name="student_profile">My Profile</string>
     <string name="total_points">Total Points:</string>
     <string name="total_points_server">Points</string>
     <string name="class_points"></string>
- 
-<!-- student classes page --> 
+
+    <!-- student classes page -->
     <string name="student_classes">My Classes</string>
     <string name="add_button">Add</string>
     <string name="delete_button">Delete</string>
 
-<!-- instructor welcome page -->
+    <!-- instructor welcome page -->
     <string name="instructor_welcome">Welcome!</string>
     <string name="current_checkins">View Current Check Ins</string>
     <string name="post_question">Post a Question</string>
     <string name="notifications">Notifications</string>
-    
-<!-- instructor profile page -->
-	<string name="instructor_profile">My Profile</string>
-	
-<!-- instructor current check ins page -->
-	<string name="instructor_current_checkins">Current Check Ins</string>	
-	
-<!-- instructor post question page -->
-	<string name="question">Post a Question</string>	
-    
-<!-- admin welcome page -->    
+
+    <!-- instructor profile page -->
+    <string name="instructor_profile">My Profile</string>
+
+    <!-- instructor current check ins page -->
+    <string name="instructor_current_checkins">Current Check Ins</string>
+
+    <!-- instructor post question page -->
+    <string name="question">Post a Question</string>
+
+    <!-- admin welcome page -->
     <string name="admin_welcome">Welcome!</string>
     <string name="manage_classes">Manage Classes</string>
     <string name="manage_users">Manage Users</string>
     <string name="reset_all">Reset All</string>
-    
-<!-- admin classes page -->
-	<string name="admin_classes">Manage Classes</string>
-	<string name="admin_current_classes">Current Class List</string>
-	
-<!-- admin profile page -->
-	<string name="admin_profile">My Profile</string>
-	
-<!-- admin reset page -->
-	<string name="admin_reset">Reset</string>
 
-<!-- admin users page -->
-	<string name="admin_users">Manage Users</string>
-	
-<!-- notifications page -->
-	<string name="notifications_title">Notifications</string>
-		
-    
+    <!-- admin classes page -->
+    <string name="admin_classes">Manage Classes</string>
+    <string name="admin_current_classes">Current Class List</string>
+    <string name="addNewClass_button">Add New Class</string>
+
+    <!-- admin profile page -->
+    <string name="admin_profile">My Profile</string>
+
+    <!-- admin reset page -->
+    <string name="admin_reset">Reset</string>
+
+    <!-- admin users page -->
+    <string name="admin_users">Manage Users</string>
+
+    <!-- notifications page -->
+    <string name="notifications_title">Notifications</string>
+    <string name="title_activity_create_new_class">CreateNewClass</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
