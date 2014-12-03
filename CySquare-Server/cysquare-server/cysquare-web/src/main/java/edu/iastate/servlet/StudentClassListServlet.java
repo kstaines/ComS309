@@ -34,16 +34,16 @@ public class StudentClassListServlet extends HttpServlet {
 		if(isNull(object, user, "user name", response)) return;
 		if(isBlank(object, user, "user name", response)) return;
 		//get the list of all the courses the student user has
-		Integer userId = account.getAccountInfo(user).getUserId();
-		List<StudentCourse> course = studentCourseDao.getCourses(userId);
+		List<StudentCourse> course = studentCourseDao.getCourses(account.getAccountInfo(user).getUserId());
 		
 		
 		try
 		{
 			//check if the user has any courses
-			if(course.isEmpty() || course == null)
+			if(course == null || course.isEmpty())
 			{
 				putError(object, "You do not have any courses yet. Please add courses.", response);
+				return;
 			}
 			object.put("size", course.size());
 			for(int i = 0; i < course.size(); i++)
