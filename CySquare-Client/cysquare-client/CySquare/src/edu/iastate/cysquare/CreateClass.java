@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TimePicker;
 
 public class CreateClass extends ActionBarActivity {
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	private Button back;
-//	private TimePicker timepicker;
+	private TimePicker timePicker;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,8 @@ public class CreateClass extends ActionBarActivity {
 		setContentView(R.layout.activity_create_class);
 		
 		back = (Button)findViewById(R.id.button_back);
+		timePicker = (TimePicker)findViewById(R.id.timePicker1);
+		timePicker.setIs24HourView(true);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
