@@ -1,5 +1,7 @@
 package edu.iastate.servlet;
 
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -21,7 +23,7 @@ import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.UserAccount;
 
-public class NotApprovedListServletTest {
+public class ApprovedListServletTest {
 	@Mock
 	private AccountDAO accountDao;
 	
@@ -29,7 +31,7 @@ public class NotApprovedListServletTest {
 	private StudentCourseDAO studentCourseDao;
 	
 	@InjectMocks
-	private NotApprovedListServlet notApprovedList = new NotApprovedListServlet();
+	private ApprovedListServlet approvedList = new ApprovedListServlet();
 	
 	@Before
 	public void setUp() {
@@ -47,10 +49,10 @@ public class NotApprovedListServletTest {
 		
 		List<UserAccount> userList = new ArrayList<UserAccount> ();
 		
-		Mockito.when(accountDao.getUnapprovedUsers()).thenReturn(userList);
+		Mockito.when(accountDao.getAllUsers()).thenReturn(userList);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		notApprovedList.doPost(request, response);
+		approvedList.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
@@ -66,10 +68,10 @@ public class NotApprovedListServletTest {
 		
 		List<UserAccount> userList = null;
 		
-		Mockito.when(accountDao.getUnapprovedUsers()).thenReturn(userList);
+		Mockito.when(accountDao.getAllUsers()).thenReturn(userList);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		notApprovedList.doPost(request, response);
+		approvedList.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
@@ -88,21 +90,26 @@ public class NotApprovedListServletTest {
 		UserAccount user1 = new UserAccount ();
 		UserAccount user2 = new UserAccount ();
 		UserAccount user3 = new UserAccount ();
+		user1.setApproved("y");
 		user1.setUsername("Instructor 1");
+		user2.setApproved("n");
 		user2.setUsername("Instructor 2");
+		user3.setApproved("y");
 		user3.setUsername("Instructor 3");
 		userList.add(user1);
 		userList.add(user2);
 		userList.add(user3);
 		
-		Mockito.when(accountDao.getUnapprovedUsers()).thenReturn(userList);
+		Mockito.when(accountDao.getAllUsers()).thenReturn(userList);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		notApprovedList.doPost(request, response);
+		approvedList.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
+
+
 
 
 }

@@ -1,6 +1,6 @@
 package edu.iastate.servlet;
 
-import static org.junit.Assert.*;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +21,6 @@ import org.mockito.MockitoAnnotations;
 
 import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
-import edu.iastate.dao.impl.FriendDAO;
 import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
 import edu.iastate.domain.StudentCourse;

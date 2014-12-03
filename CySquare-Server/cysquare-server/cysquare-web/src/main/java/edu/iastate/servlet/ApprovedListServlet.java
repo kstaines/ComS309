@@ -14,44 +14,48 @@ import org.json.JSONObject;
 import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.domain.UserAccount;
 
+@WebServlet("/approvedList")
+public class ApprovedListServlet extends HttpServlet {
 
-@WebServlet("/notApprovedList")
-
-
-public class NotApprovedListServlet extends HttpServlet {
-
-	private static final long serialVersionUID = 4531330599938624077L;
-	private AccountDAO accountDao = new AccountDAO();
+	private static final long serialVersionUID = 7571497687219427637L;
+	private AccountDAO accountDao = new AccountDAO ();
+	
 	
 	/**
-	 * Retrieves all the unapproved users from the database and sends this list back to the client.
+	 * Retrieves all the approved users from the database and sends this list back to the client.
 	 * @param request An HTTP request received by the client  
-	 * @param response An HTTP response to send to the client as a JSON object with the status of the process, the size of the list, and the list.
+	 * @param response An HTTP response to send to the client as a JSON object with the status of the process, size of the list, and the list.
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//No request parameters for this servlet
 		
 		JSONObject object = new JSONObject ();
-		List<UserAccount> unapprovedList = accountDao.getUnapprovedUsers();
+		List<UserAccount> approvedList = accountDao.getAllUsers();
 		
-		if(unapprovedList == null || unapprovedList.isEmpty())
+		if(approvedList == null || approvedList.isEmpty())
 		{
-			putError(object, "There are no users who are unapproved.", response);
+			putError(object, "There are no users who are approved.", response);
 			return;
 		}
 		else
 		{			
 	 		try {
-	 			//return the size
-				object.put("size", unapprovedList.size());
+	 			int approveSize = 0;
 				
 				//return the list
-				for(int i = 0; i < unapprovedList.size(); i++)
+				for(int i = 0; i < approvedList.size(); i++)
 		 		{
-		 			UserAccount user = unapprovedList.get(i);
-		 			object.put("User" + (i+1), user.getUsername());
+		 			UserAccount user = approvedList.get(i);
+		 			if(user.getApproved().equalsIgnoreCase("y"))
+		 			{
+		 				object.put("User" + (i+1), user.getUsername());
+		 				approveSize = approveSize + 1;
+		 			}
+		 			
 		 		}
+				//return the size
+				object.put("size", approveSize);
 				putTrue(object, response);
 				return;
 			} catch (JSONException e) 
@@ -61,7 +65,6 @@ public class NotApprovedListServlet extends HttpServlet {
 			}
 	 		
 		}
-		
 	}
 	/*
 	 * Private Helper Method to send an error message to the client
@@ -116,5 +119,6 @@ public class NotApprovedListServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+
 
 }
