@@ -10,8 +10,7 @@ import android.widget.Button;
 
 public class InstructorProfile extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
-	private Button home;
-	private Intent homeIntent;
+	private Button home, add;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -19,14 +18,25 @@ public class InstructorProfile extends Activity{
 		setContentView(R.layout.instructor_profile);
 		
 		home = (Button)findViewById(R.id.home_button);
+		add = (Button)findViewById(R.id.add_button);
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				homeIntent = new Intent(v.getContext(), InstructorWelcome.class);
-				goHome();
+				Intent homeIntent = new Intent(v.getContext(), InstructorWelcome.class);
+				startActivity(homeIntent);
 			} //end onClick(View v)
 		});
+		
+		add.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent addIntent = new Intent(v.getContext(), CreateClass.class);
+				startActivity(addIntent);
+			} //end onClick(View v)
+		});
+		
+		
 	} //end onCreate(Bundle savedInstanceState)
 
 	@Override
@@ -47,10 +57,5 @@ public class InstructorProfile extends Activity{
         }
         return super.onOptionsItemSelected(item);
     }
-    
-    private void goHome(){
-    	startActivity(homeIntent);
-    }
-    
     
 }

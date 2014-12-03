@@ -23,4 +23,12 @@
     android:layout_alignParentTop="true"
     android:text="@string/home" />
 
+<Button
+    android:id="@+id/add_button"
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/instructor_profile"
+    android:text="@string/addNewClass_button" />
+
 </RelativeLayout>
