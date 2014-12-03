@@ -76,7 +76,7 @@ public class CheckInServlet extends HttpServlet
 		List<StudentCourse> correlationList = student_dao.getCourses(userAccount.getUserId());
 		
 		//check if the student has any courses
-		if(correlationList.isEmpty())
+		if(correlationList == null || correlationList.isEmpty())
 		{
 			putError(object, "You do not have any courses yet. Please add courses.", response);
 			return;
