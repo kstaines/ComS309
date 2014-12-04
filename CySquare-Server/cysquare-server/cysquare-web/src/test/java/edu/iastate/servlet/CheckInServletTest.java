@@ -88,6 +88,49 @@ public class CheckInServletTest {
 		System.out.println(stringWriter.toString());
 		
 	}
+	
+	@Test
+	public void testNullList() throws IOException, JSONException{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+
+		//UserAccount userAccount = account_dao.getAccountInfo(username_string);
+		UserAccount userAccount1 = new UserAccount ();
+		userAccount1.setTotalPts(2);
+		userAccount1.setUserId(15);
+		
+		//List<StudentCourse> correlationList = student_dao.getCourses(userAccount.getUserId());
+		List<StudentCourse> correlationList = null;
+		StudentCourse studentCourse = new StudentCourse ();
+		studentCourse.setCourseId(54);
+		//correlationList.add(studentCourse);
+		
+		//Course courseInfo = course_dao.getCourseInfoWithSection(classname, section);
+		Course course = new Course ();
+		course.setCourseId(45);
+		course.setSection("A");
+		course.setName("COMS");
+		
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount1);
+		Mockito.when(userAccount.getTotalPts()).thenReturn(userAccount1.getTotalPts());
+		Mockito.when(studentDao.getCourses(15)).thenReturn(correlationList);
+		Mockito.when(courseDao.getCourseInfoWithSection("COMS", "A")).thenReturn(course);
+		
+		
+		
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		checkIn.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+		
+	}
 
 
 

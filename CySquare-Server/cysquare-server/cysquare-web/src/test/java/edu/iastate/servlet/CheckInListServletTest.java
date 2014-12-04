@@ -5,6 +5,8 @@ package edu.iastate.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,14 +19,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import edu.iastate.dao.impl.AccountDAO;
+import edu.iastate.dao.impl.CheckInDAO;
+import edu.iastate.domain.CheckIn;
 
-public class ManageUserPageServletTest {
+public class CheckInListServletTest {
+
 	@Mock
-	private AccountDAO accountDao;
+	private CheckInDAO checkInDao;
 	
 	@InjectMocks
-	private ManageUserPageServlet manageUser = new ManageUserPageServlet();
+	private CheckInListServlet checkInListServlet = new CheckInListServlet();
 	
 	@Before
 	public void setUp() {
@@ -45,7 +49,7 @@ public class ManageUserPageServletTest {
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
@@ -64,14 +68,13 @@ public class ManageUserPageServletTest {
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
-	
 	@Test
-	public void testEditTypeNull() throws IOException, JSONException{
+	public void testClassnameNull() throws IOException, JSONException{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		
@@ -79,20 +82,19 @@ public class ManageUserPageServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		Mockito.when(request.getParameter("username")).thenReturn("user");
-		Mockito.when(request.getParameter("editType")).thenReturn(null);
+		Mockito.when(request.getParameter("classname")).thenReturn(null);
 		
 		
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
-	
 	@Test
-	public void testEditTypeBlank() throws IOException, JSONException{
+	public void testClassnameBlank() throws IOException, JSONException{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		
@@ -100,20 +102,19 @@ public class ManageUserPageServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		Mockito.when(request.getParameter("username")).thenReturn("user");
-		Mockito.when(request.getParameter("editType")).thenReturn("");
-		
+		Mockito.when(request.getParameter("classname")).thenReturn("");
 		
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
 	
 	@Test
-	public void testEditTypeWrong() throws IOException, JSONException{
+	public void testSectionNull() throws IOException, JSONException{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		
@@ -121,20 +122,20 @@ public class ManageUserPageServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		Mockito.when(request.getParameter("username")).thenReturn("user");
-		Mockito.when(request.getParameter("editType")).thenReturn("disapprove");
+		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
+		Mockito.when(request.getParameter("section")).thenReturn(null);
 		
 		
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
-	
 	@Test
-	public void testDeleteMethod() throws IOException, JSONException{
+	public void testSectionBlank() throws IOException, JSONException{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		
@@ -142,20 +143,19 @@ public class ManageUserPageServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		Mockito.when(request.getParameter("username")).thenReturn("user");
-		Mockito.when(request.getParameter("editType")).thenReturn("delEte");
-		
+		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
+		Mockito.when(request.getParameter("section")).thenReturn("");
 		
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
-	
 	@Test
-	public void testApproveMethod() throws IOException, JSONException{
+	public void testNoList() throws IOException, JSONException{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
 		
@@ -163,17 +163,42 @@ public class ManageUserPageServletTest {
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
 		Mockito.when(request.getParameter("username")).thenReturn("user");
-		Mockito.when(request.getParameter("editType")).thenReturn("approve");
+		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
+		List<CheckIn> checkInList = new ArrayList<CheckIn> ();
 		
+		Mockito.when(checkInDao.getAllCurrentCheckIns()).thenReturn(checkInList);
 		
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		
-		manageUser.doPost(request, response);
+		checkInListServlet.doPost(request, response);
 		
 		System.out.println(stringWriter.toString());
 		
 	}
-	
+	@Test
+	public void testNullList() throws IOException, JSONException{
+		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+		
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
+		List<CheckIn> checkInList = null;
+		
+		Mockito.when(checkInDao.getAllCurrentCheckIns()).thenReturn(checkInList);
+		
+		
+		Mockito.when(response.getWriter()).thenReturn(printWriter);
+		
+		checkInListServlet.doPost(request, response);
+		
+		System.out.println(stringWriter.toString());
+		
+	}
 
 }
