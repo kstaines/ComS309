@@ -70,6 +70,9 @@ public class AdminClasses extends Activity{
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+				
+				Intent refreshAfterDelete = new Intent(v.getContext(), AdminClasses.class);
+				startActivity(refreshAfterDelete);
 			} //end onClick(view v)
 		});
 	} //end onCreate(Bundle savedInstanceState)
