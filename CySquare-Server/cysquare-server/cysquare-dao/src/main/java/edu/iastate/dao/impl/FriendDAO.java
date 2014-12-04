@@ -13,6 +13,11 @@ import edu.iastate.literals.DAOLiterals;
 
 public class FriendDAO extends DatabaseAccess {
 
+	/**
+	 * Retrieves a list of Friends based on a studentID.
+	 * @param studentId
+	 * @return
+	 */
 	public List<Friend> getFriendList(Integer studentId) {
 		
 		List<Friend> friends = new ArrayList<Friend>();
@@ -33,6 +38,13 @@ public class FriendDAO extends DatabaseAccess {
 		return friends;
 	}
 
+	/**
+	 * Approves a friendship based on the studentid and friendid.
+	 * Throws exception if student and friend correlation
+	 * does not exist.
+	 * @param studentId
+	 * @param friendId
+	 */
 	public void approveFriendship(Integer studentId, Integer friendId) {
 		Connection conn;
 		try {

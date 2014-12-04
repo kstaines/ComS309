@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import edu.iastate.domain.CheckIn;
 import edu.iastate.domain.Course;
 import edu.iastate.domain.Friend;
 import edu.iastate.domain.StudentCourse;
@@ -79,6 +80,17 @@ public abstract class DatabaseAccess {
 		studentCourse.setPoints(res.getInt("points"));
 		studentCourse.setUpdatedTimestamp(res.getInt("ts_update"));
 		return studentCourse;
+	}
+
+	protected CheckIn populateCheckIn(ResultSet res) throws SQLException {
+		CheckIn checkIn = new CheckIn();
+		checkIn.setCheckinId(res.getInt("checkinid"));
+		checkIn.setStudentId(res.getInt("studentid"));
+		checkIn.setCourseId(res.getInt("courseid"));
+		checkIn.setLatitude(res.getFloat("latitude"));
+		checkIn.setLongitude(res.getFloat("longitude"));
+		checkIn.setUpdatedTimestamp(res.getString("ts_update"));
+		return checkIn;
 	}
 	
 }

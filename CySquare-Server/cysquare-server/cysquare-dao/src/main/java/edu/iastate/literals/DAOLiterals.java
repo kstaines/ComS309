@@ -11,5 +11,8 @@ public class DAOLiterals {
 	public static final String TABLE_COURSES = "courses";
 	public static final String TABLE_STUDCOURSES = "studentcourses";
 	public static final String TABLE_FRIENDS = "friends";
+	public static final String TABLE_INSTCOURSES = "instructorcourses";
+	public static final String TABLE_CHECKIN = "checkin";
+	public static final String TABLE_QUESTIONS = "questions";
 	
 }
