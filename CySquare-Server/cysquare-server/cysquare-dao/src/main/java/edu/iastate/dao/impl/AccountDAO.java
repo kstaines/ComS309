@@ -135,6 +135,25 @@ public class AccountDAO extends DatabaseAccess {
 		return users;
 	}
 	
+	public List<UserAccount> getApprovedUsers() {
+		List<UserAccount> users = new ArrayList<UserAccount>();
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE approved='Y' OR approved='y';");
+			while(res.next()) {
+				UserAccount userAccount = populateUserAccount(res);
+				users.add(userAccount);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return users;
+	}
+	
 	public List<UserAccount> getAllUsers() {
 		List<UserAccount> users = new ArrayList<UserAccount>();
 		try {

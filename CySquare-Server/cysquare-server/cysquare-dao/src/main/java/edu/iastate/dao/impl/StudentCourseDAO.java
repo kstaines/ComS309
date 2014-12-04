@@ -53,6 +53,24 @@ public class StudentCourseDAO extends DatabaseAccess {
 		
 		return correlations;
 	}
+	/**
+	 * Updates the number of times a user has checked into the course.
+	 * Automatically adds one to the value in the times checked in column.
+	 * @param studentId
+	 * @param courseId
+	 */
+	public void updateNumCheckIns(Integer studentId, Integer courseId) {
+		Connection conn;
+		try {
+			conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " SET `times_chk_in`=`times_chk_in` + 1 WHERE `studentid`='" + studentId + "' AND `courseid`='" + courseId + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void createCorrelation(Integer studentId, Integer courseId) {
 		Connection conn;

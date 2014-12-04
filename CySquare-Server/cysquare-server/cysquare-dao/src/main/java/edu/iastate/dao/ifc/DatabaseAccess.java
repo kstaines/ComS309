@@ -79,6 +79,7 @@ public abstract class DatabaseAccess {
 		studentCourse.setStudentId(res.getInt("studentid"));
 		studentCourse.setCourseId(res.getInt("courseid"));
 		studentCourse.setPoints(res.getInt("points"));
+		studentCourse.setTimesCheckedIn(res.getInt("times_chk_in"));
 		studentCourse.setUpdatedTimestamp(res.getInt("ts_update"));
 		return studentCourse;
 	}
