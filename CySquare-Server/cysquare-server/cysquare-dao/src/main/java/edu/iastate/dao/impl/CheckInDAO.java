@@ -70,6 +70,15 @@ public class CheckInDAO extends DatabaseAccess {
 	 * @param longitude
 	 */
 	public void updateUserCheckIn(int userId, int courseId, float latitude, float longitude) {
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeQuery("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_CHECKIN + " SET `courseid`=" + courseId + ", `latitude`=" + latitude + ", `longitude`=" + longitude + " WHERE `studentid`=" + userId + ";");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -83,6 +92,15 @@ public class CheckInDAO extends DatabaseAccess {
 	 * @param longitude
 	 */
 	public void createUserCheckIn(int userId, int courseId, float latitude, float longitude) {
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeQuery("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_CHECKIN + "(`studentid`, `courseid`, `latitude`, `longitude`) VALUES (" + userId + ", " + courseId + ", " + latitude + ", " + longitude + ");");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 }
