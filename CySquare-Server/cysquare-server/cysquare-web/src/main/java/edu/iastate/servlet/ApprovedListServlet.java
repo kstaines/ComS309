@@ -31,7 +31,7 @@ public class ApprovedListServlet extends HttpServlet {
 		//No request parameters for this servlet
 		
 		JSONObject object = new JSONObject ();
-		List<UserAccount> approvedList = accountDao.getAllUsers();
+		List<UserAccount> approvedList = accountDao.getApprovedUsers();
 		
 		if(approvedList == null || approvedList.isEmpty())
 		{
@@ -41,21 +41,18 @@ public class ApprovedListServlet extends HttpServlet {
 		else
 		{			
 	 		try {
-	 			int approveSize = 0;
+	 		
+	 			//return the size
+				object.put("size", approvedList.size());
 				
 				//return the list
 				for(int i = 0; i < approvedList.size(); i++)
 		 		{
 		 			UserAccount user = approvedList.get(i);
-		 			if(user.getApproved().equalsIgnoreCase("y"))
-		 			{
-		 				object.put("User" + (i+1), user.getUsername());
-		 				approveSize = approveSize + 1;
-		 			}
-		 			
+		 			object.put("User" + (i+1), user.getUsername());
+
 		 		}
-				//return the size
-				object.put("size", approveSize);
+				
 				putTrue(object, response);
 				return;
 			} catch (JSONException e) 

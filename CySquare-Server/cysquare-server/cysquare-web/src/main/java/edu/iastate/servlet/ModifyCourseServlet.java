@@ -77,15 +77,18 @@ public class ModifyCourseServlet extends HttpServlet {
 		//Get the user account info
 		UserAccount userAccount = accountDao.getAccountInfo(user);
 		String userType = userAccount.getUserType();
+		int courseId = courseDao.getCourseInfoWithSection(courseName, section).getCourseId();
+		int userId = userAccount.getUserId();
 		//If the edit type is delete then delete the course
 		if(editType.equalsIgnoreCase("delete"))
 		{
 			courseDao.deleteCourse(courseName);
-			studentDao.deleteAllCourseStudents(courseDao.getCourseInfoWithSection(courseName, section).getCourseId());
-			instructorDao.deleteAllCourseInstructors(courseDao.getCourseInfoWithSection(courseName, section).getCourseId());
+			studentDao.deleteAllCourseStudents(courseId);
+			instructorDao.deleteAllCourseInstructors(courseId);
 			if(userType.equalsIgnoreCase("instructor"))
 			{
 				//delete the correlation between instructor and course
+				instructorDao.deleteCorrelation(userId, courseId);
 			}
 			putTrue(object, response);
 			return;
@@ -130,6 +133,7 @@ public class ModifyCourseServlet extends HttpServlet {
 			if(userType.equalsIgnoreCase("instructor"))
 			{
 				//create the correlation between instructor and course
+				instructorDao.createCorrelation(userId, courseId);
 			}
 			else
 			{
