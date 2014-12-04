@@ -23,7 +23,7 @@ public class CheckInDAO extends DatabaseAccess {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_CHECKIN + ";");
-			if(res.next()) {
+			while(res.next()) {
 				CheckIn checkIn = populateCheckIn(res);
 				checkIns.add(checkIn);
 			}

@@ -1,6 +1,7 @@
 package edu.iastate.domain;
 
 public class CheckIn {
+
 	private int checkinId;
 	private int studentId;
 	private int courseId;
@@ -54,5 +55,13 @@ public class CheckIn {
 
 	public void setUpdatedTimestamp(String updatedTimestamp) {
 		this.updatedTimestamp = updatedTimestamp;
+	}
+	
+	@Override
+	public String toString() {
+		return "CheckIn [checkinId=" + checkinId + ", studentId=" + studentId
+				+ ", courseId=" + courseId + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", updatedTimestamp="
+				+ updatedTimestamp + "]";
 	}
 }

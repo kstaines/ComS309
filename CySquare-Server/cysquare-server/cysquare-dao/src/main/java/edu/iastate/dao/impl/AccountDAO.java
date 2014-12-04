@@ -123,8 +123,7 @@ public class AccountDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " WHERE approved='N' OR approved='n';");
 			while(res.next()) {
-				UserAccount userAccount = new UserAccount();
-				userAccount = populateUserAccount(res);
+				UserAccount userAccount = populateUserAccount(res);
 				users.add(userAccount);
 			}
 		} catch (SQLException e) {
@@ -143,8 +142,7 @@ public class AccountDAO extends DatabaseAccess {
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + ";");
 			while(res.next()) {
-				UserAccount userAccount = new UserAccount();
-				userAccount = populateUserAccount(res);
+				UserAccount userAccount = populateUserAccount(res);
 				users.add(userAccount);
 			}
 		} catch (SQLException e) {

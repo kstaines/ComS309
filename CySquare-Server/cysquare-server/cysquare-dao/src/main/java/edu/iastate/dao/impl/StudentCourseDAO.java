@@ -21,7 +21,7 @@ public class StudentCourseDAO extends DatabaseAccess {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " WHERE studentid=\"" + studentId + "\";");
-			if(res.next()) {
+			while(res.next()) {
 				StudentCourse studentCourse = populateStudentCourses(res);
 				correlations.add(studentCourse);
 			}
@@ -41,7 +41,7 @@ public class StudentCourseDAO extends DatabaseAccess {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " WHERE courseid=\"" + courseId + "\";");
-			if(res.next()) {
+			while(res.next()) {
 				StudentCourse studentCourse = populateStudentCourses(res);
 				correlations.add(studentCourse);
 			}

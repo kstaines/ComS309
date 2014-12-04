@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import edu.iastate.domain.CheckIn;
 import edu.iastate.domain.Course;
 import edu.iastate.domain.Friend;
+import edu.iastate.domain.InstructorCourse;
 import edu.iastate.domain.StudentCourse;
 import edu.iastate.domain.UserAccount;
 import edu.iastate.literals.DAOLiterals;
@@ -91,6 +92,11 @@ public abstract class DatabaseAccess {
 		checkIn.setLongitude(res.getFloat("longitude"));
 		checkIn.setUpdatedTimestamp(res.getString("ts_update"));
 		return checkIn;
+	}
+
+	protected InstructorCourse populateInstructorCourses(ResultSet res) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
