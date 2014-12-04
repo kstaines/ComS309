@@ -14,11 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+
+
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
+import edu.iastate.dao.impl.InstructorCourseDAO;
+import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
+import edu.iastate.domain.UserAccount;
 
 @WebServlet("/modifyCourse")
 public class ModifyCourseServlet extends HttpServlet {
@@ -27,6 +35,9 @@ public class ModifyCourseServlet extends HttpServlet {
 	private static final long serialVersionUID = 963016886349131227L;
 	
 	private CourseDAO courseDao = new CourseDAO ();
+	private AccountDAO accountDao = new AccountDAO ();
+	private StudentCourseDAO studentDao = new StudentCourseDAO ();
+	private InstructorCourseDAO instructorDao = new InstructorCourseDAO ();
 	/**
 	 * Returns a HTTP response back to the client as a JSON object with the status of either true or an error message.
 	 * This method receives the request from the client and processes
@@ -41,6 +52,8 @@ public class ModifyCourseServlet extends HttpServlet {
 		//Get the always be sent parameter from the client
 		String courseName = request.getParameter("coursename");
 		String editType = request.getParameter("editType");
+		String user = request.getParameter("username");
+		String section = request.getParameter("section");
 		
 		JSONObject object = new JSONObject ();
 		
@@ -49,6 +62,10 @@ public class ModifyCourseServlet extends HttpServlet {
 		if(isBlank(object, courseName, "course name", response)) return;
 		if(isNull(object, editType, "edit type", response)) return;
 		if(isBlank(object, editType, "edit type", response)) return;
+		if(isNull(object, user, "user name", response)) return;
+		if(isBlank(object, user, "user name", response)) return;
+		if(isNull(object, section, "section", response)) return;
+		if(isBlank(object, section, "section", response)) return;
 		
 		//if edit type is not delete or add the send an error message
 		if(!(editType.equalsIgnoreCase("delete") || editType.equalsIgnoreCase("add")))
@@ -57,11 +74,19 @@ public class ModifyCourseServlet extends HttpServlet {
 			return;
 		}
 		
-		
+		//Get the user account info
+		UserAccount userAccount = accountDao.getAccountInfo(user);
+		String userType = userAccount.getUserType();
 		//If the edit type is delete then delete the course
 		if(editType.equalsIgnoreCase("delete"))
 		{
 			courseDao.deleteCourse(courseName);
+			studentDao.deleteAllCourseStudents(courseDao.getCourseInfoWithSection(courseName, section).getCourseId());
+			instructorDao.deleteAllCourseInstructors(courseDao.getCourseInfoWithSection(courseName, section).getCourseId());
+			if(userType.equalsIgnoreCase("instructor"))
+			{
+				//delete the correlation between instructor and course
+			}
 			putTrue(object, response);
 			return;
 		}
@@ -70,15 +95,12 @@ public class ModifyCourseServlet extends HttpServlet {
 			//Get the rest of the parameters and check if null or blank
 			String location = request.getParameter("location");
 			String time = request.getParameter("time");
-			String section = request.getParameter("section");
 			String days = request.getParameter("days");
 			
 			if(isNull(object, location, "location", response)) return;
 			if(isBlank(object, location, "location", response)) return;
 			if(isNull(object, time, "time", response)) return;
 			if(isBlank(object, time, "time", response)) return;
-			if(isNull(object, section, "section", response)) return;
-			if(isBlank(object, section, "section", response)) return;
 			if(isNull(object, days, "days", response)) return;
 			if(isBlank(object, days, "days", response)) return;
 			
@@ -105,7 +127,14 @@ public class ModifyCourseServlet extends HttpServlet {
 		
 			if(found) return;
 			//Add the course to the database
-			courseDao.createCourse(courseName, location, time, days, section);
+			if(userType.equalsIgnoreCase("instructor"))
+			{
+				//create the correlation between instructor and course
+			}
+			else
+			{
+				courseDao.createCourse(courseName, location, time, days, section);
+			}
 			putTrue(object, response);
 			return;
 		}

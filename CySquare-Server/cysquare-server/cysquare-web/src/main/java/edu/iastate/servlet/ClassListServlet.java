@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.domain.Course;
 @WebServlet("/classList")
+
 public class ClassListServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 8438444817401559341L;
@@ -21,8 +22,21 @@ public class ClassListServlet extends HttpServlet{
 	private CourseDAO courseDao = new CourseDAO ();
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		List<Course> courseList = courseDao.getAvailableCourseList();
+		//get all the request parameters
+		String editType = request.getParameter("editType");
+		
 		JSONObject list = new JSONObject ();
+		
+		//Check if the parameters are null or blank
+		if(hasError(list, editType, "edit type", response)) return;
+		
+		//Get the corresponding courseList based upon if admin or instructor.
+		if(editType.equalsIgnoreCase("instructor"))
+		{
+			
+		}
+		List<Course> courseList = courseDao.getAvailableCourseList();
+		
 		try
 		{
 			if(courseList.isEmpty())
@@ -47,6 +61,12 @@ public class ClassListServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
+	/*
+	 * Private Helper Method to send an error message to the client
+	 * @param object A JSONObject type to be sent to the client
+	 * @param message A String that contains the message to be sent to the client
+	 * @param response An HttpServletResponse to be sent to the client
+	 */
 	private void putError(JSONObject object, String message, HttpServletResponse response)
 	{
 		try 
@@ -68,6 +88,27 @@ public class ClassListServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 		
+	}
+	/*
+	 * Private Helper Method to determine if the string is null or blank
+	 * @param object A JsonObject that is sent to the client
+	 * @param toCheck A string that is being checked if null or blank
+	 * @param toType A string word to identify what is null or blank in the message sent to the client
+	 * @param response A Http Response to be sent to the client
+	 */
+	private boolean hasError(JSONObject object, String toCheck, String toType, HttpServletResponse response)
+	{
+		if(toCheck == null)
+		{
+			putError(object, "The " + toType + " is null.", response);
+			return true;
+		}
+		else if(toCheck.equalsIgnoreCase(""))
+		{
+			putError(object, "The " + toType + " is blank.", response);
+			return true;
+		}
+		return false;
 	}
 
 }
