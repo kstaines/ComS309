@@ -24,9 +24,10 @@ import android.widget.Toast;
 public class AdminClasses extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
-	private Button home, add;
+	private Button home, add, delete;
 	private Intent homeIntent, addIntent;
 	private final static String classListURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classList";
+	private final static String modifyURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/modifyCourse";
 	private String className, section;
 	
 	@Override
@@ -36,6 +37,7 @@ public class AdminClasses extends Activity{
 		
 		home = (Button)findViewById(R.id.home_button);
 		add = (Button)findViewById(R.id.add_button);
+		delete = (Button)findViewById(R.id.delete_button);
 		
 		displayAllClasses();
 		registerClick();
@@ -53,6 +55,21 @@ public class AdminClasses extends Activity{
 			public void onClick(View v) {
 				addIntent = new Intent(v.getContext(), CreateClass.class);
 				startActivity(addIntent);
+			} //end onClick(view v)
+		});
+		
+		delete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				JSONObject jo = new JSONObject();
+				try {
+					jo.put("coursename", className);
+					jo.put("section", section);
+					jo.put("editType", "delete");
+					new PostWithAsync(modifyURL, jo).execute();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			} //end onClick(view v)
 		});
 	} //end onCreate(Bundle savedInstanceState)
@@ -113,7 +130,7 @@ public class AdminClasses extends Activity{
 					long id) {
 				TextView tv = (TextView) arg1;
 				getClassNameAndSection(tv.getText().toString());
-				Toast.makeText(AdminClasses.this, className + " is selected", Toast.LENGTH_LONG).show();
+				Toast.makeText(AdminClasses.this, className + " Section " + section + " is selected", Toast.LENGTH_LONG).show();
 			}
 		});
 		
@@ -170,11 +187,16 @@ public class AdminClasses extends Activity{
 				}
 				else {
 					if(url.equals(classListURL)) createClassesArrayAndListView(responseObject);
+					else if (url.equals(modifyURL)) {
+						if (responseObject.getString("status").equals("true")) {
+							Toast.makeText(AdminClasses.this, "This class was deleted", Toast.LENGTH_LONG).show();
+						}
+					}
 				}
 			}
 	    	catch (JSONException e){
 				e.printStackTrace();
 			}
 		}
-	}
+    }
 }

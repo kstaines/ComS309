@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class CreateClass extends ActionBarActivity {
 	public static final String PREFS_NAME = "MyPreferencesFile";
-	private String modifyURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/modifyCourse";
+	private final static String modifyURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/modifyCourse";
 	private Button back, add;
 	private TimePicker timePicker;
 	private String className, section, location, days, time;
