@@ -11,14 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CheckInDAO;
+import edu.iastate.dao.impl.CourseDAO;
 import edu.iastate.domain.CheckIn;
+import edu.iastate.domain.Course;
+import edu.iastate.domain.UserAccount;
 
 @WebServlet("/checkInList")
 public class CheckInListServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -2724038709471649446L;
 	private CheckInDAO checkInDao = new CheckInDAO ();
+	private CourseDAO courseDao = new CourseDAO ();
+	private AccountDAO accountDao = new AccountDAO ();
 
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -37,17 +43,54 @@ public class CheckInListServlet extends HttpServlet {
 		
 		//get the current check in list
 		List<CheckIn> checkInList = checkInDao.getAllCurrentCheckIns();
+		Course courseInfo = courseDao.getCourseInfoWithSection(courseName, section);
+		//Check if courseInfo is null
+		if(courseInfo == null)
+		{
+			putError(object, "The course is not found in the database", response);
+			return;
+		}
 		
-		 //check if list is null or empty
+		int courseIdOriginal = courseInfo.getCourseId();
+		
+		//the size to be returned to the client
+		int size = 0;
+		
+		 //check if checkInList is null or empty
 		if(checkInList == null || checkInList.isEmpty())
 		{
 			putError(object, "There are no current checkin's. Please check back later.", response);
 			return;
 		}
 		
-		//Awaiting details on how the client would like to recieve the message.
-		putTrue(object, response);
-		return;
+		try 
+		{
+			
+		
+			for(int i = 0; i < checkInList.size(); i++)
+			{
+				//Get all the required info
+				CheckIn checkIn = checkInList.get(i);
+				int courseIdToCheck = checkIn.getCourseId();
+				int studentId = checkIn.getStudentId();
+				
+				//If the course id's match then get all the checkins associated with that course
+				if(courseIdToCheck == courseIdOriginal)
+				{
+					size = size + 1;
+					UserAccount studentUser = accountDao.getAccountInfoById(studentId);
+					object.put("Student " + size, "Username: " + studentUser.getUsername());	
+				}
+			}
+			object.put("size", size);
+			putTrue(object, response);
+			return;
+		}
+		catch (JSONException e) {
+			
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
