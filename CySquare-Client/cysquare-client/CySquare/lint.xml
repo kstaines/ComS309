@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="NewApi">
+        <ignore path="src/edu/iastate/cysquare/GooglePlayServicesCheck.java" />
+    </issue>
+</lint>

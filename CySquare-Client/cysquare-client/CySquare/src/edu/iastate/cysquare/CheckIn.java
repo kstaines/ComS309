@@ -2,8 +2,6 @@ package edu.iastate.cysquare;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +31,11 @@ public class CheckIn extends Activity{
 	private String selectedClassName;
 	private String selectedSection;
 	private String clickedClass;
-	private JSONObject responseObject;
+	private double onCampusMaxLat = 42.035704;
+	private double onCampusMinLat = 42.022784;
+	private double onCampusMaxLong = -93.633409;
+	private double onCampusMinLong = -93.654311;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -43,33 +45,15 @@ public class CheckIn extends Activity{
 		home = (Button)findViewById(R.id.home_button);
 		classList = (ListView)findViewById(R.id.checkin_classes_list);
 		usernameFromPref = retrieveUsername();
-		
+
+
 		//populate checkin class list
 		populateCheckInListView();
-		registerClick();
-
-		//all this is in registerClick();
-//		classList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-//				JSONObject jo = new JSONObject();
-//				String splitClassString[] = clickedClass.split(" ");
-//				String classDept = splitClassString[3];
-//				String classNum = splitClassString[4];
-//				String classSec = splitClassString[6];
-//				String className = classDept + " " + classNum;
-//				try{
-//					jo.put("username", usernameFromPref);
-//					jo.put("classname", className);
-//					jo.put("section", classSec);
-//					new PostWithAsync(checkinPageURL, jo).execute();
-//				}
-//				catch(JSONException e){
-//					e.printStackTrace();
-//				}
-//				
-//			} //end onItemClick(AdapterView<?>
-//		});
+		
+		if(locationCheck()){
+			//register click on class
+			registerClick();
+		}
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -79,8 +63,8 @@ public class CheckIn extends Activity{
 			} //end onClick(View v)
 		});
 	} //end onCreate(Bundle savedInstanceState)
-	
-    @Override
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -113,20 +97,29 @@ public class CheckIn extends Activity{
     private void createCheckInArrayFromServerResponse(JSONObject responseObject){
     	try{
     		int size = responseObject.getInt("size");
-    		//Toast.makeText(getApplicationContext(), size, Toast.LENGTH_SHORT).show();
-    		
-    		String[] classes = new String[size];
+    		String[] classes = new String[size]; //stores class straight from server
+    		String[] modClasses = new String[size]; //stores split up class
+    		String[] simpleClass = new String[size]; //stores class info, no "labels"
     		for (int i=0; i<size; i++){
     			String courseID = "Course";
-    			courseID = courseID.concat(Integer.toString(i+1));
-    			classes[i] = responseObject.getString(courseID);
-    			//Toast.makeText(getApplicationContext(), classes[i], Toast.LENGTH_LONG).show();
+    			courseID = courseID.concat(Integer.toString(i+1)); //creates Coursei to search database
+    			classes[i] = responseObject.getString(courseID); //puts Coursei in classes array
+    			modClasses = classes[i].split(" "); //splits up each class string retrieved from server
+    			String classDept = modClasses[2]; //grabs second element, the class
+    			String classSec = modClasses[4];
+    			String location = modClasses[6];
+    			String days = modClasses[8];
+    			String time = modClasses[10];
+    			
+    			//put all wanted elements together to get rid of all "labels"
+    			simpleClass[i] = classDept + " " + classSec + " " + location + " " + days + " " + time;
     		}
     		
     		//build adapter
-    		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, classes);
+    		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, simpleClass);
     		//ListView
-//    		ListView classList = (ListView)findViewById(R.id.checkin_classes_list);
+    		classList = (ListView)findViewById(R.id.checkin_classes_list);
+    		
     		classList.setAdapter(adapter);
     	}
     	catch(JSONException e){
@@ -141,18 +134,19 @@ public class CheckIn extends Activity{
     		public void onItemClick(AdapterView<?> arg0, View v, int position, long id){
     			TextView tv = (TextView) v;
     			clickedClass = tv.getText().toString();
-    			Toast.makeText(CheckIn.this, "Class selected is " + clickedClass, Toast.LENGTH_LONG).show();
     			
     			String splitClassString[] = clickedClass.split(" ");
-				String classDept = splitClassString[3];
-				String classNum = splitClassString[4];
-				String classSec = splitClassString[6];
-				String className = classDept + " " + classNum;
+				selectedClassName = splitClassString[0]; //grabs 0th element, class name
+				selectedSection = splitClassString[1]; //grabs 1st element, class section
+    			Toast.makeText(CheckIn.this, "Class selected: " + selectedClassName + " Section: " + selectedSection, Toast.LENGTH_LONG).show();
+
 				JSONObject jo = new JSONObject();
 				try{
+	    			//Toast.makeText(CheckIn.this, "TEST", Toast.LENGTH_LONG).show();
+
 					jo.put("username", usernameFromPref);
-					jo.put("classname", className);
-					jo.put("section", classSec);
+					jo.put("classname", selectedClassName);
+					jo.put("section", selectedSection);
 					new PostWithAsync(checkinPageURL, jo).execute();
 				}
 				catch(JSONException e){
@@ -164,7 +158,7 @@ public class CheckIn extends Activity{
     
     private void checkInClass(JSONObject responseObject){
     	try{
-    		if(responseObject.getString("Status").equals("true")){
+    		if(responseObject.getString("status").equals("true")){
     			Toast.makeText(CheckIn.this, "You have been checked in!", Toast.LENGTH_LONG).show();
     		}
     		else{
@@ -178,6 +172,41 @@ public class CheckIn extends Activity{
     
     private void goHome(){
     	startActivity(homeIntent);
+    }
+    
+    private boolean locationCheck(){
+    	boolean status = false;
+    	GPSTracker gps = new GPSTracker(this);
+    	
+    	//getting latitude and longitude
+    	double latitude = gps.getLatitude(); //returns latitude
+    	double longitude = gps.getLongitude(); //returns longitude
+    	
+    	//register click on campus
+    	if(gps.canGetLocation()){
+    	   	//gps is enabled
+    		if(latitude <= onCampusMaxLat && latitude >= onCampusMinLat
+    				&& longitude <= onCampusMaxLong && longitude >= onCampusMinLong){
+    			//student is within campus latitude and longitude
+    			Toast.makeText(this, "Latitude: " + latitude + " Longitude: " + longitude, Toast.LENGTH_LONG).show();
+    								
+    			status = true;
+    		}
+    		else{
+    			Toast.makeText(this, "You are not on campus.", Toast.LENGTH_LONG).show();
+    			status = false;
+    		}
+    	}
+    	else{
+    		//gps not enabled
+    		//show settings alert dialog
+    		gps.showSettingsAlert();
+    		locationCheck(); //recursive call
+    	}
+    		
+    	//stop using gps
+    	gps.stopUsingGPS();
+		return status;
     }
     
     private String retrieveUsername(){
@@ -215,7 +244,7 @@ public class CheckIn extends Activity{
     	} //end String doInBackground(String... arg0)
     	
     	protected void onPostExecute(String build){
-    		
+    		JSONObject responseObject;
     		try {
 				responseObject = new JSONObject(build);
 				if(responseObject.has("status") && responseObject.getString("status").equals("error")){
@@ -239,5 +268,5 @@ public class CheckIn extends Activity{
     		
     	} //end onPostExecute(String build)
     } //end PostWithAsync extends AsyncTask<String, String, String>
-
+    
 }
