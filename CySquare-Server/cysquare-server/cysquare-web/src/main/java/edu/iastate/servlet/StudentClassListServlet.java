@@ -30,6 +30,9 @@ public class StudentClassListServlet extends HttpServlet {
 	{
 		String user = request.getParameter("username");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		JSONObject object = new JSONObject ();
 		if(isNull(object, user, "user name", response)) return;
 		if(isBlank(object, user, "user name", response)) return;

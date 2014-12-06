@@ -31,6 +31,9 @@ public class ClassListServlet extends HttpServlet{
 		//get all the request parameters
 		String editType = request.getParameter("editType");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		
 		JSONObject list = new JSONObject ();
 		

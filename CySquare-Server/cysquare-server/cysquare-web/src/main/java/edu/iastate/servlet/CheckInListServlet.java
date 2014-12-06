@@ -34,6 +34,9 @@ public class CheckInListServlet extends HttpServlet {
 		String courseName = request.getParameter("classname");
 		String section = request.getParameter("section");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		JSONObject object = new JSONObject ();
 		
 		//check if the parameters are null or blank

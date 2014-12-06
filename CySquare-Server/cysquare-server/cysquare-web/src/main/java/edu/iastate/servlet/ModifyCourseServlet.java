@@ -55,6 +55,9 @@ public class ModifyCourseServlet extends HttpServlet {
 		String user = request.getParameter("username");
 		String section = request.getParameter("section");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		JSONObject object = new JSONObject ();
 		
 		//Check if the parameters are null or blank

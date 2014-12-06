@@ -31,6 +31,8 @@ public class NotApprovedListServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//No request parameters for this servlet
+		//Set the response type
+		response.setContentType("application/json");
 		
 		JSONObject object = new JSONObject ();
 		List<UserAccount> unapprovedList = accountDao.getUnapprovedUsers();

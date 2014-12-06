@@ -31,6 +31,8 @@ public class ApprovedListServlet extends HttpServlet {
 		//No request parameters for this servlet
 		
 		JSONObject object = new JSONObject ();
+		//Set the response type
+		response.setContentType("application/json");
 		List<UserAccount> approvedList = accountDao.getApprovedUsers();
 		
 		if(approvedList == null || approvedList.isEmpty())

@@ -32,6 +32,8 @@ public class ResetPageServlet extends HttpServlet{
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//No request parameters from the client
+		//Set the response type
+		response.setContentType("application/json");
 		JSONObject object = new JSONObject ();
 		//Get all the users
 		List<UserAccount> allUsers = accountDao.getAllUsers();

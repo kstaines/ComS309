@@ -28,6 +28,9 @@ public class FriendsListServlet extends HttpServlet{
 	{
 		String username = request.getParameter("username");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		JSONObject friend = new JSONObject ();
 		
 		if(isNull(friend, username, "username", response)) return;

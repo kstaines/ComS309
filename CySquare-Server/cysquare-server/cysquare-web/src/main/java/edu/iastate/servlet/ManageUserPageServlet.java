@@ -29,6 +29,9 @@ public class ManageUserPageServlet extends HttpServlet {
 		//Get the request parameters
 		String user = request.getParameter("username");
 		String editType = request.getParameter("editType");
+		
+		//Set the response type
+		response.setContentType("application/json");
 		JSONObject object = new JSONObject ();
 		
 		//check if username or editType is null or blank

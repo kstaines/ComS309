@@ -32,6 +32,9 @@ public class FriendsPageServlet extends HttpServlet{
 		String friend = request.getParameter("friendname");
 		String editType = request.getParameter("editType");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		JSONObject object = new JSONObject ();
 		
 		

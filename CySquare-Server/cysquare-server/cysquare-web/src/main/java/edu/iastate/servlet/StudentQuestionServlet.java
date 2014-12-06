@@ -29,6 +29,9 @@ public class StudentQuestionServlet extends HttpServlet {
 		String answer = request.getParameter("answer");
 		String editType = request.getParameter("editType");
 		
+		//Set the response type
+		response.setContentType("application/json");
+		
 		JSONObject object = new JSONObject ();
 		
 		//Check if parameters are null or blank
