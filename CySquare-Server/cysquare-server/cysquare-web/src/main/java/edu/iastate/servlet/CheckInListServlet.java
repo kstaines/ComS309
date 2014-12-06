@@ -30,19 +30,24 @@ public class CheckInListServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//Get request parameters
-		String user = request.getParameter("username");
+		
 		String courseName = request.getParameter("classname");
 		String section = request.getParameter("section");
 		
 		JSONObject object = new JSONObject ();
 		
 		//check if the parameters are null or blank
-		if(hasError(object, user, "user name", response)) return;
+	
 		if(hasError(object, courseName, "class name", response)) return;
 		if(hasError(object, section, "section", response)) return;
 		
 		//get the current check in list
 		List<CheckIn> checkInList = checkInDao.getAllCurrentCheckIns();
+		if(checkInList == null || checkInList.isEmpty())
+		{
+			putError(object, "There are currently no check ins. Please check back later." , response);
+			return;
+		}
 		Course courseInfo = courseDao.getCourseInfoWithSection(courseName, section);
 		//Check if courseInfo is null
 		if(courseInfo == null)
@@ -55,13 +60,6 @@ public class CheckInListServlet extends HttpServlet {
 		
 		//the size to be returned to the client
 		int size = 0;
-		
-		 //check if checkInList is null or empty
-		if(checkInList == null || checkInList.isEmpty())
-		{
-			putError(object, "There are no current checkin's. Please check back later.", response);
-			return;
-		}
 		
 		try 
 		{
