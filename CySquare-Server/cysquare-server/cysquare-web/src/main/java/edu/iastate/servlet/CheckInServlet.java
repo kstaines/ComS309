@@ -34,6 +34,7 @@ public class CheckInServlet extends HttpServlet
 		String username_string = request.getParameter("username");
 		String classname = request.getParameter("classname");
 		String section = request.getParameter("section");
+		//float latitude = request.getParameter("float");
 		
 		//Set the response type
 		response.setContentType("application/json");

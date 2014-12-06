@@ -35,44 +35,7 @@ public class CheckInListServletTest {
 		MockitoAnnotations.initMocks(this);
 	}
 
-	@Test
-	public void testUsernameNull() throws IOException, JSONException{
-		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-		
-		StringWriter stringWriter = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-		
-		Mockito.when(request.getParameter("username")).thenReturn(null);
-		
-		
-		
-		Mockito.when(response.getWriter()).thenReturn(printWriter);
-		
-		checkInListServlet.doPost(request, response);
-		
-		System.out.println(stringWriter.toString());
-		
-	}
-	@Test
-	public void testUsernameBlank() throws IOException, JSONException{
-		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
-		
-		StringWriter stringWriter = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-		
-		Mockito.when(request.getParameter("username")).thenReturn("");
-		
-		
-		
-		Mockito.when(response.getWriter()).thenReturn(printWriter);
-		
-		checkInListServlet.doPost(request, response);
-		
-		System.out.println(stringWriter.toString());
-		
-	}
+
 	@Test
 	public void testClassnameNull() throws IOException, JSONException{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
@@ -81,7 +44,7 @@ public class CheckInListServletTest {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
-		Mockito.when(request.getParameter("username")).thenReturn("user");
+
 		Mockito.when(request.getParameter("classname")).thenReturn(null);
 		
 		
@@ -101,7 +64,7 @@ public class CheckInListServletTest {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
-		Mockito.when(request.getParameter("username")).thenReturn("user");
+	
 		Mockito.when(request.getParameter("classname")).thenReturn("");
 		
 		
@@ -121,7 +84,7 @@ public class CheckInListServletTest {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
-		Mockito.when(request.getParameter("username")).thenReturn("user");
+	
 		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
 		Mockito.when(request.getParameter("section")).thenReturn(null);
 		
@@ -141,8 +104,7 @@ public class CheckInListServletTest {
 		
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);
-		
-		Mockito.when(request.getParameter("username")).thenReturn("user");
+	
 		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
 		Mockito.when(request.getParameter("section")).thenReturn("");
 		
@@ -162,7 +124,7 @@ public class CheckInListServletTest {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
-		Mockito.when(request.getParameter("username")).thenReturn("user");
+	
 		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
 		Mockito.when(request.getParameter("section")).thenReturn("A");
 		List<CheckIn> checkInList = new ArrayList<CheckIn> ();
@@ -185,7 +147,7 @@ public class CheckInListServletTest {
 		StringWriter stringWriter = new StringWriter();
 		PrintWriter printWriter = new PrintWriter(stringWriter);
 		
-		Mockito.when(request.getParameter("username")).thenReturn("user");
+		
 		Mockito.when(request.getParameter("classname")).thenReturn("COMS");
 		Mockito.when(request.getParameter("section")).thenReturn("A");
 		List<CheckIn> checkInList = null;
