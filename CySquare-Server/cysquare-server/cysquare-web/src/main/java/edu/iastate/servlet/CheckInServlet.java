@@ -105,13 +105,13 @@ public class CheckInServlet extends HttpServlet
 		//if it was found then update the points otherwise send a message stating that it was not found on the users list
 		if(found)
 		{
-			Integer points = userAccount.getTotalPts();
+			/*Integer points = userAccount.getTotalPts();
 			
 			//Increase the total points by one
 			points = points + 1;
 			
 			//Update the total points by user total 
-			userAccount.setTotalPts(points);
+			userAccount.setTotalPts(points);*/
 			
 			//If the getCurrentUser check in object is null,
 			//then initiate the create method, otherwise the update method
