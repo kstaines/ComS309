@@ -46,6 +46,7 @@ public class ClassListServlet extends HttpServlet{
 		{
 			//get the request parameter of username
 			String instructor = request.getParameter("username");
+			if(hasError(list, instructor, "user name", response)) return;
 			AccountDAO accountDao = new AccountDAO ();
 			UserAccount instructorAccount = accountDao.getAccountInfo(instructor);
 			int instructorId = instructorAccount.getUserId();
