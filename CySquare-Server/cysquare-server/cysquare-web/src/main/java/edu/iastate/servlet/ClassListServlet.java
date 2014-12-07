@@ -26,6 +26,7 @@ public class ClassListServlet extends HttpServlet{
 	
 	private CourseDAO courseDao = new CourseDAO ();
 	private InstructorCourseDAO instructorDao = new InstructorCourseDAO ();
+	private AccountDAO accountDao = new AccountDAO ();
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		//get all the request parameters
@@ -47,7 +48,7 @@ public class ClassListServlet extends HttpServlet{
 			//get the request parameter of username
 			String instructor = request.getParameter("username");
 			if(hasError(list, instructor, "user name", response)) return;
-			AccountDAO accountDao = new AccountDAO ();
+			
 			UserAccount instructorAccount = accountDao.getAccountInfo(instructor);
 			int instructorId = instructorAccount.getUserId();
 			List<InstructorCourse> courseList1 = instructorDao.getCourses(instructorId);
