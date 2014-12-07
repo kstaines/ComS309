@@ -197,7 +197,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn(null);
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
 		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -219,7 +224,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("");
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
 		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -242,6 +252,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn(null);
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -264,6 +280,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("");
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -287,6 +309,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn(null);
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -310,6 +338,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn("");
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -333,6 +367,12 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("days")).thenReturn(null);
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -357,6 +397,13 @@ public class ModifyCourseServletTest {
 		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("days")).thenReturn("");
 		
+		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
@@ -385,10 +432,15 @@ public class ModifyCourseServletTest {
 		Course course1 = new Course ();
 		course1.setName("COMS");
 		course1.setSection("A");
-		currentList.add(course1);		
+		currentList.add(course1);	
+		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
 		
 		Mockito.when(courseDao.getAvailableCourseList()).thenReturn(currentList);
-		
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
 		
