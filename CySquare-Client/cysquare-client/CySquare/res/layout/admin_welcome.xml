@@ -22,6 +22,7 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+   		android:background="@drawable/bg_key"
         android:text="@string/logout" />
     
     <Button
@@ -32,6 +33,7 @@
         android:layout_below="@+id/admin_welcome"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+    	android:background="@drawable/bg_key"
         android:text="@string/my_profile" />
     
     <Button
@@ -42,6 +44,7 @@
         android:layout_below="@+id/admin_profile_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+    	android:background="@drawable/bg_key"
         android:text="@string/manage_classes" />
 
     <Button
@@ -52,6 +55,7 @@
         android:layout_below="@+id/manage_classes_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+    	android:background="@drawable/bg_key"
         android:text="@string/manage_users" />
     
     <Button
@@ -62,6 +66,7 @@
         android:layout_below="@+id/manage_users_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
+    	android:background="@drawable/bg_key"
         android:text="@string/reset_all" />
     
 </RelativeLayout>

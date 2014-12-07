@@ -45,6 +45,7 @@ public class AdminClasses extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), AdminWelcome.class);
 				goHome();
 			} //end onClick(view v)
@@ -53,6 +54,7 @@ public class AdminClasses extends Activity{
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				addIntent = new Intent(v.getContext(), CreateClass.class);
 				startActivity(addIntent);
 			} //end onClick(view v)
@@ -61,6 +63,7 @@ public class AdminClasses extends Activity{
 		delete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				JSONObject jo = new JSONObject();
 				try {
 					jo.put("coursename", className);

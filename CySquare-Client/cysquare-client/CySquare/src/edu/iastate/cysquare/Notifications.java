@@ -28,6 +28,7 @@ public class Notifications extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				studentHomeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				instructorHomeIntent = new Intent(v.getContext(), InstructorWelcome.class);
 				adminHomeIntent = new Intent(v.getContext(), AdminWelcome.class);

@@ -41,6 +41,7 @@ public class InstructorProfile extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Intent homeIntent = new Intent(v.getContext(), InstructorWelcome.class);
 				startActivity(homeIntent);
 			} //end onClick(View v)
@@ -49,6 +50,7 @@ public class InstructorProfile extends Activity{
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Intent addIntent = new Intent(v.getContext(), CreateClass.class);
 				startActivity(addIntent);
 			} //end onClick(View v)

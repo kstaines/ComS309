@@ -40,6 +40,7 @@ public class StudentWelcome extends Activity{
 		logout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				
@@ -52,6 +53,7 @@ public class StudentWelcome extends Activity{
 		checkIn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				checkInIntent = new Intent(v.getContext(), CheckIn.class);
 				checkIn();
 			} //end onClick(View v)
@@ -60,6 +62,7 @@ public class StudentWelcome extends Activity{
 		myFriends.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				friendsIntent = new Intent(v.getContext(), StudentFriends.class);
 				friends();
 			} //end onClick(View v)
@@ -76,6 +79,7 @@ public class StudentWelcome extends Activity{
 		myClasses.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				classesIntent = new Intent(v.getContext(), StudentClasses.class);
 				studentClasses();
 			} //end onClick(View v)

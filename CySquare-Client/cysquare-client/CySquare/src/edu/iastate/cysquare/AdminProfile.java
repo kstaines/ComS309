@@ -23,6 +23,7 @@ public class AdminProfile extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), AdminWelcome.class);
 				goHome();
 			} //end onClick(view v)

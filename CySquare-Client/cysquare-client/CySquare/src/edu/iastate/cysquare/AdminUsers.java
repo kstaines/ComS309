@@ -42,6 +42,7 @@ public class AdminUsers extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Intent homeIntent = new Intent(v.getContext(), AdminWelcome.class);
 		    	startActivity(homeIntent);
 			} //end onClick(view v)
@@ -50,6 +51,7 @@ public class AdminUsers extends Activity{
 		viewUnapproved.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Intent unapprovedIntent = new Intent(v.getContext(), AdminUnapprovedUsers.class);
 		    	startActivity(unapprovedIntent);
 			} //end onClick(view v)
@@ -58,6 +60,7 @@ public class AdminUsers extends Activity{
 		delete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				JSONObject jo = new JSONObject();
 				try {
 					jo.put("username", clickedUser);

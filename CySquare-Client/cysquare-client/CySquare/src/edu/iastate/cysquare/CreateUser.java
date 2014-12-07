@@ -47,6 +47,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				startActivity(mainIntent);
 			} //end onClick(View v)
@@ -55,7 +56,7 @@ public class CreateUser extends ActionBarActivity implements OnItemSelectedListe
 		create.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				v.setSelected(true);
 				if (checkForMatchingPasswords()) {
 					studentWelcomeIntent = new Intent(v.getContext(), StudentWelcome.class);
 					new PostWithAsync().execute();

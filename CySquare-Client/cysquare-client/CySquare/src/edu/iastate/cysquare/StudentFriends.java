@@ -44,6 +44,7 @@ public class StudentFriends extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				goHome();
 			} //end onClick(View v)
@@ -52,6 +53,7 @@ public class StudentFriends extends Activity{
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				fusername = friend_username.getText().toString();
 				JSONObject jo = new JSONObject();
 				try {
@@ -68,6 +70,7 @@ public class StudentFriends extends Activity{
 		delete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				JSONObject jo = new JSONObject();
 				try {
 					jo.put("username", getUsername());

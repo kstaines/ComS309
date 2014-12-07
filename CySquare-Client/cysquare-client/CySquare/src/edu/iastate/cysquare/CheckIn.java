@@ -6,6 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -23,10 +25,11 @@ import android.widget.Toast;
 public class CheckIn extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	private static final String checkinPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/checkIn";
-	private static final String classListPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classList";
+	private static final String classListPageURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/classStudent";
 	private Button home;
 	private ListView classList;
 	private Intent homeIntent;
+	private Intent afterCheckinIntent;
 	private String usernameFromPref;
 	private String selectedClassName;
 	private String selectedSection;
@@ -36,7 +39,6 @@ public class CheckIn extends Activity{
 	private double onCampusMaxLong = -93.633409;
 	private double onCampusMinLong = -93.654311;
 	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -45,7 +47,6 @@ public class CheckIn extends Activity{
 		home = (Button)findViewById(R.id.home_button);
 		classList = (ListView)findViewById(R.id.checkin_classes_list);
 		usernameFromPref = retrieveUsername();
-
 
 		//populate checkin class list
 		populateCheckInListView();
@@ -59,6 +60,7 @@ public class CheckIn extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				goHome();
 			} //end onClick(View v)
@@ -88,7 +90,6 @@ public class CheckIn extends Activity{
     	JSONObject jo = new JSONObject();
     	try{
     		jo.put("username", usernameFromPref);
-    		jo.put("editType", "student");
     		new PostWithAsync(classListPageURL, jo).execute();
     	}
     	catch(JSONException e){
@@ -135,6 +136,7 @@ public class CheckIn extends Activity{
     	classList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
     		@Override
     		public void onItemClick(AdapterView<?> arg0, View v, int position, long id){
+    			afterCheckinIntent = new Intent(v.getContext(), StudentWelcome.class);
     			TextView tv = (TextView) v;
     			clickedClass = tv.getText().toString();
     			
@@ -142,26 +144,52 @@ public class CheckIn extends Activity{
 				selectedClassName = splitClassString[0]; //grabs 0th element, class name
 				selectedSection = splitClassString[1]; //grabs 1st element, class section
     			Toast.makeText(CheckIn.this, "Class selected: " + selectedClassName + " Section: " + selectedSection, Toast.LENGTH_LONG).show();
-
-				JSONObject jo = new JSONObject();
-				try{
-	    			//Toast.makeText(CheckIn.this, "TEST", Toast.LENGTH_LONG).show();
-					jo.put("username", usernameFromPref);
-					jo.put("classname", selectedClassName);
-					jo.put("section", selectedSection);
-					new PostWithAsync(checkinPageURL, jo).execute();
-				}
-				catch(JSONException e){
-					e.printStackTrace();
-				}
+    			
+    			checkInAlert(selectedClassName, selectedSection);
     		}
 		});
     } //end registerClick
+    
+    private void checkInAlert(String className, String section){
+    	AlertDialog.Builder alertDialog = new AlertDialog.Builder(CheckIn.this);
+    	alertDialog.setTitle("Check In");
+    	alertDialog.setMessage("Check in to " + className + " section " + section + "?");
+    	//on pressing yes button
+    	alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				checkInToClass();
+			}
+		});
+    	//on pressing no button
+    	alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		});
+    	alertDialog.show();
+    }
+    
+    private void checkInToClass(){
+		JSONObject jo = new JSONObject();
+		try{
+			//Toast.makeText(CheckIn.this, "TEST", Toast.LENGTH_LONG).show();
+			jo.put("username", usernameFromPref);
+			jo.put("classname", selectedClassName);
+			jo.put("section", selectedSection);
+			new PostWithAsync(checkinPageURL, jo).execute();
+		}
+		catch(JSONException e){
+			e.printStackTrace();
+		}
+    }
     
     private void checkInClass(JSONObject responseObject){
     	try{
     		if(responseObject.getString("status").equals("true")){
     			Toast.makeText(CheckIn.this, "You have been checked in!", Toast.LENGTH_LONG).show();
+    			startActivity(afterCheckinIntent);
     		}
     		else{
     			Toast.makeText(CheckIn.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
@@ -181,8 +209,8 @@ public class CheckIn extends Activity{
     	GPSTracker gps = new GPSTracker(this);
     	
     	//getting latitude and longitude
-    	double latitude = 42.028000; //gps.getLatitude(); //returns latitude
-    	double longitude = -93.644000; //gps.getLongitude(); //returns longitude
+    	double latitude = 42.028000; //gps.getLatitude(); //returns latitude 42.028000
+    	double longitude = -93.644000; //gps.getLongitude(); //returns longitude -93.644000
     	
     	//register click on campus
     	if(gps.canGetLocation()){
@@ -190,13 +218,13 @@ public class CheckIn extends Activity{
     		if(latitude <= onCampusMaxLat && latitude >= onCampusMinLat
     				&& longitude <= onCampusMaxLong && longitude >= onCampusMinLong){
     			//student is within campus latitude and longitude
-    			Toast.makeText(this, "Latitude: " + latitude + " Longitude: " + longitude, Toast.LENGTH_LONG).show();
+    			//Toast.makeText(this, "Latitude: " + latitude + " Longitude: " + longitude, Toast.LENGTH_LONG).show();
     								
     			status = true;
     		}
     		else{
     			Toast.makeText(this, "You are not on campus.", Toast.LENGTH_LONG).show();
-    			Toast.makeText(this, "Latitude: " + latitude + " Longitude: " + longitude, Toast.LENGTH_LONG).show();
+    			//Toast.makeText(this, "Latitude: " + latitude + " Longitude: " + longitude, Toast.LENGTH_LONG).show();
 
     			status = false;
     		}
@@ -256,11 +284,11 @@ public class CheckIn extends Activity{
 				}
 				else{ //responseObject.getString("status") = true
 					if(URL.equals(classListPageURL)){
-						Toast.makeText(getApplicationContext(), "class list url", Toast.LENGTH_LONG).show();
+						//Toast.makeText(getApplicationContext(), "class list url", Toast.LENGTH_LONG).show();
 						createCheckInArrayFromServerResponse(responseObject);
 					}
 					else if(URL.equals(checkinPageURL)){
-						Toast.makeText(getApplicationContext(), "checkin url", Toast.LENGTH_LONG).show();
+						//Toast.makeText(getApplicationContext(), "checkin url", Toast.LENGTH_LONG).show();
 						checkInClass(responseObject);
 					}
 				}

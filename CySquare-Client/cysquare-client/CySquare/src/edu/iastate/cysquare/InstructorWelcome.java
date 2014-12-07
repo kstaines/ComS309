@@ -34,6 +34,7 @@ public class InstructorWelcome extends Activity{
 		logout.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
+				v.setSelected(true);
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				clearUsername();
@@ -44,6 +45,7 @@ public class InstructorWelcome extends Activity{
 		myProfile.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
+				v.setSelected(true);
 				profileIntent = new Intent(v.getContext(), InstructorProfile.class);
 				profile();
 			} //end onClick(View v)
@@ -52,6 +54,7 @@ public class InstructorWelcome extends Activity{
 		currentCheckins.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
+				v.setSelected(true);
 				currentCheckinsIntent = new Intent(v.getContext(), InstructorCurrentCheckIns.class);
 				checkins();
 			} //end onClick(View v)

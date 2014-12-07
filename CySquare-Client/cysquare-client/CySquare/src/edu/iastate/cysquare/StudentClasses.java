@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -54,6 +55,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				try {
 				JSONObject addClass = new JSONObject();
 				addClass.put("name", className);
@@ -75,6 +77,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		delete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				try {
 				JSONObject deleteClass = new JSONObject();
 				deleteClass.put("name", className);
@@ -94,6 +97,7 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				goHome();
 			} //end onClick(view v)

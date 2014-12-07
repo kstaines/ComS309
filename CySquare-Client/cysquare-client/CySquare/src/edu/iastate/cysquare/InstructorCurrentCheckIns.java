@@ -49,6 +49,7 @@ public class InstructorCurrentCheckIns extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), InstructorWelcome.class);
 				goHome();
 			} //end onClick(View v)

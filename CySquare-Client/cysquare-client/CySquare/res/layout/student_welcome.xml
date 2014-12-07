@@ -22,6 +22,7 @@
     android:layout_height="40dp"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
+    android:background="@drawable/bg_key"
     android:text="@string/logout" />
 
 <Button
@@ -32,6 +33,7 @@
     android:layout_alignLeft="@+id/my_friends_button"
     android:layout_below="@+id/my_friends_button"
     android:layout_marginTop="30dp"
+    android:background="@drawable/bg_key"
     android:text="@string/my_profile" />
 
 <Button
@@ -42,6 +44,7 @@
     android:layout_alignLeft="@+id/my_profile_button"
     android:layout_below="@+id/my_profile_button"
     android:layout_marginTop="30dp"
+    android:background="@drawable/bg_key"
     android:text="@string/my_classes" />
 
 <Button
@@ -51,6 +54,7 @@
     android:layout_height="wrap_content"
     android:layout_alignLeft="@+id/check_in_button"
     android:layout_centerVertical="true"
+    android:background="@drawable/bg_key"
     android:text="@string/my_friends" />
 
 <Button
@@ -60,6 +64,7 @@
     android:layout_above="@+id/my_friends_button"
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="30dp"
+    android:background="@drawable/bg_key"
     android:text="@string/check_in" />
 
 

@@ -22,6 +22,7 @@
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+    	android:background="@drawable/bg_key"
         android:text="@string/logout" />
 
     <Button
@@ -32,6 +33,7 @@
         android:layout_alignLeft="@+id/instructor_checkins_button"
         android:layout_below="@+id/logout_button"
         android:layout_marginTop="34dp"
+    	android:background="@drawable/bg_key"
         android:text="@string/my_profile" />
 
     <Button
@@ -42,6 +44,7 @@
         android:layout_below="@+id/instructor_profile_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
+    	android:background="@drawable/bg_key"
         android:text="@string/current_checkins" />
 
 </RelativeLayout>

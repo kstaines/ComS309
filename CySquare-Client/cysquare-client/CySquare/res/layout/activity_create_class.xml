@@ -19,6 +19,7 @@
 	    android:layout_height="40dp"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
+   	    android:background="@drawable/bg_key"
 	    android:text="@string/Back" />
 
     <EditText
@@ -143,6 +144,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/timePicker1"
+	    android:background="@drawable/bg_key"
         android:text="@string/add" />
     
 </RelativeLayout>

@@ -29,7 +29,7 @@
     <style name="Button" parent="@android:style/Widget.Button">
 <!-- 		<item name="android:textColor">#FF0000</item> -->
 <!-- 		<item name="android:textStyle">bold</item> -->
-<!-- 		<item name="android:background">#FFF349</item> -->
+		<item name="android:background">@drawable/bg_key</item>
 		<!-- <item name="android:angle">45</item> -->        
 		<!-- <item name="android:centerX">50%</item> -->        
 <!-- 		<item name="android:centerColor">#EDF300</item>		         -->

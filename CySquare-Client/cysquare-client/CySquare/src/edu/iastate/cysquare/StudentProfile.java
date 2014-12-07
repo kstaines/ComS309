@@ -45,6 +45,7 @@ public class StudentProfile extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				goHome();
 			} //end onClick(View v)

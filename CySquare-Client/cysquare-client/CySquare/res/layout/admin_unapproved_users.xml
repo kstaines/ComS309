@@ -14,6 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/unapproved_users"
+    	android:background="@drawable/bg_key"
         android:text="@string/Back" />
 
     <TextView
@@ -42,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/unapprovedList"
         android:layout_alignRight="@+id/unapproved_users"
+    	android:background="@drawable/bg_key"
         android:text="@string/approve" />
 
     <Button
@@ -51,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/back_button"
         android:layout_toRightOf="@+id/back_button"
+    	android:background="@drawable/bg_key"
         android:text="@string/delete" />
 
 </RelativeLayout>

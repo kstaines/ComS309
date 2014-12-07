@@ -36,6 +36,7 @@ public class AdminReset extends Activity{
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				homeIntent = new Intent(v.getContext(), AdminWelcome.class);
 				goHome();
 			} //end onClick(view v)
@@ -44,6 +45,7 @@ public class AdminReset extends Activity{
 		reset.setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v){
+				v.setSelected(true);
 		    	resetAlert();
 			} //end onClick(View v)
 		});

@@ -42,7 +42,7 @@ public class CreateClass extends ActionBarActivity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				v.setSelected(true);
 				Intent backIntent;
 				String usertype = getUserType();
 				if (usertype.equalsIgnoreCase("admin")) {
@@ -60,7 +60,7 @@ public class CreateClass extends ActionBarActivity {
 		add.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				v.setSelected(true);
 				if (saveTextFields() == true) {
 					Toast.makeText(getApplicationContext(), "One or more class information fields contain spaces. Please enter the information without spaces and try again.", Toast.LENGTH_LONG).show();
 				}

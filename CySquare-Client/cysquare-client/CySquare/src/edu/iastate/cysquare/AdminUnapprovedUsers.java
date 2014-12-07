@@ -39,6 +39,7 @@ public class AdminUnapprovedUsers extends ActionBarActivity {
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Intent backIntent = new Intent(v.getContext(), AdminUsers.class);
 		    	startActivity(backIntent);
 			} //end onClick(view v)
@@ -47,6 +48,7 @@ public class AdminUnapprovedUsers extends ActionBarActivity {
 		delete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				JSONObject jo = new JSONObject();
 				try {
 					jo.put("username", clickedUser);
@@ -64,6 +66,7 @@ public class AdminUnapprovedUsers extends ActionBarActivity {
 		approve.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				JSONObject jo = new JSONObject();
 				try {
 					jo.put("username", clickedUser);

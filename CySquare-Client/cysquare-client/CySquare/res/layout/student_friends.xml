@@ -21,6 +21,7 @@
     android:layout_height="40dp"
     android:layout_alignParentLeft="true"
     android:layout_alignParentTop="true"
+    android:background="@drawable/bg_key"
     android:text="@string/home" />
 
 <TextView
@@ -83,6 +84,7 @@
     android:layout_height="40dp"
     android:layout_below="@+id/notFriendsListView"
     android:layout_toRightOf="@+id/TextView02"
+    android:background="@drawable/bg_key"
     android:text="@string/delete" />
 
 <TextView
