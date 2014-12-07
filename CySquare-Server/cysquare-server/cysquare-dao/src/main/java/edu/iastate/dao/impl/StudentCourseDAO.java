@@ -127,4 +127,17 @@ public class StudentCourseDAO extends DatabaseAccess {
 		}
 	}
 	
+	public void deleteAllStudentCourseCorrelations() {
+		Connection conn;
+		try {
+			conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + ";");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

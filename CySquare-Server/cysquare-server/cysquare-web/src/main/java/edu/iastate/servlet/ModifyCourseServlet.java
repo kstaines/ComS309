@@ -36,8 +36,8 @@ public class ModifyCourseServlet extends HttpServlet {
 	
 	private CourseDAO courseDao = new CourseDAO ();
 	private AccountDAO accountDao = new AccountDAO ();
-	private StudentCourseDAO studentDao = new StudentCourseDAO ();
-	private InstructorCourseDAO instructorDao = new InstructorCourseDAO ();
+	private StudentCourseDAO studentCourseDao = new StudentCourseDAO ();
+	private InstructorCourseDAO instructorCourseDao = new InstructorCourseDAO ();
 	/**
 	 * Returns a HTTP response back to the client as a JSON object with the status of either true or an error message.
 	 * This method receives the request from the client and processes
@@ -105,12 +105,12 @@ public class ModifyCourseServlet extends HttpServlet {
 			
 			int courseId = courseInfo.getCourseId();
 			courseDao.deleteCourse(courseName);
-			studentDao.deleteAllCourseStudents(courseId);
-			instructorDao.deleteAllCourseInstructors(courseId);
+			studentCourseDao.deleteAllCourseStudents(courseId);
+			instructorCourseDao.deleteAllCourseInstructors(courseId);
 			if(userType.equalsIgnoreCase("instructor"))
 			{
 				//delete the correlation between instructor and course
-				instructorDao.deleteCorrelation(userId, courseId);
+				instructorCourseDao.deleteCorrelation(userId, courseId);
 			}
 			putTrue(object, response);
 			return;
@@ -172,7 +172,7 @@ public class ModifyCourseServlet extends HttpServlet {
 				}
 				
 				int courseId = courseInfo.getCourseId();
-				instructorDao.createCorrelation(userId, courseId);
+				instructorCourseDao.createCorrelation(userId, courseId);
 			}
 			putTrue(object, response);
 			return;

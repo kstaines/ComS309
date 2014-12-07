@@ -202,4 +202,16 @@ public class AccountDAO extends DatabaseAccess {
 			e.printStackTrace();
 		}
 	}
+	
+	public void resetStudentPoints() {
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " SET `totalPts`=0 WHERE `userType`='STUDENT';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

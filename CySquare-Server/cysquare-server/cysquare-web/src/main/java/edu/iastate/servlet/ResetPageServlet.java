@@ -47,29 +47,32 @@ public class ResetPageServlet extends HttpServlet{
 		}
 		
 		//a key to see if there are any student users
-		boolean found = false;
+//		boolean found = false;
 		//Delete the all the student user points and class list
-		for(int i = 0; i< allUsers.size(); i++)
-		{
-			if(allUsers.get(i).getUserType().equalsIgnoreCase("student"))
-			{
-				UserAccount studentUser = allUsers.get(i);
-				studentUser.setTotalPts(0);
-				studentCourseDao.deleteAllStudentCourses(studentUser.getUserId());
-				found = true;
-				
-			}
-		}
-		if(!found)
-		{
-			putError(object, "There are no student user that need to be reset.", response);
-			return;
-		}
-		else
-		{
-			putTrue(object, response);
-			return;
-		}
+		accountDao.resetStudentPoints();
+		studentCourseDao.deleteAllStudentCourseCorrelations();
+		
+//		for(int i = 0; i< allUsers.size(); i++)
+//		{
+//			if(allUsers.get(i).getUserType().equalsIgnoreCase("student"))
+//			{
+//				UserAccount studentUser = allUsers.get(i);
+//				studentUser.setTotalPts(0);
+//				studentCourseDao.deleteAllStudentCourses(studentUser.getUserId());
+//				found = true;
+//				
+//			}
+//		}
+//		if(!found)
+//		{
+//			putError(object, "There are no student user that need to be reset.", response);
+//			return;
+//		}
+//		else
+//		{
+		putTrue(object, response);
+		return;
+//		}
 	}
 
 	/*
