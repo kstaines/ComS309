@@ -29,6 +29,7 @@
         android:layout_alignTop="@+id/className"
         android:layout_toRightOf="@+id/className"
         android:ems="10"
+        android:hint="ComS309"
         android:inputType="textPersonName" >
 
         <requestFocus />
@@ -42,6 +43,7 @@
         android:layout_alignRight="@+id/entered_classname"
         android:layout_below="@+id/entered_classname"
         android:ems="10"
+        android:hint="2"
         android:inputType="textPersonName" />
 
     <EditText
@@ -53,6 +55,7 @@
         android:layout_alignRight="@+id/entered_section"
         android:layout_toRightOf="@+id/className"
         android:ems="10"
+        android:hint="Gilman1352"
         android:inputType="textPersonName" />
 
     <TextView
@@ -83,6 +86,7 @@
         android:layout_alignRight="@+id/entered_location"
         android:layout_alignTop="@+id/days"
         android:ems="10"
+        android:hint="TR"
         android:inputType="textPersonName" />
 
     <TextView

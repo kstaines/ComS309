@@ -51,6 +51,7 @@ public class MainActivity extends ActionBarActivity{
         login.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				welcomeIntent = new Intent(v.getContext(), StudentWelcome.class);
 				adminWelcomeIntent = new Intent(v.getContext(), AdminWelcome.class);
 				instructorWelcomeIntent = new Intent(v.getContext(), InstructorWelcome.class);
@@ -62,6 +63,7 @@ public class MainActivity extends ActionBarActivity{
         createNewUser.setOnClickListener(new View.OnClickListener(){
         	@Override
         	public void onClick(View v) {
+        		v.setSelected(true);
             	createIntent = new Intent(v.getContext(), CreateUser.class);
             	startActivity(createIntent);
         	}
