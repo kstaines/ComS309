@@ -44,7 +44,6 @@
         android:layout_marginTop="24dp"
         android:text="@string/manage_classes" />
 
-    
     <Button
         android:id="@+id/manage_users_button"
         style="?android:attr/buttonStyleSmall"
@@ -65,14 +64,4 @@
         android:layout_marginTop="24dp"
         android:text="@string/reset_all" />
     
-    <Button
-        android:id="@+id/notifications_button"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/reset_all_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:text="@string/notifications" />
-        
 </RelativeLayout>

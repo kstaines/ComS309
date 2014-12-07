@@ -59,7 +59,7 @@ public class InstructorProfile extends Activity{
 			public void onClick(View v) {
 				try {
 				JSONObject deleteClass = new JSONObject();
-				deleteClass.put("name", className);
+				deleteClass.put("coursename", className);
 				deleteClass.put("section", section);
 				deleteClass.put("editType", "delete");
 				deleteClass.put("username", getUsername());
