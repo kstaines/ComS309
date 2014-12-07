@@ -39,6 +39,7 @@ public class AdminWelcome extends Activity{
 		logout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_LONG).show();
 				mainIntent = new Intent(v.getContext(), MainActivity.class);
 				clearUsername();
@@ -49,6 +50,7 @@ public class AdminWelcome extends Activity{
 		myProfile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				profileIntent = new Intent(v.getContext(), AdminProfile.class);
 				profile();
 			} //end onClick(View v)
@@ -57,6 +59,7 @@ public class AdminWelcome extends Activity{
 		manageClasses.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				manageClassesIntent = new Intent(v.getContext(), AdminClasses.class);
 				manageClasses();
 			} //end onClick(View v)
@@ -65,6 +68,7 @@ public class AdminWelcome extends Activity{
 		reset.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				resetIntent = new Intent(v.getContext(), AdminReset.class);
 				reset();
 			} //end onClick(View v)
@@ -73,6 +77,7 @@ public class AdminWelcome extends Activity{
 		manageUsers.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				v.setSelected(true);
 				manageUsersIntent = new Intent(v.getContext(), AdminUsers.class);
 				manageUsers();
 			} //end onClick(View v)
