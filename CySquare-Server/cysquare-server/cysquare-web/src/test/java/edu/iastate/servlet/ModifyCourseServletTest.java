@@ -21,8 +21,16 @@ import org.mockito.MockitoAnnotations;
 
 
 
+
+
+
+
+import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CourseDAO;
+import edu.iastate.dao.impl.InstructorCourseDAO;
+import edu.iastate.dao.impl.StudentCourseDAO;
 import edu.iastate.domain.Course;
+import edu.iastate.domain.UserAccount;
 
 
 
@@ -35,6 +43,15 @@ public class ModifyCourseServletTest {
 
 	@Mock
 	private CourseDAO courseDao;
+	
+	@Mock
+	private AccountDAO accountDao;
+	
+	@Mock 
+	private StudentCourseDAO studentDao;
+	
+	@Mock
+	private InstructorCourseDAO instructorDao;
 
 	
 	@InjectMocks
@@ -147,6 +164,15 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("delete");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
+		UserAccount userAccount = new UserAccount ();
+		userAccount.setUserType("instructor");
+		userAccount.setUserId(3);
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userAccount);
+		Course courseInfo = new Course ();
+		courseInfo.setCourseId(6);
+		Mockito.when(courseDao.getCourseInfoWithSection("COMS", "A")).thenReturn(courseInfo);
 		
 		
 		
@@ -167,6 +193,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn(null);
 		
 		
@@ -187,6 +215,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("");
 		
 		
@@ -207,6 +237,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn(null);
 		
@@ -227,6 +259,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("");
 		
@@ -247,6 +281,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn(null);
@@ -268,6 +304,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn("");
@@ -288,6 +326,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn("A");
@@ -310,6 +350,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn("A");
@@ -332,6 +374,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn("A");
@@ -352,7 +396,7 @@ public class ModifyCourseServletTest {
 		
 	}
 	@Test
-	public void testAddMethod() throws IOException, JSONException
+	public void testAddMethodInstructor() throws IOException, JSONException
 	{
 		HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 		HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
@@ -361,6 +405,8 @@ public class ModifyCourseServletTest {
 
 		Mockito.when(request.getParameter("coursename")).thenReturn("COMS");
 		Mockito.when(request.getParameter("editType")).thenReturn("add");
+		Mockito.when(request.getParameter("username")).thenReturn("user");
+		Mockito.when(request.getParameter("section")).thenReturn("A");
 		Mockito.when(request.getParameter("location")).thenReturn("Hoover");
 		Mockito.when(request.getParameter("time")).thenReturn("0900");
 		Mockito.when(request.getParameter("section")).thenReturn("A");
@@ -372,7 +418,17 @@ public class ModifyCourseServletTest {
 		course1.setSection("B");
 		currentList.add(course1);		
 		
+		UserAccount userInfo = new UserAccount ();
+		userInfo.setUsername("user");
+		userInfo.setUserId(145);
+		userInfo.setUserType("instructor");
+		
+		Course courseInfo = new Course ();
+		courseInfo.setCourseId(6);
+		
 		Mockito.when(courseDao.getAvailableCourseList()).thenReturn(currentList);
+		Mockito.when(accountDao.getAccountInfo("user")).thenReturn(userInfo);
+		Mockito.when(courseDao.getCourseInfoWithSection("COMS", "A")).thenReturn(courseInfo);
 		
 		Mockito.when(response.getWriter()).thenReturn(printWriter);
 		modifyCourseServlet.doPost(request, response);
