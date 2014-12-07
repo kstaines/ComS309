@@ -23,4 +23,12 @@
         android:layout_alignParentTop="true"
         android:text="@string/home" />
 
+    <Button
+        android:id="@+id/reset_button"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/reset" />
+
 </RelativeLayout>

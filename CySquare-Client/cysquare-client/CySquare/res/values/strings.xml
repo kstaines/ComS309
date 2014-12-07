@@ -90,7 +90,8 @@
     <string name="admin_profile">My Profile</string>
 
     <!-- admin reset page -->
-    <string name="admin_reset">Reset</string>
+    <string name="admin_reset">Reset All</string>
+    <string name="reset">Reset</string>
 
     <!-- admin users page -->
     <string name="admin_users">Manage Users</string>
