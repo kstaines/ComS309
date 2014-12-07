@@ -40,6 +40,7 @@ public class ClassListServlet extends HttpServlet{
 		//Check if the parameters are null or blank
 		if(hasError(list, editType, "edit type", response)) return;
 		
+		
 		//Get the corresponding courseList based upon if admin or instructor.
 		if(editType.equalsIgnoreCase("instructor"))
 		{
@@ -68,10 +69,15 @@ public class ClassListServlet extends HttpServlet{
 			return;
 			
 		}
-		else
+		else if(editType.equalsIgnoreCase("admin"))
 		{
 			List<Course> courseList = courseDao.getAvailableCourseList();
 			putList(list, courseList, response);
+			return;
+		}
+		else
+		{
+			putError(list, "The edit type should be admin or instructor", response);
 			return;
 		}
 	}
