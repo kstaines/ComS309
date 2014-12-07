@@ -20,7 +20,7 @@ public class InstructorCourseDAO extends DatabaseAccess {
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE instructorid=\"" + instructorId + "\";");
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE instructorid=" + instructorId + ";");
 			while(res.next()) {
 				InstructorCourse instructorCourse = populateInstructorCourses(res);
 				correlations.add(instructorCourse);
@@ -41,7 +41,7 @@ public class InstructorCourseDAO extends DatabaseAccess {
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE courseid=\"" + courseId + "\";");
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE courseid=" + courseId + ";");
 			while(res.next()) {
 				InstructorCourse instructorCourse = populateInstructorCourses(res);
 				correlations.add(instructorCourse);
@@ -60,7 +60,7 @@ public class InstructorCourseDAO extends DatabaseAccess {
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " (`instructorid`, `courseid`) VALUES ('" + instructorId + "', '" + courseId + "');");
+			st.executeUpdate("INSERT INTO " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " (`instructorid`, `courseid`) VALUES (" + instructorId + ", " + courseId + ");");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class InstructorCourseDAO extends DatabaseAccess {
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE instructorid='" + instructorId + "' AND courseid='" + courseId + "';");
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE instructorid=" + instructorId + " AND courseid=" + courseId + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class InstructorCourseDAO extends DatabaseAccess {
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE instructorid='" + instructorId + ";");
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE instructorid=" + instructorId + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -99,7 +99,7 @@ public class InstructorCourseDAO extends DatabaseAccess {
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " 'WHERE courseid='" + courseId + ";");
+			st.executeUpdate("DELETE FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_INSTCOURSES + " WHERE courseid=" + courseId + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

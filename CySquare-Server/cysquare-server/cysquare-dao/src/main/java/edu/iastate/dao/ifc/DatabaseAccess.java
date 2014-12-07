@@ -95,9 +95,12 @@ public abstract class DatabaseAccess {
 		return checkIn;
 	}
 
-	protected InstructorCourse populateInstructorCourses(ResultSet res) {
-		// TODO Auto-generated method stub
-		return null;
+	protected InstructorCourse populateInstructorCourses(ResultSet res) throws SQLException {
+		InstructorCourse instCourse = new InstructorCourse();
+		instCourse.setInstructorId(res.getInt("instructorid"));
+		instCourse.setCourseId(res.getInt("courseid"));
+		instCourse.setUpdatedTimestamp(res.getString("ts_update"));
+		return instCourse;
 	}
 	
 }
