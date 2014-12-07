@@ -16,14 +16,11 @@ public class InstructorWelcome extends Activity{
 	private Button logout;
 	private Button myProfile;
 	private Button currentCheckins;
-	private Button postQuestion;
-	private Button notifications;
 	
 	private Intent mainIntent;
 	private Intent profileIntent;
 	private Intent currentCheckinsIntent;
-	private Intent postQuestionIntent;
-	private Intent notificationsIntent;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -33,8 +30,6 @@ public class InstructorWelcome extends Activity{
 		logout = (Button)findViewById(R.id.logout_button);
 		myProfile = (Button)findViewById(R.id.instructor_profile_button);
 		currentCheckins = (Button)findViewById(R.id.instructor_checkins_button);
-		postQuestion = (Button)findViewById(R.id.post_question_button);
-		notifications = (Button)findViewById(R.id.notifications_button);
 		
 		logout.setOnClickListener(new View.OnClickListener(){
 			@Override
@@ -61,22 +56,6 @@ public class InstructorWelcome extends Activity{
 				checkins();
 			} //end onClick(View v)
 		}); //end currentCheckins.setOnClickListener
-		
-		postQuestion.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v){
-				postQuestionIntent = new Intent(v.getContext(), InstructorPostQuestion.class);
-				postQuestion();
-			} //end onClick(View v)
-		}); //end myProfile.setOnClickListener
-		
-		notifications.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v){
-				notificationsIntent = new Intent(v.getContext(), Notifications.class);
-				notifications();
-			} //end onClick(View v)
-		}); //end myProfile.setOnClickListener
 		
 	} //end onCreate(Bundle savedInstanceState)
 	
@@ -117,13 +96,5 @@ public class InstructorWelcome extends Activity{
     
     private void checkins(){
     	startActivity(currentCheckinsIntent);
-    }
-    
-    private void postQuestion(){
-    	startActivity(postQuestionIntent);
-    }
-    
-    private void notifications(){
-    	startActivity(notificationsIntent);
     }
 }
