@@ -8,20 +8,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.iastate.cysquare.AdminUnapprovedUsers" >
 
+    <Button
+        android:id="@+id/back_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/unapproved_users"
+        android:text="@string/Back" />
+
     <TextView
         android:id="@+id/unapproved_users"
         style="@style/PageTitle"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="38dp"
+        android:layout_toRightOf="@+id/back_button"
         android:text="@string/unapproved_title" />
+
+    <ListView
+        android:id="@+id/unapprovedList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/back_button"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/delete_button" >
+
+    </ListView>
 
     <Button
         android:id="@+id/approve_button"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/unapproved_users"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="28dp"
+        android:layout_above="@+id/unapprovedList"
+        android:layout_alignRight="@+id/unapproved_users"
         android:text="@string/approve" />
 
     <Button
@@ -29,11 +49,8 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/approve_button"
-        android:layout_alignBottom="@+id/approve_button"
-        android:layout_alignRight="@+id/unapproved_users"
-        android:layout_marginRight="20dp"
+        android:layout_below="@+id/back_button"
+        android:layout_toRightOf="@+id/back_button"
         android:text="@string/delete" />
-
 
 </RelativeLayout>

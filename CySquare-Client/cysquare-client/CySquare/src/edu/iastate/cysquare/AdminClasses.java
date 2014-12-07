@@ -102,6 +102,11 @@ public class AdminClasses extends Activity{
     
     private void displayAllClasses() {
     	JSONObject jo = new JSONObject();
+    	try {
+			jo.put("editType", "admin");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
     	new PostWithAsync(classListURL, jo).execute();
     }
     

@@ -22,9 +22,10 @@ import android.widget.Toast;
 public class AdminUsers extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	private static final String approvedURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/approvedList";
-	private Button home;
-	private Intent homeIntent;
+	private static final String manageUsersURL = "http://proj-309-w03.cs.iastate.edu/cysquare-web-1.0.0-SNAPSHOT/manageUser";
+	private Button home, viewUnapproved, delete;
 	private ListView userList;
+	private String clickedUser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -32,14 +33,39 @@ public class AdminUsers extends Activity{
 		setContentView(R.layout.admin_users); //sets screen layout
 		
 		home = (Button)findViewById(R.id.home_button);
+		viewUnapproved = (Button)findViewById(R.id.unapprovedUsers_button);
+		delete = (Button)findViewById(R.id.delete_button);
 		
 		populateUsersListView();
+		registerClick();
 		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				homeIntent = new Intent(v.getContext(), AdminWelcome.class);
-				goHome();
+				Intent homeIntent = new Intent(v.getContext(), AdminWelcome.class);
+		    	startActivity(homeIntent);
+			} //end onClick(view v)
+		});
+		
+		viewUnapproved.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent unapprovedIntent = new Intent(v.getContext(), AdminUnapprovedUsers.class);
+		    	startActivity(unapprovedIntent);
+			} //end onClick(view v)
+		});
+		
+		delete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				JSONObject jo = new JSONObject();
+				try {
+					jo.put("username", clickedUser);
+					jo.put("editType", "delete");
+					new PostWithAsync(manageUsersURL, jo).execute();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			} //end onClick(view v)
 		});
 	} //end onCreate(Bundle savedInstanceState)
@@ -63,10 +89,6 @@ public class AdminUsers extends Activity{
         return super.onOptionsItemSelected(item);
     }
     
-    private void goHome(){
-    	startActivity(homeIntent);
-    }
-
     private void populateUsersListView() {
     	JSONObject jo = new JSONObject();
     	new PostWithAsync(approvedURL, jo).execute();
@@ -77,12 +99,12 @@ public class AdminUsers extends Activity{
 			int size = response.getInt("size");
 			String[] users = new String[size];
 			for (int i=0; i<size; i++) {
-				String name = "user";
+				String name = "User";
 				name = name.concat(Integer.toString(i+1));
 				users[i] = response.getString(name);
 			}
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.listview_items, users);
-			userList = (ListView)findViewById(R.id.approvedUsers);
+			userList = (ListView)findViewById(R.id.approvedList);
 			userList.setAdapter(adapter);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -90,15 +112,20 @@ public class AdminUsers extends Activity{
     }
     
 	private void registerClick() {
+		userList = (ListView)findViewById(R.id.approvedList);
 		userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long id) {
 				TextView tv = (TextView) arg1;
-				String clickedUser = tv.getText().toString();
-				Toast.makeText(AdminUsers.this, "User selected is " + clickedUser, Toast.LENGTH_LONG).show();
+				clickedUser = tv.getText().toString();
+				Toast.makeText(AdminUsers.this, clickedUser + " is selected", Toast.LENGTH_LONG).show();
 			}
 		});
+	}
+	
+	private void manageUsersResponse() {
+		Toast.makeText(AdminUsers.this, clickedUser + " has been deleted", Toast.LENGTH_LONG).show();
 	}
 
     private class PostWithAsync extends AsyncTask<String, String, String> {
@@ -136,6 +163,7 @@ public class AdminUsers extends Activity{
 				}
 				else {
 					if (URL.equals(approvedURL)) createUserArray(responseObject);
+					else if (URL.equals(manageUsersURL)) manageUsersResponse();
 				}
 			}
 	    	catch (JSONException e){

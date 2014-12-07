@@ -126,6 +126,11 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
     private void createClassListSpinner() {
     	spinner = (Spinner) findViewById(R.id.classList_spinner);
     	JSONObject jo = new JSONObject();
+    	try {
+			jo.put("editType", "admin");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
     	new PostWithAsync(classListURL, jo).execute();
     }
     

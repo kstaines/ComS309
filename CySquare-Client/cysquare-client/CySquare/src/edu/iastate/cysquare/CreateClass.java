@@ -104,12 +104,18 @@ public class CreateClass extends ActionBarActivity {
 			jobj.put("time", time);
 			jobj.put("section", section);
 			jobj.put("days", days);
+			jobj.put("username", getUsername());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
     	
     	return jobj;
     }
+    
+    private String getUsername() {
+    	SharedPreferences userData = getSharedPreferences(PREFS_NAME, 0);
+		return userData.getString("username", "false");
+	}
     
     private class PostWithAsync extends AsyncTask<String, String, String> {
     	private String URL;

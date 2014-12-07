@@ -95,6 +95,7 @@
     <!-- admin users page -->
     <string name="admin_users">Manage Users</string>
     <string name="view_unapproved_users">View Unapproved Users</string>
+    <string name="approved_title">Approved Users</string>
 
     <!-- notifications page -->
     <string name="notifications_title">Notifications</string>

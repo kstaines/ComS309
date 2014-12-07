@@ -1,9 +1,7 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent" >
+
     
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -11,11 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AdminUsers" >
-
-    <TextView
-        android:id="@+id/admin_users"
-        style="@style/PageTitle"
-        android:text="@string/admin_users" />
 
     <Button
         android:id="@+id/home_button"
@@ -35,13 +28,26 @@
         android:layout_below="@+id/home_button"
         android:text="@string/view_unapproved_users" />
 
+    <TextView
+        android:id="@+id/admin_users"
+        style="@style/PageTitle"
+        android:layout_alignTop="@+id/home_button"
+        android:layout_marginLeft="46dp"
+        android:layout_toRightOf="@+id/home_button"
+        android:text="@string/admin_users" />
+    
+   <TextView
+        android:id="@+id/approved"
+        style="@style/PageTitle"
+        android:layout_marginLeft="46dp"
+        android:layout_below="@+id/unapprovedUsers_button" 
+        android:text="@string/approved_title" />
+    
     <ListView
-        android:id="@+id/approvedUsers"
+        android:id="@+id/approvedList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/unapprovedUsers_button"
-        android:layout_below="@+id/unapprovedUsers_button"
-        android:layout_marginTop="15dp" >
+        android:layout_below="@+id/approved" >
     </ListView>
     
     <Button
@@ -50,9 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/unapprovedUsers_button"
+        android:layout_below="@+id/approvedList"
         android:text="@string/delete" />
 
 </RelativeLayout>
-
-</ScrollView>
