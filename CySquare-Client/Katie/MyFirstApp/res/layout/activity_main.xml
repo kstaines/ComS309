@@ -25,7 +25,8 @@
       android:layout_alignBottom="@+id/username"
       android:layout_marginLeft="32dp"
       android:layout_toRightOf="@+id/username"
-      android:ems="10" >
+      android:ems="10" 
+      android:inputType="text">
 
       <requestFocus />
    </EditText>

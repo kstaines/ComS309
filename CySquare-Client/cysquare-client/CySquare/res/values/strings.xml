@@ -69,6 +69,8 @@
 
     <!-- instructor current check ins page -->
     <string name="instructor_current_checkins">Current Check Ins</string>
+	<string name="class_names">My Classes:</string>
+	<string name="check_ins_names">Check Ins:</string>
 
     <!-- instructor post question page -->
     <string name="question">Post a Question</string>

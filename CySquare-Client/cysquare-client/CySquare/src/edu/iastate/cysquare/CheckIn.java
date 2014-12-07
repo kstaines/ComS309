@@ -55,6 +55,7 @@ public class CheckIn extends Activity{
 			registerClick();
 		}
 		
+		
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -87,6 +88,7 @@ public class CheckIn extends Activity{
     	JSONObject jo = new JSONObject();
     	try{
     		jo.put("username", usernameFromPref);
+    		jo.put("editType", "student");
     		new PostWithAsync(classListPageURL, jo).execute();
     	}
     	catch(JSONException e){
@@ -121,6 +123,7 @@ public class CheckIn extends Activity{
     		classList = (ListView)findViewById(R.id.checkin_classes_list);
     		
     		classList.setAdapter(adapter);
+    		
     	}
     	catch(JSONException e){
     		e.printStackTrace();
@@ -143,7 +146,6 @@ public class CheckIn extends Activity{
 				JSONObject jo = new JSONObject();
 				try{
 	    			//Toast.makeText(CheckIn.this, "TEST", Toast.LENGTH_LONG).show();
-
 					jo.put("username", usernameFromPref);
 					jo.put("classname", selectedClassName);
 					jo.put("section", selectedSection);
@@ -179,8 +181,8 @@ public class CheckIn extends Activity{
     	GPSTracker gps = new GPSTracker(this);
     	
     	//getting latitude and longitude
-    	double latitude = gps.getLatitude(); //returns latitude
-    	double longitude = gps.getLongitude(); //returns longitude
+    	double latitude = 42.028000; //gps.getLatitude(); //returns latitude
+    	double longitude = -93.644000; //gps.getLongitude(); //returns longitude
     	
     	//register click on campus
     	if(gps.canGetLocation()){
@@ -194,6 +196,8 @@ public class CheckIn extends Activity{
     		}
     		else{
     			Toast.makeText(this, "You are not on campus.", Toast.LENGTH_LONG).show();
+    			Toast.makeText(this, "Latitude: " + latitude + " Longitude: " + longitude, Toast.LENGTH_LONG).show();
+
     			status = false;
     		}
     	}
@@ -239,7 +243,6 @@ public class CheckIn extends Activity{
  	    	catch (IOException e) {
  				e.printStackTrace();
  			} 
-    		
 			return null;
     	} //end String doInBackground(String... arg0)
     	
@@ -247,16 +250,17 @@ public class CheckIn extends Activity{
     		JSONObject responseObject;
     		try {
 				responseObject = new JSONObject(build);
+				
 				if(responseObject.has("status") && responseObject.getString("status").equals("error")){
 					Toast.makeText(CheckIn.this, responseObject.getString("error"), Toast.LENGTH_LONG).show();
 				}
-				else{
+				else{ //responseObject.getString("status") = true
 					if(URL.equals(classListPageURL)){
-						Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), "class list url", Toast.LENGTH_LONG).show();
 						createCheckInArrayFromServerResponse(responseObject);
 					}
 					else if(URL.equals(checkinPageURL)){
-						Toast.makeText(getApplicationContext(), "111111111111", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), "checkin url", Toast.LENGTH_LONG).show();
 						checkInClass(responseObject);
 					}
 				}
@@ -264,7 +268,6 @@ public class CheckIn extends Activity{
 			catch (JSONException e) {
 				e.printStackTrace();
 			}
-    		
     		
     	} //end onPostExecute(String build)
     } //end PostWithAsync extends AsyncTask<String, String, String>
