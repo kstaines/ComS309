@@ -172,4 +172,34 @@ public class AccountDAO extends DatabaseAccess {
 		
 		return users;
 	}
+	
+	/**
+	 * Updates the value of the current points in the database by adding the parameter's value (newPoints)
+	 * to the existing point value. Also takes in the username. If needing to update by user ID, use updatePointValueById().
+	 * @param username
+	 * @param newPoints
+	 */
+	public void updatePointValue(String username, Integer newPoints) {
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " SET `totalPts`=`totalPts` + " + newPoints + " WHERE `username`='" + username + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updatePointValueById(Integer userId, Integer newPoints) {
+		try {
+			Connection conn = makeConnection();
+			Statement st = conn.createStatement();
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_USERS + " SET `totalPts`=`totalPts` + " + newPoints + " WHERE `userId`='" + userId + "';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

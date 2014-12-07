@@ -79,6 +79,24 @@ public class AccountDAOTest {
 		System.out.println(users.size());
 	}
 	
+	@Test
+	public void testUpdatePoints() {
+		UserAccount user = accountDao.getAccountInfo("use");
+		assertEquals(Integer.valueOf(0), user.getTotalPts());
+		accountDao.updatePointValue("use", 10);
+		user = accountDao.getAccountInfo("use");
+		assertEquals(Integer.valueOf(10), user.getTotalPts());
+	}
+	
+	@Test
+	public void testUpdatePointsById() {
+		UserAccount user = accountDao.getAccountInfo("use");
+		assertEquals(Integer.valueOf(0), user.getTotalPts());
+		accountDao.updatePointValueById(user.getUserId(), 10);
+		user = accountDao.getAccountInfoById(user.getUserId());
+		assertEquals(Integer.valueOf(10), user.getTotalPts());
+	}
+	
 	private void createData() {
 		accountDao.createUserAccount("use", "pass", "STUDENT");
 	}

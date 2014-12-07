@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 
 
+
 //import edu.iastate.dao.ifc.DatabaseAccess;
 import edu.iastate.dao.impl.AccountDAO;
 import edu.iastate.dao.impl.CheckInDAO;
@@ -27,6 +28,8 @@ import edu.iastate.domain.UserAccount;
 public class CheckInServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 943348396279963269L;
+
+	private static final Integer POINTS_PER_CHECKIN = 1;
 	
 	private AccountDAO account_dao = new AccountDAO();
 	private StudentCourseDAO student_dao = new StudentCourseDAO ();
@@ -92,6 +95,7 @@ public class CheckInServlet extends HttpServlet
 				coursePoints = coursePoints + 1;
 				correlationList.get(i).setPoints(coursePoints);*/
 				//got a method from the studentCourseDao to update the checkin points
+				account_dao.updatePointValueById(userId, POINTS_PER_CHECKIN);
 				student_dao.updateNumCheckIns(userId, courseId);
 				break;
 			
