@@ -66,6 +66,9 @@ public class AdminUsers extends Activity{
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+				
+				Intent usersIntent = new Intent(v.getContext(), AdminUsers.class);
+				startActivity(usersIntent);
 			} //end onClick(view v)
 		});
 	} //end onCreate(Bundle savedInstanceState)

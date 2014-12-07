@@ -55,6 +55,9 @@ public class AdminUnapprovedUsers extends ActionBarActivity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+				
+				Intent usersIntent = new Intent(v.getContext(), AdminUnapprovedUsers.class);
+				startActivity(usersIntent);
 			} //end onClick(view v)
 		});
 		
@@ -69,6 +72,9 @@ public class AdminUnapprovedUsers extends ActionBarActivity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+				
+				Intent usersIntent = new Intent(v.getContext(), AdminUnapprovedUsers.class);
+				startActivity(usersIntent);
 			} //end onClick(view v)
 		});
 		

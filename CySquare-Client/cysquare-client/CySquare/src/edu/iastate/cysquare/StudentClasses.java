@@ -202,7 +202,6 @@ public class StudentClasses extends Activity implements OnItemSelectedListener{
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-    	
     }
     
 	private void registerClick() {
