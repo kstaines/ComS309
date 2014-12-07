@@ -79,12 +79,31 @@ public class ModifyCourseServlet extends HttpServlet {
 		
 		//Get the user account info
 		UserAccount userAccount = accountDao.getAccountInfo(user);
+		//put error if can not find the user in the database
+		if(userAccount == null)
+		{
+			putError(object, "The user can not be found in the database.", response);
+			return;
+		}
+		
+		
+		
+		
 		String userType = userAccount.getUserType();
-		int courseId = courseDao.getCourseInfoWithSection(courseName, section).getCourseId();
 		int userId = userAccount.getUserId();
+		
 		//If the edit type is delete then delete the course
 		if(editType.equalsIgnoreCase("delete"))
 		{
+			Course courseInfo = courseDao.getCourseInfoWithSection(courseName, section);
+			//put error if can not find the course in the database
+			if(courseInfo == null)
+			{
+				putError(object, "The course can not be found in the database.", response);
+				return;
+			}
+			
+			int courseId = courseInfo.getCourseId();
 			courseDao.deleteCourse(courseName);
 			studentDao.deleteAllCourseStudents(courseId);
 			instructorDao.deleteAllCourseInstructors(courseId);
@@ -102,6 +121,8 @@ public class ModifyCourseServlet extends HttpServlet {
 			String location = request.getParameter("location");
 			String time = request.getParameter("time");
 			String days = request.getParameter("days");
+			//int courseId = Integer.parseInt(request.getParameter("courseId"));
+			//String id = request.getParameter("courseId");
 			
 			if(isNull(object, location, "location", response)) return;
 			if(isBlank(object, location, "location", response)) return;
@@ -109,6 +130,10 @@ public class ModifyCourseServlet extends HttpServlet {
 			if(isBlank(object, time, "time", response)) return;
 			if(isNull(object, days, "days", response)) return;
 			if(isBlank(object, days, "days", response)) return;
+			//if(isNull(object, id, "course id", response)) return;
+			//if(isBlank(object, id, "coures id", response)) return;
+			
+			//int courseId = Integer.parseInt(id);
 			
 			//Check if the course name is already in the current list
 			List<Course> currentList = courseDao.getAvailableCourseList();
@@ -116,7 +141,7 @@ public class ModifyCourseServlet extends HttpServlet {
 			//boolean key used to return the error message back to the client
 			boolean found = false;
 			//If the list is not empty or null proceed to see if the course is already in the database.
-			if(!(currentList.isEmpty() || currentList == null))
+			if(!(currentList == null || currentList.isEmpty()))
 			{
 				//Loop to see if the course is in current list
 				for(int i = 0; i < currentList.size(); i++)
@@ -133,14 +158,21 @@ public class ModifyCourseServlet extends HttpServlet {
 		
 			if(found) return;
 			//Add the course to the database
+			courseDao.createCourse(courseName, location, time, days, section);
+			
 			if(userType.equalsIgnoreCase("instructor"))
 			{
 				//create the correlation between instructor and course
+				Course courseInfo = courseDao.getCourseInfoWithSection(courseName, section);
+				//put error if can not find the course in the database
+				if(courseInfo == null)
+				{
+					putError(object, "The course can not be found in the database.", response);
+					return;
+				}
+				
+				int courseId = courseInfo.getCourseId();
 				instructorDao.createCorrelation(userId, courseId);
-			}
-			else
-			{
-				courseDao.createCourse(courseName, location, time, days, section);
 			}
 			putTrue(object, response);
 			return;
