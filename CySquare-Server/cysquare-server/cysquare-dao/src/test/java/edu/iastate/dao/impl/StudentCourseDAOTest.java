@@ -40,7 +40,7 @@ public class StudentCourseDAOTest {
 		List<StudentCourse> studCourses = studentCourseDao.getCourses(0);
 		assertEquals(Integer.valueOf(0), studCourses.get(0).getTimesCheckedIn());
 		assertEquals(Integer.valueOf(0), studCourses.get(0).getPoints());
-		studentCourseDao.updateNumCheckIns(0, 1);
+		studentCourseDao.updateNumCheckIns(0, 1, 1);
 		studCourses = studentCourseDao.getCourses(0);
 		assertEquals(Integer.valueOf(1), studCourses.get(0).getTimesCheckedIn());
 		assertEquals(Integer.valueOf(1), studCourses.get(0).getPoints());

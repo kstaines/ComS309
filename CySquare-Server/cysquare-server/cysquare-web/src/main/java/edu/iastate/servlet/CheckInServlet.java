@@ -96,7 +96,7 @@ public class CheckInServlet extends HttpServlet
 				correlationList.get(i).setPoints(coursePoints);*/
 				//got a method from the studentCourseDao to update the checkin points
 				account_dao.updatePointValueById(userId, POINTS_PER_CHECKIN);
-				student_dao.updateNumCheckIns(userId, courseId);
+				student_dao.updateNumCheckIns(userId, courseId, POINTS_PER_CHECKIN);
 				break;
 			
 			}

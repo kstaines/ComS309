@@ -55,16 +55,19 @@ public class StudentCourseDAO extends DatabaseAccess {
 	}
 	/**
 	 * Updates the number of times a user has checked into the course.
-	 * Automatically adds one to the value in the times checked in column and one to the points column.
+	 * Automatically adds one to the value in the times checked in column and the value of new points
+	 * gets added to the existing value in the points column.
 	 * @param studentId
 	 * @param courseId
+	 * @param newPoints TODO
+	 * @param newPoints
 	 */
-	public void updateNumCheckIns(Integer studentId, Integer courseId) {
+	public void updateNumCheckIns(Integer studentId, Integer courseId, Integer newPoints) {
 		Connection conn;
 		try {
 			conn = makeConnection();
 			Statement st = conn.createStatement();
-			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " SET `times_chk_in`=`times_chk_in` + 1, `points`=`points` + 1 WHERE `studentid`=" + studentId + " AND `courseid`=" + courseId + ";");
+			st.executeUpdate("UPDATE " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_STUDCOURSES + " SET `times_chk_in`=`times_chk_in` + 1, `points`=`points` + " + newPoints + " WHERE `studentid`=" + studentId + " AND `courseid`=" + courseId + ";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
