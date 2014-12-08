@@ -191,6 +191,12 @@ public class AccountDAO extends DatabaseAccess {
 		}
 	}
 	
+	/**
+	 * Updates the value of the current points in the database by adding the parameter's value (newPoints)
+	 * to the existing point value. Also takes in the userId. If needing to update by username, use updatePointValue().
+	 * @param userId
+	 * @param newPoints
+	 */
 	public void updatePointValueById(Integer userId, Integer newPoints) {
 		try {
 			Connection conn = makeConnection();
