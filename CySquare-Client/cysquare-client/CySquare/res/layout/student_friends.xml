@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".StudentFriends"
-        android:background="#FFFF8F" >
+    android:background="#FFFF8F" >
  
 <TextView
     android:id="@+id/student_friends"
@@ -104,6 +104,7 @@
     android:layout_below="@+id/editText_enterFriendName"
     android:layout_marginTop="17dp"
     android:layout_toRightOf="@+id/student_friends"
+    android:background="@drawable/bg_key"
     android:text="@string/add" />
 
 </RelativeLayout>
