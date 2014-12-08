@@ -143,7 +143,7 @@ public class CheckIn extends Activity{
     			String splitClassString[] = clickedClass.split(" ");
 				selectedClassName = splitClassString[0]; //grabs 0th element, class name
 				selectedSection = splitClassString[1]; //grabs 1st element, class section
-    			Toast.makeText(CheckIn.this, "Class selected: " + selectedClassName + " Section: " + selectedSection, Toast.LENGTH_LONG).show();
+//    			Toast.makeText(CheckIn.this, "Class selected: " + selectedClassName + " Section: " + selectedSection, Toast.LENGTH_LONG).show();
     			
     			checkInAlert(selectedClassName, selectedSection);
     		}
