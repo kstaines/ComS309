@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".InstructorCurrentCheckIns" >
+    tools:context=".InstructorCurrentCheckIns"
+    android:background="#FFFF8F" >
 
 <Button
     android:id="@+id/home_button"
@@ -18,21 +19,6 @@
     android:layout_alignParentTop="true"
     android:background="@drawable/bg_key"
     android:text="@string/home" />
-
-<TextView
-    android:id="@+id/instructor_current_checkins"
-    style="@style/PageTitle"
-    android:layout_alignTop="@+id/home_button"
-    android:layout_toRightOf="@+id/home_button"
-    android:text="@string/instructor_current_checkins" />
-
-<TextView
-    android:id="@+id/class_name"
-    style="@style/PageTitle"
-    android:layout_alignLeft="@+id/home_button"
-    android:layout_below="@+id/instructor_current_checkins"
-    android:text="@string/class_names"
-    android:textSize="15sp" />
 
 <ListView
     android:id="@+id/class_list"
@@ -59,5 +45,21 @@
     android:layout_below="@+id/check_ins_name"
     android:layout_marginTop="24dp" >
 </ListView>
+
+<TextView
+    android:id="@+id/class_name"
+    style="@style/PageTitle"
+    android:layout_alignLeft="@+id/home_button"
+    android:layout_below="@+id/home_button"
+    android:text="@string/class_names"
+    android:textSize="15sp" />
+
+<TextView
+    android:id="@+id/instructor_current_checkins"
+    style="@style/PageTitle"
+    android:layout_alignRight="@+id/class_list"
+    android:layout_alignTop="@+id/home_button"
+    android:layout_marginRight="14dp"
+    android:text="@string/instructor_current_checkins" />
 
 </RelativeLayout>

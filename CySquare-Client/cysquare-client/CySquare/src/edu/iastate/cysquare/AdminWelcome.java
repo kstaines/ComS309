@@ -14,13 +14,11 @@ public class AdminWelcome extends Activity{
 	public static final String PREFS_NAME = "MyPreferencesFile";
 	
 	private Button logout;
-	private Button myProfile;
 	private Button manageClasses;
 	private Button reset;
 	private Button manageUsers;
 	
 	private Intent mainIntent;
-	private Intent profileIntent;
 	private Intent manageClassesIntent;
 	private Intent resetIntent;
 	private Intent manageUsersIntent;
@@ -31,7 +29,6 @@ public class AdminWelcome extends Activity{
 		setContentView(R.layout.admin_welcome);
 		
 		logout = (Button)findViewById(R.id.logout_button);
-		myProfile = (Button)findViewById(R.id.admin_profile_button);
 		manageClasses = (Button)findViewById(R.id.manage_classes_button);
 		reset = (Button)findViewById(R.id.reset_all_button);
 		manageUsers = (Button)findViewById(R.id.manage_users_button);
@@ -46,15 +43,6 @@ public class AdminWelcome extends Activity{
 				logout();
 			} //end onClick(View v)
 		}); //end logout.setOnClickListener
-		
-		myProfile.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				v.setSelected(true);
-				profileIntent = new Intent(v.getContext(), AdminProfile.class);
-				profile();
-			} //end onClick(View v)
-		}); //end myProfile.setOnClickListener
 		
 		manageClasses.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -114,10 +102,6 @@ public class AdminWelcome extends Activity{
     
     private void logout(){
     	startActivity(mainIntent);
-    }
-    
-    private void profile(){
-    	startActivity(profileIntent);
     }
     
     private void manageClasses(){
