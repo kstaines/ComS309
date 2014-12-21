@@ -47,7 +47,7 @@ public class CheckInDAO extends DatabaseAccess {
 		try {
 			Connection conn = makeConnection();
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_CHECKIN + " WHERE studentid=`" + userId + "`;");
+			ResultSet res = st.executeQuery("SELECT * FROM " + DAOLiterals.MYSQL_DB_NAME + "." + DAOLiterals.TABLE_CHECKIN + " WHERE studentid=" + userId + ";");
 			if(res.next()) {
 				checkIn = populateCheckIn(res);
 			}
